@@ -27,7 +27,7 @@ public class BitmapHolder {
 
     private AsyncTask loaderTask;
 
-    public BitmapHolder(final byte[] data, String recordId, String subRecord, final String fileName) {
+    public BitmapHolder(byte[] data, String recordId, String subRecord, final String fileName) {
         this.recordId = recordId;
         this.subRecord = subRecord;
         String theSub = true == StringUtils.isNullOrEmpty(subRecord) ? "" : File.separator + subRecord;
@@ -37,14 +37,14 @@ public class BitmapHolder {
 
         this.fullPath = directory + File.separator + fileName;
 
-        // Save the new image into the designated directory
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
-                FileUtils.writeBitmapToFile(directory, fileName, bitmap);
-            }
-        }).start();
+        try {
+            Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
+            FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+        } catch (OutOfMemoryError e) {
+            System.gc();
+            Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
+            FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+        }
     }
 
     public BitmapHolder(String recordId, String subRecord, String fileName) {

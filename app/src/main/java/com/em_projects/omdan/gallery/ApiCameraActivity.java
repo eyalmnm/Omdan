@@ -47,7 +47,7 @@ public class ApiCameraActivity extends Activity {
     private CameraPreview mPreview;
     private PictureCallback mPicture;
 
-    private OnClickListener captrureListener = new OnClickListener() {
+    private OnClickListener captureListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
@@ -264,7 +264,7 @@ public class ApiCameraActivity extends Activity {
         cameraPreview.addView(mPreview);
 
         captureButton = (ImageButton) findViewById(R.id.captureButton);
-        captureButton.setOnClickListener(captrureListener);
+        captureButton.setOnClickListener(captureListener);
 
         switchCameraButton = (ImageButton) findViewById(R.id.changeCameraButton);
         switchCameraButton.setOnClickListener(switchCameraListener);
