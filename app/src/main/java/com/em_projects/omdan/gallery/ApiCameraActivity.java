@@ -46,6 +46,7 @@ public class ApiCameraActivity extends Activity {
     private Camera mCamera;
     private CameraPreview mPreview;
     private PictureCallback mPicture;
+    private MediaActionSound sound = new MediaActionSound();
 
     private OnClickListener captureListener = new OnClickListener() {
         @Override
@@ -53,11 +54,13 @@ public class ApiCameraActivity extends Activity {
             try {
                 mPreview.setFlashlight(true);
                 mCamera.takePicture(null, null, mPicture);
-                MediaActionSound sound = new MediaActionSound();
+                //MediaActionSound sound = new MediaActionSound();
                 sound.play(MediaActionSound.SHUTTER_CLICK);
                 mPreview.setFlashlight(false);
             } catch (Throwable tr) {
                 Log.e(TAG, "takePicture", tr);
+                FirebaseCrash.logcat(Log.ERROR, TAG, "captureListener");
+                FirebaseCrash.report(tr);
             }
         }
     };
@@ -69,7 +72,7 @@ public class ApiCameraActivity extends Activity {
     private boolean cameraFront = false;
     private String recordId = null;
     private String subDir = null;
-    private ArrayList<BitmapHolder> bitmapHolders = new ArrayList<>();
+    private ArrayList<String> bitmapHolders = new ArrayList<>();
 
     private OnClickListener switchCameraListener = new OnClickListener() {
         @Override
@@ -88,6 +91,7 @@ public class ApiCameraActivity extends Activity {
     OnClickListener cancelListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
+            sound.release();
             Intent intent = new Intent();
             intent.putExtra("bitmaps", (bitmapHolders.size() > 0));
             ApiCameraActivity.this.setResult(Activity.RESULT_CANCELED, intent);
@@ -318,7 +322,8 @@ public class ApiCameraActivity extends Activity {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 String fileName = "IMG_" + TimeUtils.imageFormatedTime(System.currentTimeMillis()) + ".png";
-                bitmapHolders.add(new BitmapHolder(data, recordId, subDir, fileName));
+                bitmapHolders.add(fileName);
+                new BitmapHolder(data, recordId, subDir, fileName);
                 FirebaseCrash.log(TAG + " onPictureTaken");
                 //mPreview.setFlashlight(false);
                 //refresh camera to continue preview

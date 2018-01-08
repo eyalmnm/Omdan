@@ -2,11 +2,13 @@ package com.em_projects.omdan.gallery;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.utils.FileUtils;
 import com.em_projects.omdan.utils.ImageUtils;
 import com.em_projects.omdan.utils.StringUtils;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.File;
 
@@ -17,6 +19,7 @@ import java.io.File;
 // Ref: https://alvinalexander.com/android/asynctask-examples-parameters-callbacks-executing-canceling
 
 public class BitmapHolder {
+    private static final String TAG = "BitmapHolder";
 
     private String recordId;
     private String fullPath;
@@ -27,7 +30,7 @@ public class BitmapHolder {
 
     private AsyncTask loaderTask;
 
-    public BitmapHolder(byte[] data, String recordId, String subRecord, final String fileName) {
+    public BitmapHolder(final byte[] data, String recordId, String subRecord, final String fileName) {
         this.recordId = recordId;
         this.subRecord = subRecord;
         String theSub = true == StringUtils.isNullOrEmpty(subRecord) ? "" : File.separator + subRecord;
@@ -37,14 +40,31 @@ public class BitmapHolder {
 
         this.fullPath = directory + File.separator + fileName;
 
-        try {
-            Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
-            FileUtils.writeBitmapToFile(directory, fileName, bitmap);
-        } catch (OutOfMemoryError e) {
-            System.gc();
-            Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
-            FileUtils.writeBitmapToFile(directory, fileName, bitmap);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
+                    //FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+                    //bitmap.recycle();
+                    //bitmap = null;
+                    FileUtils.writeBitmapToFile(directory, fileName, data);
+                } catch (OutOfMemoryError e) {
+                    Log.e(TAG, "BitmapHolder - loading from bytes", e);
+                    System.gc();
+//                    Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
+//                    FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+//                    bitmap.recycle();
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "BitmapHolder - loading from bytes");
+                    FirebaseCrash.report(e);
+                } catch (Throwable tr) {
+                    Log.e(TAG, "BitmapHolder - loading from bytes", tr);
+                    System.gc();
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "BitmapHolder - loading from bytes");
+                    FirebaseCrash.report(tr);
+                }
+            }
+        }).start();
     }
 
     public BitmapHolder(String recordId, String subRecord, String fileName) {
