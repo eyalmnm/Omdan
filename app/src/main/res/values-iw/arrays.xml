@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cat_record_id">מספר תיק</string>
+    <string name="cat_creation_date">תאריך יצירה</string>
+    <string name="cat_loaction">מיקום</string>
+    <string name="cat_record_status">מצב התיק</string>
+    <string name="cat_record_manager">מנהל התיק</string>
+</resources>

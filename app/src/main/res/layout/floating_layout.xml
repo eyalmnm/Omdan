@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <!-- https://stackoverflow.com/questions/17990603/animated-toggle-button -->
+
+    <LinearLayout
+        android:id="@+id/fabButtonsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginBottom="2dip"
+        android:layout_marginRight="2dip"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/fab_save"
+            style="@style/fab_buttons_style"
+            android:text="@string/save" />
+
+
+        <Button
+            android:id="@+id/fab_refresh"
+            style="@style/fab_buttons_style"
+            android:text="@string/refresh" />
+
+        <Button
+            android:id="@+id/fab_show_images"
+            style="@style/fab_buttons_style"
+            android:text="@string/open_images" />
+
+        <Button
+            android:id="@+id/fab_show_docs"
+            style="@style/fab_buttons_style"
+            android:text="@string/show_docs" />
+
+
+        <Button
+            android:id="@+id/fab_archive_images"
+            style="@style/fab_buttons_style"
+            android:text="@string/archive_images" />
+
+        <Button
+            android:id="@+id/fab_rec_images"
+            style="@style/fab_buttons_style"
+            android:text="@string/record_images" />
+
+        <Button
+            android:id="@+id/fab_camera"
+            style="@style/fab_buttons_style"
+            android:text="@string/camera" />
+
+        <Button
+            android:id="@+id/dummyFab"
+            style="@style/fab_buttons_style"
+            android:background="@color/light_gray"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <ToggleButton
+        android:id="@+id/fab"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="267dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/app_button_bg_color_selector"
+        android:button="@drawable/more_button_selector"
+        android:clickable="true"
+        android:gravity="center"
+        android:saveEnabled="true"
+        android:textOff=""
+        android:textOn="" />
+
+</RelativeLayout>

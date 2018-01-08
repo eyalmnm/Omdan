@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
+
+    <!--CheckedTextView
+        android:id="@+id/checkedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple" /-->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/recordNumberTextView"
+            style="@style/AppTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="10020208"
+            android:textSize="@dimen/text_size_reg" />
+
+        <TextView
+            android:id="@+id/recordDateTextView"
+            style="@style/AppTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="10 Oct 2017"
+            android:textSize="@dimen/text_size_reg" />
+
+        <TextView
+            android:id="@+id/recordTimeTextView"
+            style="@style/AppTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="15:30"
+            android:textSize="@dimen/text_size_reg" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            style="@style/AppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recordNumberTextView"
+            android:layout_marginTop="5dp"
+            android:text="Description"
+            android:textSize="@dimen/text_size_reg" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/recordTitleTextView"
+        style="@style/AppTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/fab_margin_sides"
+        android:textSize="@dimen/text_size_main" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:layout_below="@id/recordTitleTextView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 1"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 1 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 2"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 2 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 3"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 3 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 4"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 4 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 5"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 5 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 6"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 6 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 7"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 7 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 8"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 8 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 9"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 9 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 10"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 10 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 11"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 11 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 12"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 12 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 13"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 13 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 14"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 14 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin_sides"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="Data 15"
+                    android:textSize="@dimen/text_size_reg" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 15 data"
+                    android:textSize="@dimen/text_size_reg" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include
+        layout="@layout/floating_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ZoomControls xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/zoomControls1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="80dp"
+    android:layout_marginTop="200dp"
+    android:background="@android:color/transparent" />

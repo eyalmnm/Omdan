@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="sorting_categories">
+        <item>@string/cat_record_id</item>
+        <item>@string/cat_creation_date</item>
+        <item>@string/cat_loaction</item>
+        <item>@string/cat_record_status</item>
+        <item>@string/cat_record_manager</item>
+    </array>
+
+    <!-- sorting_categories -->
+    <string name="cat_record_id">Record Id</string>
+    <string name="cat_creation_date">Creation Date</string>
+    <string name="cat_loaction">Location</string>
+    <string name="cat_record_status">Record Status</string>
+    <string name="cat_record_manager">Record Manager</string>
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">אומדן</string>
+
+    <!-- Intro Activity -->
+    <string name="skip">דלג</string>
+    <string name="first_intro_title">כותרת ראשונה</string>
+    <string name="second_intro_title">כותרת שנייה</string>
+    <string name="third_intro_title">כותרת שלישית</string>
+    <string name="fourth_intro_title">כותרת רביעית</string>
+    <string name="first_intro_message">הודעה ראשונה</string>
+    <string name="second_intro_message">הודעה שנייה</string>
+    <string name="third_intro_message">הודעה שלישית</string>
+    <string name="fourth_intro_message">הודעה רביעית</string>
+
+    <!-- Action Bar -->
+    <string name="record_id_title">מספר תיק</string>
+
+    <!-- Drawer Options -->
+    <string name="find_record">מצא רשומה</string>
+    <string name="show_record">הצג רשומה</string>
+    <string name="new_record">רשומה חדשה</string>
+    <string name="show_all">הצג את כל הרשומות</string>
+    <string name="open_galery">פתח גלריית תמונות</string>
+
+    <!-- Login Dialog -->
+    <string name="login_msg">Login</string>
+    <string name="name_et_hint">הכנס שם משתמש</string>
+    <string name="password_et_hint">הכנס סיסמה</string>
+
+    <!-- New Record -->
+    <string name="data_1_et_hint">נתון 1</string>
+    <string name="data_2_et_hint">נתון 2</string>
+    <string name="data_3_et_hint">נתון 3</string>
+    <string name="data_4_et_hint">נתון 4</string>
+    <string name="data_5_et_hint">נתון 5</string>
+    <string name="data_6_et_hint">נתון 6</string>
+    <string name="data_7_et_hint">נתון 7</string>
+    <string name="data_8_et_hint">נתון 8</string>
+    <string name="data_9_et_hint">נתון 9</string>
+    <string name="data_10_et_hint">נתון 10</string>
+    <string name="data_11_et_hint">נתון 11</string>
+    <string name="data_12_et_hint">נתון 12</string>
+    <string name="data_13_et_hint">נתון 13</string>
+    <string name="data_14_et_hint">נתון 14</string>
+    <string name="data_15_et_hint">נתון 15</string>
+
+    <!-- Record Created successfully message -->
+    <string name="record_created_successfully_message">רשומה %s נוצרה בהצלחה</string>
+
+    <!-- Show All Records fragment -->
+    <string name="select_record_from_list">בחר רשומה מהרשימה</string>
+    <string name="select_record_sort_by">מיין לפי: </string>
+
+    <!-- Create new record dialog -->
+    <string name="new_record_id_title">מספר תיק %s</string>
+    <string name="create_new_record_msg">נא אשר מספר התיק החדש %s</string>
+
+    <!-- Find record fragment -->
+    <string name="missing_data">אנא מלאו לפחות שדה אחד</string>
+    <string name="find_record_by_data">חפש תיק</string>
+
+    <!-- Find results fragment -->
+    <string name="choose_record_from_list">בחר רשומה מתוך הרשימה</string>
+
+    <!-- Show camera dialog -->
+    <string name="record_id_et_hint">שם התיקייה</string>
+
+    <!-- MainScreen -->
+    <string name="galery">גלרית תמונות</string>
+    <string name="device_archive">ארכיון תמונות</string>
+    <string name="all_records">ארכיון תיקים</string>
+    <string name="create_new_record">תיק חדש</string>
+
+    <!-- Open Galery -->
+    <string name="galeries">גלריות</string>
+    <string name="empty_archive_msg">ארכיון התמונות שלך ריק</string>
+    <string name="directory_contains_no_images">תיקייה זו אינה מכילה תמונות</string>
+
+    <!-- Camera Activity -->
+    <string name="record_id">שם תיקייה</string>
+    <string name="loading">טוען </string>
+    <string name="root">תיקיית ראשית</string>
+
+    <!-- Floating layout -->
+    <string name="camera">צלם</string>
+    <string name="record_images">גלריית תמונות</string>
+    <string name="archive_images">ארכיון תמונות</string>
+    <string name="show_docs">מסמכים בתיק</string>
+    <string name="open_images">פתח תמונות</string>
+    <string name="save">שמור</string>
+    <string name="refresh">רענן</string>
+
+    <!-- Image Gallery Strings -->
+    <string name="selected_files">%d קבצים נבחרו</string>
+    <string name="select_all_title">בחר הכל</string>
+
+    <!-- Delete Confirmation Dialog -->
+    <string name="delete_dialog_title">%d קבצים נבחרו למחיקה. האם ברצונך להמשיך?</string>
+
+
+    <!-- App Exit Dialog -->
+    <string name="exit_title">יציאה</string>
+    <string name="exit_message">לחיצה על כפתור אישור תיגרום לאפליקיה להיסגר. האם ברצונך לההמשיך בתהליך הסגירה?</string>
+
+
+</resources>

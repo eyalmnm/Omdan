@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--color name="colorPrimary">@android:color/background_light</color-->
+    <color name="colorPrimary">@color/yad_2_background_color</color>
+    <color name="colorPrimaryDark">@android:color/background_dark</color>
+    <color name="textColorPrimary">@android:color/primary_text_light</color>
+    <color name="windowBackground">@color/light_gray</color>
+    <color name="colorAccent">@android:color/secondary_text_light</color>
+    <!--color name="app_text_color">#FFCCCCCC</color-->
+    <color name="textSecondaryColor">@android:color/secondary_text_light</color>
+    <color name="HintColor">@color/turquoise</color>
+
+    <!-- Application color -->
+    <color name="orange">#f37721</color>
+    <color name="turquoise">#FF00C5CD</color>
+    <color name="dark_gray">#FF333333</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="light_gray">#FFCCCCCC</color>
+    <color name="semi_transparent">#44000000</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="yad_2_background_color">#F0F0F0</color>
+
+    <!-- Switch Track Selector -->
+
+    <!-- Fab colors -->
+    <color name="colorFAB_normal">#757575</color>
+    <color name="colorFAB_pressed">#55000000</color>
+    <!--color name="colorFAB_pressed">#e0e0e0</color-->
+    <!--color name="colorFAB_pressed">@color/windowBackground</color-->
+
+    <!-- List View Selector -->
+    <color name="list_item_selected">@color/colorAccent</color>
+    <color name="list_item_focused">@color/colorAccent</color>
+    <color name="list_item_normal">@color/windowBackground</color>
+
+</resources>

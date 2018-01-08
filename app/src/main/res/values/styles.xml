@@ -1,0 +1,132 @@
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/turquoise</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/HintColor</item>
+        <item name="android:actionModeStyle">@style/CustomActionModeStyle</item>
+    </style>
+
+    <!--item name="android:padding">5dp</item-->
+    <!--item name="android:fontFamily">sans-serif-light</item>
+    <item name="android:textColorPrimary">@color/textColorPrimary</item>
+    <item name="android:textColorSecondary">@color/textSecondaryColor</item-->
+
+    <!-- ToolBar -->
+    <!--style name="AppToolBarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="background">@color/colorPrimaryDark</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTheme</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+    </style>
+    <style name="ToolbarTitleTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style-->
+
+    <!-- Switch Style -->
+
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:textSize">17sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorControlNormal">@color/textColorPrimary</item>
+        <item name="colorControlActivated">@color/dark_gray</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="AppTextView">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="textInputLayoutEditText">
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:background">@drawable/rounded_white_rectangle</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <!-- Ref: https://stackoverflow.com/questions/11590538/dpi-value-of-default-large-medium-and-small-text-views-android -->
+    <style name="horizontal_menu_buttons">
+        <item name="android:layout_width">@dimen/hor_menu_size_normal_wide</item>
+        <item name="android:layout_height">@dimen/hor_menu_size_normal</item>
+        <item name="android:layout_margin">@dimen/hor_menu_margin</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/app_button_bg_color_selector</item>
+        <item name="android:button">@android:color/transparent</item>
+    </style>
+
+    <style name="fab_buttons_style">
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:layout_width">@dimen/button_width</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:layout_marginRight">@dimen/fab_margin_sides</item>
+        <item name="android:layout_marginLeft">@dimen/fab_margin_sides</item>
+        <item name="android:layout_marginTop">@dimen/fab_margin_upDown</item>
+        <item name="android:layout_marginBottom">@dimen/fab_margin_upDown</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:background">@drawable/app_button_bg_color_selector</item>
+    </style>
+
+    <!-- Ref: https://stackoverflow.com/questions/17981507/android-listview-item-style -->
+    <style name="ListView" parent="@android:style/Widget.ListView">
+        <item name="android:background">@color/windowBackground</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:listSelector">@drawable/list_item_selector</item>
+    </style>
+
+    <style name="AppButton">
+        <item name="android:background">@drawable/app_button_bg_color_selector</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="CustomActionModeStyle" parent="@android:style/Widget.Holo.ActionMode">
+        <item name="android:titleTextStyle">@style/CustomeActionModeTextStyle</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <!--item name="android:actionModeBackground">@color/colorPrimaryDark</item-->
+        <!--item name="android:colorBackground">@color/colorPrimaryDark</item-->
+        <item name="android:textSize">16sp</item>
+        <item name="android:actionModeCloseDrawable">@drawable/ic_clear_black_18dp</item>
+    </style>
+
+    <style name="CustomeActionModeTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textSecondaryColor</item>
+    </style>
+
+</resources>

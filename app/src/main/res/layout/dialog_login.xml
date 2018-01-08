@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@color/yad_2_background_color"
+    android:windowSoftInputMode="adjustResize|adjustPan">
+
+    <TextView
+        android:id="@+id/captionTextView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:text="@string/login_msg"
+        android:textAllCaps="false"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_main" />
+
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/captionTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="4dp"
+                android:focusableInTouchMode="true"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/name_et_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="11dp"
+                android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textSecondaryColor"
+                android:textSize="17dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/password_et_hint"
+                android:imeOptions="actionSend"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:paddingBottom="11dp"
+                android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textSecondaryColor"
+                android:textCursorDrawable="@null"
+                android:textSize="17dp" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/AppButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/buttonsLayout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@android:string/cancel"
+        android:textAllCaps="true" />
+
+    <Button
+        android:id="@+id/okButton"
+        style="@style/AppButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignBottom="@id/cancelButton"
+        android:layout_alignTop="@id/cancelButton"
+        android:layout_below="@id/buttonsLayout"
+        android:layout_toEndOf="@id/cancelButton"
+        android:layout_toRightOf="@id/cancelButton"
+        android:text="@android:string/ok"
+        android:textAllCaps="true" />
+
+</RelativeLayout>
