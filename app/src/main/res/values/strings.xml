@@ -2,7 +2,7 @@
     <string name="app_name">Omdan</string>
 
     <!-- Splash -->
-    <string name="app_version_format">Version v %s (%d) </string>
+    <string name="app_version_format" translatable="false">Version v %s (%d) </string>
 
     <!-- Intro Activity -->
     <string name="skip">Skip</string>
