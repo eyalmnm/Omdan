@@ -18,8 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.em_projects.omdan.R;
-import com.em_projects.omdan.ui.ContactsAutoCompleteTextView;
-import com.em_projects.omdan.utils.DimenUtils;
 import com.em_projects.omdan.utils.StringUtils;
 
 import java.util.ArrayList;

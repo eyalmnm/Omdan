@@ -203,7 +203,7 @@ public class ApiCameraActivity extends Activity {
     }
 
     private void openCamera() {
-        FirebaseCrash.log(TAG + " openCamera");
+        //FirebaseCrash.log(TAG + " openCamera");
         if (mCamera == null) {
             //if the front facing camera does not exist
             if (findFrontFacingCamera() < 0) {
@@ -282,7 +282,7 @@ public class ApiCameraActivity extends Activity {
 
     public void chooseCamera() {
         //if the camera preview is the front
-        FirebaseCrash.log(TAG + " chooseCamera");
+        //FirebaseCrash.log(TAG + " chooseCamera");
         if (cameraFront) {
             int cameraId = findBackFacingCamera();
             if (cameraId >= 0) {
@@ -324,7 +324,7 @@ public class ApiCameraActivity extends Activity {
                 String fileName = "IMG_" + TimeUtils.imageFormatedTime(System.currentTimeMillis()) + ".png";
                 bitmapHolders.add(fileName);
                 new BitmapHolder(data, recordId, subDir, fileName);
-                FirebaseCrash.log(TAG + " onPictureTaken");
+                //FirebaseCrash.log(TAG + " onPictureTaken");
                 //mPreview.setFlashlight(false);
                 //refresh camera to continue preview
                 mPreview.refreshCamera(mCamera);

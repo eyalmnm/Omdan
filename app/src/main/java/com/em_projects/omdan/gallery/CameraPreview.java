@@ -182,7 +182,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void refreshCamera(Camera camera) {
-        FirebaseCrash.log(TAG + " refreshCamera");
+        //FirebaseCrash.log(TAG + " refreshCamera");
         if (mHolder.getSurface() == null) {
             // preview surface does not exist
             return;
