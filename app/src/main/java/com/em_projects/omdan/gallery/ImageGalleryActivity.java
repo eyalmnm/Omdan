@@ -27,6 +27,7 @@ import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.utils.DimenUtils;
 import com.em_projects.omdan.utils.FileUtils;
+import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.File;
@@ -284,7 +285,12 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         String path = Constants.BASE_PATH + File.separator + recordId;
         ArrayList<String> allSubs = new ArrayList<>();
         allSubs.add(getResources().getString(R.string.root));
-        allSubs.addAll(FileUtils.getDirectories(path));
+        if (false == StringUtils.isNullOrEmpty(path)) {
+            ArrayList<String> dirs = FileUtils.getDirectories(path);
+            if (null != dirs) {
+                allSubs.addAll(dirs);
+            }
+        }
         return allSubs;
     }
 
