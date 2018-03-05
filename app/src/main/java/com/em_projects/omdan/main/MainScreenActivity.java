@@ -35,6 +35,7 @@ import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.dialogs.AppExitDialog;
 import com.em_projects.omdan.dialogs.LoginDialog;
+import com.em_projects.omdan.dialogs.ServerConnectionDialog;
 import com.em_projects.omdan.main.fragments.FindRecordFragment;
 import com.em_projects.omdan.main.fragments.FindResultsFragment;
 import com.em_projects.omdan.main.fragments.NewRecordFragment;
@@ -42,6 +43,7 @@ import com.em_projects.omdan.main.fragments.OpenGaleryFragment;
 import com.em_projects.omdan.main.fragments.ShowAllRecordsFragment;
 import com.em_projects.omdan.main.fragments.ShowRecordFragment;
 import com.em_projects.omdan.main.models.Setting;
+import com.em_projects.omdan.utils.PreferencesUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -67,7 +69,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
  */
 
 public class MainScreenActivity extends AppCompatActivity implements FindRecordFragment.FindRecordListener,
-        ShowAllRecordsFragment.SelectRecordListener, FindResultsFragment.FindResultsListener {
+        ShowAllRecordsFragment.SelectRecordListener, FindResultsFragment.FindResultsListener,
+        ServerConnectionDialog.OnSetServerConnectionListener {
 
     // Setting IDs
     public static final int FIND_RECORD = 100;
@@ -158,10 +161,10 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             if (!checkPermissions()) {
                 requestPermission();
             } else {
-                showLoginDialog();
+                continueLoading();
             }
         } else {
-            showLoginDialog();
+            continueLoading();
         }
 
         // Make sure the view adjust while showing keyboard
@@ -255,7 +258,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     if (cameraRes && locationRes && locationCRes && internetRes && contectRes &&
                             wakeLockRes && writeFileRes && readFileRes) {
                         Snackbar.make(view, "Permission Granted, Now you can use the application.", Snackbar.LENGTH_LONG).show();
-                        showLoginDialog();
+                        continueLoading();
                     } else {
                         Snackbar.make(view, "Permission Denied, You cannot access the application.", Snackbar.LENGTH_LONG).show();
 
@@ -280,6 +283,17 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         }
     }
 
+    private void continueLoading() {
+        if (null == PreferencesUtils.getInstance(context).getServerConncetionString()) {
+            showServerConnectionDialog();
+            return;
+        }
+        if (true == StringUtils.isNullOrEmpty(Dynamics.uUID)) {
+            showLoginDialog();
+            return;
+        }
+    }
+
     private void showLoginDialog() {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -290,6 +304,22 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     dialog.show(fm, "LoginDialog");
                 } catch (Throwable e) {
                     FirebaseCrash.logcat(Log.ERROR, TAG, "showLoginDialog");
+                    FirebaseCrash.report(e);
+                }
+            }
+        }, 500);
+    }
+
+    private void showServerConnectionDialog() {
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FragmentManager fm = getFragmentManager();
+                ServerConnectionDialog dialog = new ServerConnectionDialog();
+                try {
+                    dialog.show(fm, "ServerConnectionDialog");
+                } catch (Throwable e) {
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "ServerConnectionDialog");
                     FirebaseCrash.report(e);
                 }
             }
@@ -472,6 +502,13 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     private void showRecord(String recNumber) {
         selectItem(1, null); // TODO add the required args
     }   // TODO add the required args
+
+    // ServerConnectionDialog.OnSetServerConnectionListener
+    @Override
+    public void onSetServerConnection(String serverIp, int serverPort) {
+        PreferencesUtils.getInstance(context).setServerConncetionString(serverIp, serverPort);
+        continueLoading();
+    }
 
     @Override
     public void onBackPressed() {

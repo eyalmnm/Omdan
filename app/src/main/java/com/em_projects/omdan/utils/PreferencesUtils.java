@@ -23,6 +23,10 @@ public class PreferencesUtils {
     // Shared preferences working mode
     private int PRIVATE_MODE = 0;
 
+    // Connection properties
+    private String serverIp = null;
+    private int serverPort = -1;
+
     private PreferencesUtils(Context context) {
         this.context = context;
         preferences = this.context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -47,6 +51,28 @@ public class PreferencesUtils {
         } else {
             throw new Exception("Invalid Record Id");
         }
+    }
+
+    public String getServerConncetionString() {
+        if((true == StringUtils.isNullOrEmpty(serverIp)) || (0 >= serverPort)) {
+            serverIp = preferences.getString("serverIp", null);
+            serverPort = preferences.getInt("serverPort", -1);
+        }
+        if((true == StringUtils.isNullOrEmpty(serverIp)) || (0 >= serverPort)) {
+            return null;
+        } else {
+            return "http://" + serverIp + ":" + serverPort + "//";
+        }
+    }
+
+    public boolean setServerConncetionString(String serverIp, int serverPort) {
+        if ((true == StringUtils.isNullOrEmpty(serverIp)) || (0 >= serverPort)) return false;
+        editor.putString("serverIp", serverIp);
+        editor.putInt("serverPort", serverPort);
+        editor.commit();
+        this.serverIp = serverIp;
+        this.serverPort = serverPort;
+        return true;
     }
 
     @Override
