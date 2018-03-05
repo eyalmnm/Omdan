@@ -104,4 +104,10 @@
     <string name="exit_title">Exit</string>
     <string name="exit_message">You are about to exit the application. Do you want to continue with exit?</string>
 
+    <!-- Sever connection Dialog -->
+    <string name="connection_msg">Enter Server\'s Prop</string>
+    <string name="ip_et_hint">Ip Address</string>
+    <string name="port_et_hint">Port</string>
+
+
 </resources>

@@ -103,5 +103,9 @@
     <string name="exit_title">יציאה</string>
     <string name="exit_message">לחיצה על כפתור אישור תיגרום לאפליקיה להיסגר. האם ברצונך לההמשיך בתהליך הסגירה?</string>
 
+    <!-- Server connection Dialog -->
+    <string name="connection_msg">הכנס פירטי שרת</string>
+    <string name="ip_et_hint">כתובת שרת</string>
+    <string name="port_et_hint">Port</string>
 
 </resources>

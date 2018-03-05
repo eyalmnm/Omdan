@@ -17,7 +17,7 @@
         android:layout_marginBottom="25dp"
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
-        android:text="@string/login_msg"
+        android:text="@string/connection_msg"
         android:textAllCaps="false"
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/text_size_main" />
@@ -38,16 +38,16 @@
             android:theme="@style/TextLabel">
 
             <EditText
-                android:id="@+id/nameEditText"
+                android:id="@+id/serverIpEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="4dp"
                 android:focusableInTouchMode="true"
                 android:fontFamily="sans-serif-light"
-                android:hint="@string/name_et_hint"
+                android:hint="@string/ip_et_hint"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="textUri"
                 android:maxLines="1"
                 android:paddingBottom="11dp"
                 android:textColor="@color/textColorPrimary"
@@ -61,14 +61,14 @@
             android:theme="@style/TextLabel">
 
             <EditText
-                android:id="@+id/passwordEditText"
+                android:id="@+id/serverPortEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif-light"
-                android:hint="@string/password_et_hint"
+                android:hint="@string/port_et_hint"
                 android:imeOptions="actionSend"
-                android:inputType="textPassword"
+                android:inputType="numberDecimal"
                 android:maxLength="15"
                 android:paddingBottom="11dp"
                 android:textColor="@color/textColorPrimary"
