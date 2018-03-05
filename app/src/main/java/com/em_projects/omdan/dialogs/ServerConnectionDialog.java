@@ -14,8 +14,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.em_projects.omdan.R;
+import com.em_projects.omdan.utils.StringUtils;
 
 /**
  * Created by eyalmuchtar on 3/5/18.
@@ -35,10 +37,13 @@ public class ServerConnectionDialog extends DialogFragment implements View.OnCli
     private Button okButton;
     private Button cancelButton;
 
+    private Context context;
+
     @Override
     public void onAttach(Activity activity) {
         listener = (OnSetServerConnectionListener) activity;
         super.onAttach(activity);
+        context = activity;
     }
 
     @Nullable
@@ -74,14 +79,19 @@ public class ServerConnectionDialog extends DialogFragment implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        dismiss();
         if (R.id.cancelButton == view.getId()) {
+            dismiss();
             System.exit(0);
         } else if (R.id.okButton == view.getId()) {
             String ip = serverIpEditText.getText().toString();
             String portStr = serverPortEditText.getText().toString();
-            int port = Integer.parseInt(portStr);
-            if (listener != null) listener.onSetServerConnection(ip, port);
+            if ((true == StringUtils.isNullOrEmpty(ip)) || (true == StringUtils.isNullOrEmpty(portStr))) {
+                Toast.makeText(context, R.string.missing_data_all, Toast.LENGTH_SHORT).show();
+            } else {
+                int port = Integer.parseInt(portStr);
+                if (listener != null) listener.onSetServerConnection(ip, port);
+                dismiss();
+            }
         }
     }
 }
