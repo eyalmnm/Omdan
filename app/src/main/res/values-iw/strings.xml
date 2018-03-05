@@ -107,5 +107,6 @@
     <string name="connection_msg">הכנס פירטי שרת</string>
     <string name="ip_et_hint">כתובת שרת</string>
     <string name="port_et_hint">Port</string>
+    <string name="missing_data_all">יש למלא את כל השדות</string>
 
 </resources>
