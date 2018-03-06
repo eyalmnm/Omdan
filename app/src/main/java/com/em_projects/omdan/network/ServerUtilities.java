@@ -3,6 +3,8 @@ package com.em_projects.omdan.network;
 import android.os.Build;
 import android.util.Log;
 
+import com.em_projects.omdan.config.Constants;
+import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.utils.StringUtils;
 
 import org.apache.http.HttpResponse;
@@ -21,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,15 +57,14 @@ public final class ServerUtilities implements Runnable {
         return instance;
     }
 
-//    public void sendGcmToken(String deviceId, String gcmToken, CommListener listener) {
-//        String serverUrl = Dynamic.serverURL +  Constants.sendGcmToken;
-//        HashMap params = new HashMap();
-//        params.put(Constants.ourSecret, Constants.secret);
-//        params.put(Constants.deviceId, deviceId);
-//        params.put(Constants.gcmToken, gcmToken);
-//
-//        post(serverUrl, params, listener);
-//    }
+    public void login(String user, String password, CommListener listener) {
+        String serverUrl = Dynamics.serverURL +  Constants.login;
+        HashMap params = new HashMap();
+        params.put(Constants.userName, user);
+        params.put(Constants.password, password);
+
+        post(serverUrl, params, listener);
+    }
 
 //    public void requestSMSVerification(String deviceId, String phoneNumber, CommListener listener) {
 //        String serverUrl = Constants.serverURL + "/" + Constants.smsVerification;
@@ -91,12 +93,12 @@ public final class ServerUtilities implements Runnable {
     private void post(final String serverURL, final Map<String, String> params, CommListener listener) {
 
         //Amend device information for the server
-        params.put("PHONE_MODEL", Build.MODEL);
+        /*params.put("PHONE_MODEL", Build.MODEL);
         params.put("PHONE_MANUFACTURER", Build.MANUFACTURER);
         params.put("VERSION", Build.VERSION.RELEASE);
-        params.put("PHONE_TYPE", "Android");
+        params.put("PHONE_TYPE", "Android");*/
 
-        queue.add(new CommRequest(serverURL, params, CommRequest.MethodType.GET, listener)); // TODO
+        queue.add(new CommRequest(serverURL, params, CommRequest.MethodType.GET, listener));
         synchronized (monitor) {
             monitor.notifyAll();
         }
@@ -156,13 +158,13 @@ public final class ServerUtilities implements Runnable {
         if (method == CommRequest.MethodType.GET) {
             String body = encodeParams(params);
             String urlString = serverUrl + "?" + body;
-            Log.d(TAG, "transmitData urlString: " + urlString);
+            Log.d(TAG, "transmitData GET urlString: " + urlString);
             HttpGet request = new HttpGet(urlString);
             httpResponse = client.execute(request);
         } else if (method == CommRequest.MethodType.POST) {
             HttpPost httpPost = new HttpPost(serverUrl);
             ArrayList<NameValuePair> nameValuePairs = convertMapToNameValuePairs(params);
-            Log.d(TAG, "transmitData urlString: " + serverUrl);
+            Log.d(TAG, "transmitData POST urlString: " + serverUrl);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             httpResponse = client.execute(httpPost);
         }

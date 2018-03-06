@@ -61,7 +61,7 @@ public class PreferencesUtils {
         if((true == StringUtils.isNullOrEmpty(serverIp)) || (0 >= serverPort)) {
             return null;
         } else {
-            return "http://" + serverIp + ":" + serverPort + "//";
+            return "http://" + serverIp + ":" + serverPort + "/";
         }
     }
 

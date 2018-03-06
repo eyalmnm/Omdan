@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -43,9 +44,14 @@ import com.em_projects.omdan.main.fragments.OpenGaleryFragment;
 import com.em_projects.omdan.main.fragments.ShowAllRecordsFragment;
 import com.em_projects.omdan.main.fragments.ShowRecordFragment;
 import com.em_projects.omdan.main.models.Setting;
+import com.em_projects.omdan.network.CommListener;
+import com.em_projects.omdan.network.ServerUtilities;
 import com.em_projects.omdan.utils.PreferencesUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -70,7 +76,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainScreenActivity extends AppCompatActivity implements FindRecordFragment.FindRecordListener,
         ShowAllRecordsFragment.SelectRecordListener, FindResultsFragment.FindResultsListener,
-        ServerConnectionDialog.OnSetServerConnectionListener {
+        ServerConnectionDialog.OnSetServerConnectionListener, LoginDialog.OnSetLoginDataListener {
 
     // Setting IDs
     public static final int FIND_RECORD = 100;
@@ -96,11 +102,13 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     private android.support.v7.app.ActionBarDrawerToggle drawerToggle;
     private View view;
 
-    // Horizontal mune buttons
+    // Horizontal menu buttons
     private Button openArchiveButton;
     private Button openGaleryButton;
     private Button allRecordsButton;
     private Button newRecordButton;
+
+    private ProgressDialog progressDialog;
 
     // Hold the current RecordId
     private String currentRecordId; // TODO use this to hold the current Record id.
@@ -284,7 +292,8 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     }
 
     private void continueLoading() {
-        if (null == PreferencesUtils.getInstance(context).getServerConncetionString()) {
+        Dynamics.serverURL = PreferencesUtils.getInstance(context).getServerConncetionString();
+        if (null == Dynamics.serverURL) {
             showServerConnectionDialog();
             return;
         }
@@ -508,6 +517,52 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     public void onSetServerConnection(String serverIp, int serverPort) {
         PreferencesUtils.getInstance(context).setServerConncetionString(serverIp, serverPort);
         continueLoading();
+    }
+
+    // LoginDialog.OnSetLoginDataListener
+    @Override
+    public void onSetLoginDataListener(String usr, String pwd) {
+        showProgressDialog();
+        ServerUtilities.getInstance().login(usr, pwd, new CommListener() {
+            @Override
+            public void newDataArrived(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                } catch (JSONException ex) {
+                    Log.e(TAG, "onSetLoginDataListener -> newDataArrived response: " + response);
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
+                    FirebaseCrash.report(ex);
+                    FirebaseCrash.log("response: " + response);
+                } finally {
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void exceptionThrown(Throwable throwable) {
+                Log.e(TAG, "onSetLoginDataListener -> exceptionThrown");
+                FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
+                FirebaseCrash.report(throwable);
+                hideProgressDialog();
+            }
+        });
+    }
+
+    private void hideProgressDialog() {
+        if (null != progressDialog) {
+            new Handler(getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            });
+        }
+    }
+
+    private void showProgressDialog() {
+        if (null == progressDialog) {
+            progressDialog = ProgressDialog.show(context, "", "Loading...", true);
+        }
     }
 
     @Override

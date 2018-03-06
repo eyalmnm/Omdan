@@ -13,6 +13,10 @@ public class Dynamics {
     private static Dynamics instance = null;
     private Context context;
 
+    public static String serverURL = null;
+
+    public static String uUID = null;
+
     private Dynamics(Context context) {
         this.context = context;
     }
@@ -31,4 +35,6 @@ public class Dynamics {
     public void setCurrentRecordId(String currentRecordId) throws Exception {
         PreferencesUtils.getInstance(context).setRecordId(currentRecordId);
     }
+
+
 }
