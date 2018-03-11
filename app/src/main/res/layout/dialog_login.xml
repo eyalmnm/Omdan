@@ -22,8 +22,16 @@
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/text_size_main" />
 
+    <ImageView
+        android:id="@+id/settingImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/buttonsLayout"
+        android:layout_alignTop="@id/captionTextView"
+        android:src="@drawable/ic_settings_black_18dp" />
+
     <LinearLayout
-        android:id="@+id/buttonsLayout"
+        android:id="@id/buttonsLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/captionTextView"
