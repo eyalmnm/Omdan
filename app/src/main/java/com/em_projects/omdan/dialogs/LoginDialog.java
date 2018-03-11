@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,20 +26,13 @@ import com.em_projects.omdan.utils.StringUtils;
 
 public class LoginDialog extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "LoginDialog";
-
-    public interface OnSetLoginDataListener {
-        void onSetLoginDataListener(String usr, String pwd);
-    }
     private OnSetLoginDataListener listener;
-
     private EditText nameEditText;
     private EditText passwordEditText;
-
     private Button okButton;
     private Button cancelButton;
-
+    private ImageView settingImageView;
     private Context context;
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -60,6 +54,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
 
         nameEditText = (EditText) view.findViewById(R.id.nameEditText);
         passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
+        settingImageView = view.findViewById(R.id.settingImageView);
         okButton = (Button) view.findViewById(R.id.okButton);
         cancelButton = (Button) view.findViewById(R.id.cancelButton);
 
@@ -85,6 +80,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
                 return false;
             }
         });
+        settingImageView.setOnClickListener(this);
 
         okButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
@@ -92,7 +88,10 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        if (R.id.cancelButton == view.getId()) {
+        if (R.id.settingImageView == view.getId()) {
+            if (null != listener) listener.settingButtonPressed();
+            dismiss();
+        } else if (R.id.cancelButton == view.getId()) {
             dismiss();
             System.exit(0);
         } else if (null != listener) {
@@ -105,5 +104,11 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
                 dismiss();
             }
         }
+    }
+
+    public interface OnSetLoginDataListener {
+        void onSetLoginDataListener(String usr, String pwd);
+
+        void settingButtonPressed();
     }
 }

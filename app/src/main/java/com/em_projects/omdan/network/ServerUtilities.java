@@ -1,6 +1,5 @@
 package com.em_projects.omdan.network;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.em_projects.omdan.config.Constants;
@@ -11,10 +10,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -98,7 +99,7 @@ public final class ServerUtilities implements Runnable {
         params.put("VERSION", Build.VERSION.RELEASE);
         params.put("PHONE_TYPE", "Android");*/
 
-        queue.add(new CommRequest(serverURL, params, CommRequest.MethodType.GET, listener));
+        queue.add(new CommRequest(serverURL, params, CommRequest.MethodType.POST, listener));
         synchronized (monitor) {
             monitor.notifyAll();
         }
@@ -135,6 +136,16 @@ public final class ServerUtilities implements Runnable {
                     if (StringUtils.isNullOrEmpty(response)) {
                         requestHolder.getListener().exceptionThrown(new Exception());
                     } else {
+                        int firstIndex = response.indexOf("{");
+                        int lastIndex = response.lastIndexOf("}");
+                        response = response.substring(firstIndex, lastIndex + 1);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < response.length(); i++) {
+                            char c = response.charAt(i);
+                            if ('\\' == c) continue;
+                            sb.append(c);
+                        }
+                        response = sb.toString();
                         requestHolder.getListener().newDataArrived(response);
                     }
                 }
@@ -148,7 +159,7 @@ public final class ServerUtilities implements Runnable {
     }
 
     // Sends the request to the server. Supporting GET and POST only
-    private synchronized String transmitData(CommRequest commRequest) throws IOException {
+    private synchronized String transmitData(CommRequest commRequest) throws IOException, JSONException {
         Map<String, String> params = commRequest.getParams();
         CommRequest.MethodType method = commRequest.getMethodType();
         String serverUrl = commRequest.getServerURL();
@@ -165,7 +176,9 @@ public final class ServerUtilities implements Runnable {
             HttpPost httpPost = new HttpPost(serverUrl);
             ArrayList<NameValuePair> nameValuePairs = convertMapToNameValuePairs(params);
             Log.d(TAG, "transmitData POST urlString: " + serverUrl);
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            //UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);//, "UTF-8");
+            //httpPost.setEntity(entity);
+            httpPost = postAsJson(httpPost, nameValuePairs);
             httpResponse = client.execute(httpPost);
         }
 
@@ -211,6 +224,18 @@ public final class ServerUtilities implements Runnable {
             }
         }
         return nameValuePairs;
+    }
+
+    private HttpPost postAsJson(HttpPost httpost, ArrayList<NameValuePair> params) throws JSONException, UnsupportedEncodingException {
+        JSONObject holder = new JSONObject();
+        for (NameValuePair pairs : params) {
+            holder.put((String) pairs.getName(), (String) pairs.getValue());
+        }
+        StringEntity se = new StringEntity(holder.toString());
+        httpost.setEntity(se);
+        httpost.setHeader("Accept", "application/json");
+        httpost.setHeader("Content-type", "application/json");
+        return httpost;
     }
 
     // Reads the returned data and convert it to String

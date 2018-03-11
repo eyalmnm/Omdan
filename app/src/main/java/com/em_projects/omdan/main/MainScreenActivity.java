@@ -325,6 +325,12 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             public void run() {
                 FragmentManager fm = getFragmentManager();
                 ServerConnectionDialog dialog = new ServerConnectionDialog();
+                if (false == StringUtils.isNullOrEmpty(Dynamics.serverURL)) {
+                    Bundle args = new Bundle();
+                    args.putString("serverIp", Dynamics.getServerIp());
+                    args.putInt("serverPort", Dynamics.getServerPort());
+                    dialog.setArguments(args);
+                }
                 try {
                     dialog.show(fm, "ServerConnectionDialog");
                 } catch (Throwable e) {
@@ -515,6 +521,10 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     // ServerConnectionDialog.OnSetServerConnectionListener
     @Override
     public void onSetServerConnection(String serverIp, int serverPort) {
+        if ((false == Dynamics.getServerIp().equalsIgnoreCase(serverIp)) &&
+                (Dynamics.getServerPort() != serverPort)) {
+            Dynamics.uUID = "";
+        }
         PreferencesUtils.getInstance(context).setServerConncetionString(serverIp, serverPort);
         continueLoading();
     }
@@ -528,6 +538,9 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             public void newDataArrived(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.has("uuid")) {
+                        Dynamics.uUID = (String) jsonObject.get("uuid");
+                    }
                 } catch (JSONException ex) {
                     Log.e(TAG, "onSetLoginDataListener -> newDataArrived response: " + response);
                     FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
@@ -544,8 +557,15 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
                 FirebaseCrash.report(throwable);
                 hideProgressDialog();
+                continueLoading();
             }
         });
+    }
+
+    // LoginDialog.OnSetLoginDataListener
+    @Override
+    public void settingButtonPressed() {
+        showServerConnectionDialog();
     }
 
     private void hideProgressDialog() {

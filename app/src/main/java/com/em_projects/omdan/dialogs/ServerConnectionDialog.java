@@ -25,19 +25,13 @@ import com.em_projects.omdan.utils.StringUtils;
 
 public class ServerConnectionDialog extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "ServerConnectionDialog";
-
-    public interface OnSetServerConnectionListener {
-        void onSetServerConnection(String serverIp, int serverPort);
-    }
     private OnSetServerConnectionListener listener;
-
     private EditText serverIpEditText;
     private EditText serverPortEditText;
-
     private Button okButton;
     private Button cancelButton;
-
     private Context context;
+    private Bundle args;
 
     @Override
     public void onAttach(Activity activity) {
@@ -62,6 +56,12 @@ public class ServerConnectionDialog extends DialogFragment implements View.OnCli
         okButton = (Button) view.findViewById(R.id.okButton);
         cancelButton = (Button) view.findViewById(R.id.cancelButton);
 
+        args = getArguments();
+        if (null != args) {
+            serverIpEditText.setText(String.valueOf(args.getString("serverIp", "")));
+            serverPortEditText.setText(String.valueOf(args.getInt("serverPort", -1)));
+        }
+
         serverPortEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -81,7 +81,9 @@ public class ServerConnectionDialog extends DialogFragment implements View.OnCli
     public void onClick(View view) {
         if (R.id.cancelButton == view.getId()) {
             dismiss();
-            System.exit(0);
+            if (null == args) {
+                System.exit(0);
+            }
         } else if (R.id.okButton == view.getId()) {
             String ip = serverIpEditText.getText().toString();
             String portStr = serverPortEditText.getText().toString();
@@ -93,5 +95,9 @@ public class ServerConnectionDialog extends DialogFragment implements View.OnCli
                 dismiss();
             }
         }
+    }
+
+    public interface OnSetServerConnectionListener {
+        void onSetServerConnection(String serverIp, int serverPort);
     }
 }

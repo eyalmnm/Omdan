@@ -3,6 +3,8 @@ package com.em_projects.omdan.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.em_projects.omdan.config.Dynamics;
+
 /**
  * Created by eyalmuchtar on 30/10/2017.
  */
@@ -61,6 +63,8 @@ public class PreferencesUtils {
         if((true == StringUtils.isNullOrEmpty(serverIp)) || (0 >= serverPort)) {
             return null;
         } else {
+            Dynamics.setServerIp(serverIp);
+            Dynamics.setServerPort(serverPort);
             return "http://" + serverIp + ":" + serverPort + "/";
         }
     }
