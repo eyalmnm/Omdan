@@ -1,5 +1,7 @@
 package com.em_projects.omdan.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,7 +38,7 @@ public class TimeUtils {
     }
 
     public static String getTimeStr(Date date) {
-        String out = new SimpleDateFormat("hh:mm").format(date);
+        String out = new SimpleDateFormat("HH:mm").format(date);
         return out;
     }
 
@@ -45,4 +47,9 @@ public class TimeUtils {
         return out;
     }
 
+    public static Date parseToDate(String dateTime) throws ParseException {
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = sdf.parse(dateTime);
+        return date;
+    }
 }
