@@ -1,11 +1,13 @@
 package com.em_projects.omdan.utils;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -184,5 +186,18 @@ public class JSONUtils {
             array.put(floatArray[i]);
         }
         return array;
+    }
+
+    public static Bundle convertJsonObject2Bundle(JSONObject jsonObject) {
+        Iterator<String> keys = jsonObject.keys();
+        if (false == keys.hasNext()) return null;
+        Bundle bundle = new Bundle();
+        String key;
+        while (keys.hasNext()) {
+            key = keys.next();
+            Object value = getStringValue(jsonObject, key);
+            bundle.putString(key, String.valueOf(value));
+        }
+        return bundle;
     }
 }
