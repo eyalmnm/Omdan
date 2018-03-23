@@ -67,28 +67,13 @@ public final class ServerUtilities implements Runnable {
         post(serverUrl, params, listener);
     }
 
-//    public void requestSMSVerification(String deviceId, String phoneNumber, CommListener listener) {
-//        String serverUrl = Constants.serverURL + "/" + Constants.smsVerification;
-//        HashMap params = new HashMap();
-//        params.put(Constants.ourSecret, Constants.secret);
-//        params.put(Constants.deviceId, deviceId);
-//        params.put(Constants.phoneNumber, phoneNumber);
-//        params.put(Constants.timeStamp, String.valueOf(TimeUtils.getTime()));
-//
-//        post(serverUrl, params, listener);
-//    }
-//
-//    public void verifyOtpCode(String otp, String phoneNumber, String deviceId, CommListener listener) {
-//        String serverUrl = Constants.serverURL + "/" + Constants.otpVerification;
-//        HashMap params = new HashMap();
-//        params.put(Constants.otp, otp);
-//        params.put(Constants.ourSecret, Constants.secret);
-//        params.put(Constants.deviceId, deviceId);
-//        params.put(Constants.phoneNumber, phoneNumber);
-//        params.put(Constants.timeStamp, String.valueOf(TimeUtils.getTime()));
-//
-//        post(serverUrl, params, listener);
-//    }
+    public void findFiles(String fileNumber, CommListener listener) {
+        String serverUrl = Dynamics.serverURL + Constants.findFile;
+        HashMap params = new HashMap();
+        params.put(Constants.fileNumber, fileNumber);
+
+        post(serverUrl, params, listener);
+    }
 
     // Puts the request into queue for requests and add some additional data
     private void post(final String serverURL, final Map<String, String> params, CommListener listener) {
@@ -136,8 +121,12 @@ public final class ServerUtilities implements Runnable {
                     if (StringUtils.isNullOrEmpty(response)) {
                         requestHolder.getListener().exceptionThrown(new Exception());
                     } else {
-                        int firstIndex = response.indexOf("{");
-                        int lastIndex = response.lastIndexOf("}");
+                        int firstIndex = response.indexOf("[");
+                        int lastIndex = response.lastIndexOf("]");
+                        if (0 > firstIndex) {
+                            firstIndex = response.indexOf("{");
+                            lastIndex = response.lastIndexOf("}");
+                        }
                         response = response.substring(firstIndex, lastIndex + 1);
                         StringBuilder sb = new StringBuilder();
                         for (int i = 0; i < response.length(); i++) {
@@ -165,7 +154,6 @@ public final class ServerUtilities implements Runnable {
         String serverUrl = commRequest.getServerURL();
         HttpResponse httpResponse = null;
         HttpClient client = new DefaultHttpClient();
-
         if (method == CommRequest.MethodType.GET) {
             String body = encodeParams(params);
             String urlString = serverUrl + "?" + body;
@@ -176,16 +164,19 @@ public final class ServerUtilities implements Runnable {
             HttpPost httpPost = new HttpPost(serverUrl);
             ArrayList<NameValuePair> nameValuePairs = convertMapToNameValuePairs(params);
             Log.d(TAG, "transmitData POST urlString: " + serverUrl);
-            //UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);//, "UTF-8");
-            //httpPost.setEntity(entity);
             httpPost = postAsJson(httpPost, nameValuePairs);
+            httpPost.addHeader("Content-Type", "application/json");
+            if (false == StringUtils.isNullOrEmpty(Dynamics.uUID)) {
+                httpPost.addHeader("uuid", Dynamics.uUID);
+            }
             httpResponse = client.execute(httpPost);
         }
 
         // Check if server response is valid
         StatusLine status = httpResponse.getStatusLine();
         if (status.getStatusCode() != 200) {
-            throw new IOException("Invalid response from server: " + status.toString());
+            String answer = handleHttpResponse(httpResponse);
+            throw new IOException("Invalid response from server: " + status.toString() + " response: " + answer);
         }
         // Return result from buffered stream
         String answer = handleHttpResponse(httpResponse);

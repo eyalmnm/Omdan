@@ -17,9 +17,12 @@ import android.widget.TextView;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.main.models.HistoryDataHolder;
+import com.google.firebase.crash.FirebaseCrash;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -59,6 +62,23 @@ public class FindResultsFragment extends Fragment {
 
         // Init History List View
         historyArrayList = new ArrayList<>();
+        Bundle args = getArguments();
+        try {
+            String data = (String) args.get("data");
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject = null;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonObject = jsonArray.getJSONObject(i);
+                historyArrayList.add(new HistoryDataHolder(jsonObject.getString("FileNumber")
+                        , jsonObject.getString("CreationDate")
+                        , jsonObject.getString("Customers.Name")));
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "onViewCreated", ex);
+            FirebaseCrash.logcat(Log.ERROR, TAG, "onViewCreated");
+            FirebaseCrash.report(ex);
+            FirebaseCrash.log("data: " + args.get("data"));
+        }
         adapter = new HistoryListAdapter();
         historyListView.setAdapter(adapter);
         historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,33 +97,33 @@ public class FindResultsFragment extends Fragment {
             }
         });
 
-        loadRecordsHistory();
+        //loadRecordsHistory();
     }
 
-    private void loadRecordsHistory() {
-        // Load History from db
-        historyArrayList.add(new HistoryDataHolder("1001001", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001002", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001003", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001004", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001005", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001006", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001007", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001008", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001009", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001010", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001011", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001012", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001013", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001014", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001015", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001016", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001017", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001018", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001019", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001020", new Date()));
-        adapter.notifyDataSetInvalidated();
-    }
+//    private void loadRecordsHistory() {
+//        // Load History from db
+//        historyArrayList.add(new HistoryDataHolder("1001001", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001002", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001003", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001004", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001005", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001006", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001007", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001008", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001009", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001010", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001011", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001012", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001013", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001014", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001015", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001016", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001017", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001018", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001019", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001020", new Date()));
+//        adapter.notifyDataSetInvalidated();
+//    }
 
     @Override
     public void onDetach() {

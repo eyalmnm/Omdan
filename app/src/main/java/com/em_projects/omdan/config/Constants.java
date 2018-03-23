@@ -15,4 +15,8 @@ public class Constants {
     public static final String userName = "name";
     public static final String password = "password";
     public static final String uuid = "uuid";
+
+    public static final String findFile = "api/FindFile";
+    public static final String fileNumber = "fileNumber";
+
 }

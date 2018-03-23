@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.em_projects.omdan.R;
+import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.utils.StringUtils;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class FindRecordFragment extends Fragment {
     private Context context;
     private FindRecordListener listener;
     // UI Components
-    private EditText data_1_EditText;
+    private EditText fileNumberEditText;
     private EditText data_2_EditText;
     private EditText data_3_EditText;
     private EditText data_4_EditText;
@@ -59,7 +60,7 @@ public class FindRecordFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        data_1_EditText = (EditText) view.findViewById(R.id.data_1_EditText);
+        fileNumberEditText = (EditText) view.findViewById(R.id.fileNumberEditText);
         data_2_EditText = (EditText) view.findViewById(R.id.data_2_EditText);
         data_3_EditText = (EditText) view.findViewById(R.id.data_3_EditText);
         data_4_EditText = (EditText) view.findViewById(R.id.data_4_EditText);
@@ -82,7 +83,7 @@ public class FindRecordFragment extends Fragment {
                     if (null != listener) {
                         listener.findRecordByData(dataMap);
                     }
-                    clearData();
+                    // clearData();
                 } else {
                     Toast.makeText(context, R.string.missing_data, Toast.LENGTH_SHORT).show();
                 }
@@ -92,7 +93,7 @@ public class FindRecordFragment extends Fragment {
         clearAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data_1_EditText.setText(null);
+                fileNumberEditText.setText(null);
                 data_2_EditText.setText(null);
                 data_3_EditText.setText(null);
                 data_4_EditText.setText(null);
@@ -100,7 +101,7 @@ public class FindRecordFragment extends Fragment {
             }
         });
 
-        data_1_EditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        fileNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 searchButton.performClick();
@@ -142,7 +143,7 @@ public class FindRecordFragment extends Fragment {
     }
 
     private void clearData() {
-        data_1_EditText.setText(null);
+        fileNumberEditText.setText(null);
         data_2_EditText.setText(null);
         data_3_EditText.setText(null);
         data_4_EditText.setText(null);
@@ -150,13 +151,13 @@ public class FindRecordFragment extends Fragment {
     }
 
     private Map<String, String> getAllData() {
-        String data_1 = data_1_EditText.getText().toString();
+        String fileNumber = fileNumberEditText.getText().toString();
         String data_2 = data_2_EditText.getText().toString();
         String data_3 = data_3_EditText.getText().toString();
         String data_4 = data_4_EditText.getText().toString();
         String data_5 = data_5_EditText.getText().toString();
 
-        if (true == StringUtils.isNullOrEmpty(data_1) &&
+        if (true == StringUtils.isNullOrEmpty(fileNumber) &&
                 true == StringUtils.isNullOrEmpty(data_2) &&
                 true == StringUtils.isNullOrEmpty(data_3) &&
                 true == StringUtils.isNullOrEmpty(data_4) &&
@@ -165,7 +166,7 @@ public class FindRecordFragment extends Fragment {
         }
 
         HashMap dataMap = new HashMap(5);
-        dataMap.put("data_1", data_1);
+        dataMap.put(Constants.fileNumber, fileNumber);
         dataMap.put("data_2", data_2);
         dataMap.put("data_3", data_3);
         dataMap.put("data_4", data_4);

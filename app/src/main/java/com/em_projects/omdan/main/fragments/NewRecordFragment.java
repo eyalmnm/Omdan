@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.dialogs.CreateNewRecordDialog;
 import com.em_projects.omdan.gallery.ImageGalleryActivity;
+import com.em_projects.omdan.main.models.HistoryDataHolder;
 
 /**
  * Created by eyal muchtar on 15/09/2017.
@@ -134,6 +135,14 @@ public class NewRecordFragment extends Fragment implements TextWatcher {
         Bundle args = getArguments();
         if (null != args && args.containsKey("record")) {
             Toast.makeText(context, "טוען תיק", Toast.LENGTH_SHORT).show();
+            HistoryDataHolder dataHolder = (HistoryDataHolder) args.getSerializable("record");
+            String description = dataHolder.getDescription();
+            String timeStr = dataHolder.getTimeStr();
+            String dateStr = dataHolder.getDateStr();
+            data_1_EditText.setText(description);
+            data_2_EditText.setText(timeStr);
+            data_3_EditText.setText(dateStr);
+            recordTitleTextView.setText(context.getString(R.string.new_record_id_title, dataHolder.getRecord()));
         } else {
             showCreateNewRecordDialog();
         }

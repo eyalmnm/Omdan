@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.em_projects.omdan.R;
+import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.dialogs.AppExitDialog;
 import com.em_projects.omdan.dialogs.LoginDialog;
@@ -50,6 +51,7 @@ import com.em_projects.omdan.utils.PreferencesUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -468,16 +470,55 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     @Override
     public void findRecordByData(Map<String, String> dataMap) {
         Log.d(TAG, "findRecordByData");
-        Bundle args = null;
-        showFindResults(args);
+        String fileNumber = dataMap.get(Constants.fileNumber);
+        if (true == StringUtils.isNullOrEmpty(fileNumber)) return;
+        showProgressDialog();
+        ServerUtilities.getInstance().findFiles(fileNumber, new CommListener() {
+            @Override
+            public void newDataArrived(String response) {
+                try {
+                    Log.d(TAG, "findRecordByData -> newDataArrived response: " + response);
+                    JSONArray jsonArray = new JSONArray(response);
+                    if (0 == jsonArray.length()) {
+                        // Display no results found dialog and stay in find record screen.
+                        showToast(context.getString(R.string.file_not_found));
+                    } else {
+                        Bundle bundle = new Bundle(); // JSONUtils.convertJsonObject2Bundle(jsonObject);
+                        bundle.putString("data", response);
+                        showFindResults(bundle);
+                    }
+                } catch (JSONException ex) {
+                    Log.e(TAG, "findRecordByData -> newDataArrived response: " + response);
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "findRecordByData -> newDataArrived");
+                    FirebaseCrash.report(ex);
+                    FirebaseCrash.log("response: " + response);
+                } finally {
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void exceptionThrown(Throwable throwable) {
+                Log.e(TAG, "findRecordByData -> exceptionThrown");
+                FirebaseCrash.logcat(Log.ERROR, TAG, "findRecordByData -> newDataArrived");
+                FirebaseCrash.report(throwable);
+                hideProgressDialog();
+                continueLoading();
+            }
+        });
     }
 
     private void showFindResults(Bundle args) {
-        FindResultsFragment fragment = new FindResultsFragment();
+        final FindResultsFragment fragment = new FindResultsFragment();
         if (null != args) {
             fragment.setArguments(args);
         }
-        showFragment(fragment, true);
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                showFragment(fragment, true);
+            }
+        });
     }
 
     // Fragment Navigation Interfaces Implementations
@@ -539,7 +580,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.has("uuid")) {
-                        Dynamics.uUID = (String) jsonObject.get("uuid");
+                        Dynamics.uUID = (String) jsonObject.get(Constants.uuid);
                     }
                 } catch (JSONException ex) {
                     Log.e(TAG, "onSetLoginDataListener -> newDataArrived response: " + response);
@@ -554,10 +595,20 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             @Override
             public void exceptionThrown(Throwable throwable) {
                 Log.e(TAG, "onSetLoginDataListener -> exceptionThrown");
+                showToast(context.getString(R.string.login_failed));
                 FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
                 FirebaseCrash.report(throwable);
                 hideProgressDialog();
                 continueLoading();
+            }
+        });
+    }
+
+    private void showToast(final String message) {
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -580,7 +631,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     }
 
     private void showProgressDialog() {
-        if (null == progressDialog) {
+        if (null == progressDialog || false == progressDialog.isShowing()) {
             progressDialog = ProgressDialog.show(context, "", "Loading...", true);
         }
     }

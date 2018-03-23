@@ -1,8 +1,12 @@
 package com.em_projects.omdan.main.models;
 
+import android.util.Log;
+
 import com.em_projects.omdan.utils.TimeUtils;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -10,6 +14,7 @@ import java.util.Date;
  */
 
 public class HistoryDataHolder implements Serializable {
+    private static final String TAG = "HistoryDataHolder";
 
     private String record;
     private Date date;
@@ -19,6 +24,19 @@ public class HistoryDataHolder implements Serializable {
         this.record = record;
         this.date = date;
         this.description = "תאור התיק";
+    }
+
+    public HistoryDataHolder(String record, String date, String description) {
+        this.record = record;
+        this.description = description;
+        try {
+            this.date = TimeUtils.parseToDate(date);
+        } catch (ParseException e) {
+            Log.e(TAG, "Constructor", e);
+            FirebaseCrash.logcat(Log.ERROR, TAG, "Constructor");
+            FirebaseCrash.report(e);
+            FirebaseCrash.log("Data: " + date);
+        }
     }
 
     public HistoryDataHolder(String record, Date date, String description) {
