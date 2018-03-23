@@ -26,10 +26,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
+                android:layout_weight="1"
                 android:gravity="center_vertical|start"
                 android:text="@string/find_record_by_data"
-                android:textSize="@dimen/text_size_main"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/text_size_main" />
 
             <ImageButton
                 android:id="@+id/clearAllButton"
@@ -60,12 +60,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="data 1"
+                        android:text="@string/file_number_title"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/data_1_EditText"
+                        android:id="@+id/fileNumberEditText"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

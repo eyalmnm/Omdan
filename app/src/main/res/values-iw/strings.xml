@@ -27,6 +27,7 @@
     <string name="login_msg">Login</string>
     <string name="name_et_hint">הכנס שם משתמש</string>
     <string name="password_et_hint">הכנס סיסמה</string>
+    <string name="login_failed">כניסה נכשלה. נסו שוב.</string>
 
     <!-- New Record -->
     <string name="data_1_et_hint">נתון 1</string>
@@ -59,6 +60,8 @@
     <!-- Find record fragment -->
     <string name="missing_data">אנא מלאו לפחות שדה אחד</string>
     <string name="find_record_by_data">חפש תיק</string>
+    <string name="file_number_title">מספר תיק</string>>
+    <string name="file_not_found">לא נמצאה רשומה תואמת לחיפוש</string>
 
     <!-- Find results fragment -->
     <string name="choose_record_from_list">בחר רשומה מתוך הרשימה</string>

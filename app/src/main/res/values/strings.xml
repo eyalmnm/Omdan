@@ -29,6 +29,7 @@
     <string name="login_msg">Login</string>
     <string name="name_et_hint">Enter your user name</string>
     <string name="password_et_hint">Enter your password</string>
+    <string name="login_failed">Login failed. Please try again.</string>
 
     <!-- New Record -->
     <string name="data_1_et_hint">Data 1</string>
@@ -61,6 +62,8 @@
     <!-- Find record fragment -->
     <string name="missing_data">You should fill at list one field</string>
     <string name="find_record_by_data">Find Record</string>
+    <string name="file_number_title">File Number</string>
+    <string name="file_not_found">File Not Found!</string>
 
     <!-- Find results fragment -->
     <string name="choose_record_from_list">Choose Record Form List</string>
@@ -109,6 +112,5 @@
     <string name="ip_et_hint">Ip Address</string>
     <string name="port_et_hint">Port</string>
     <string name="missing_data_all">All fields are required</string>
-
 
 </resources>
