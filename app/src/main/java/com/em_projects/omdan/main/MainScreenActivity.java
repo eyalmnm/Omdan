@@ -562,8 +562,12 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     // ServerConnectionDialog.OnSetServerConnectionListener
     @Override
     public void onSetServerConnection(String serverIp, int serverPort) {
-        if ((false == Dynamics.getServerIp().equalsIgnoreCase(serverIp)) &&
-                (Dynamics.getServerPort() != serverPort)) {
+        if (false == StringUtils.isNullOrEmpty(Dynamics.getServerIp())) {
+            if ((false == Dynamics.getServerIp().equalsIgnoreCase(serverIp)) &&
+                    (Dynamics.getServerPort() != serverPort)) {
+                Dynamics.uUID = "";
+            }
+        } else {
             Dynamics.uUID = "";
         }
         PreferencesUtils.getInstance(context).setServerConncetionString(serverIp, serverPort);
