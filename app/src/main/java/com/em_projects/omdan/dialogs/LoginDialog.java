@@ -45,6 +45,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        setStyle(R.style.CustomDialogTheme, android.R.style.Theme_Dialog);
         return inflater.inflate(R.layout.dialog_login, null);
     }
 

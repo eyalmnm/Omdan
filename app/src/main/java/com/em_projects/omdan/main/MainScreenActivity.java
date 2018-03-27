@@ -67,7 +67,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WAKE_LOCK;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-
+// https://stackoverflow.com/questions/19766402/dialogfragment-remove-transparent-black
 // https://developer.android.com/training/implementing-navigation/nav-drawer.html
 // http://www.android4devs.com/2014/12/how-to-make-material-design-navigation-drawer.html
 // https://www.journaldev.com/9958/android-navigation-drawer-example-tutorial   <-----------<<<-
@@ -103,6 +103,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     private CharSequence title;
     private android.support.v7.app.ActionBarDrawerToggle drawerToggle;
     private View view;
+    private ImageView vailImageView;
 
     // Horizontal menu buttons
     private Button openArchiveButton;
@@ -161,6 +162,8 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         left_drawer.setOnItemClickListener(new DrawerItemClickListener());
         setupDrawerToggle();
         settingLayout.setDrawerListener(drawerToggle);
+
+        vailImageView = findViewById(R.id.vailImageView);
 
         initScreen();
 
@@ -294,6 +297,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     }
 
     private void continueLoading() {
+        hideVail();
         Dynamics.serverURL = PreferencesUtils.getInstance(context).getServerConncetionString();
         if (null == Dynamics.serverURL) {
             showServerConnectionDialog();
@@ -309,6 +313,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
+                showVail();
                 FragmentManager fm = getFragmentManager();
                 LoginDialog dialog = new LoginDialog();
                 try {
@@ -316,6 +321,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 } catch (Throwable e) {
                     FirebaseCrash.logcat(Log.ERROR, TAG, "showLoginDialog");
                     FirebaseCrash.report(e);
+                    hideVail();
                 }
             }
         }, 500);
@@ -325,6 +331,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
+                showVail();
                 FragmentManager fm = getFragmentManager();
                 ServerConnectionDialog dialog = new ServerConnectionDialog();
                 if (false == StringUtils.isNullOrEmpty(Dynamics.serverURL)) {
@@ -338,9 +345,28 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 } catch (Throwable e) {
                     FirebaseCrash.logcat(Log.ERROR, TAG, "ServerConnectionDialog");
                     FirebaseCrash.report(e);
+                    hideVail();
                 }
             }
         }, 500);
+    }
+
+    private void showVail() {
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                vailImageView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void hideVail() {
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                vailImageView.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
@@ -443,10 +469,6 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         settingLayout.closeDrawer(left_drawer);
     }
 
-//    private void showFragment(Fragment fragment) {
-//        showFragment(fragment, false);
-//    }
-
     private void showFragment(Fragment fragment, boolean addToBackStack) {
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
@@ -478,6 +500,16 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             public void newDataArrived(String response) {
                 try {
                     Log.d(TAG, "findRecordByData -> newDataArrived response: " + response);
+                    if (response.contains("error")) {
+                        if (response.contains("user not found")) {
+                            showLoginDialog();
+                        } else {
+                            if (response.contains("file not found")) {
+                                showToast(context.getString(R.string.file_not_found));
+                            }
+                        }
+                        return;
+                    }
                     JSONArray jsonArray = new JSONArray(response);
                     if (0 == jsonArray.length()) {
                         // Display no results found dialog and stay in find record screen.
@@ -593,6 +625,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     FirebaseCrash.log("response: " + response);
                 } finally {
                     hideProgressDialog();
+                    hideVail();
                 }
             }
 
@@ -603,6 +636,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
                 FirebaseCrash.report(throwable);
                 hideProgressDialog();
+                hideVail();
                 continueLoading();
             }
         });

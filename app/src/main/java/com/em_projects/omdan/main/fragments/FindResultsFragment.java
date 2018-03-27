@@ -84,46 +84,27 @@ public class FindResultsFragment extends Fragment {
         historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (null != listener) {
-                    Bundle args = new Bundle();
-                    args.putSerializable("record", historyArrayList.get(i));
-                    listener.loadRecord(historyArrayList.get(i).getRecord(), args);
-                    try {
-                        Dynamics.getInstance(context).setCurrentRecordId(historyArrayList.get(i).getRecord());  // TODO
-                    } catch (Exception e) {
-                        Log.e(TAG, "setOnItemClickListener", e);
-                    }
-                }
+                loadRecord(i);
             }
         });
 
-        //loadRecordsHistory();
+        if (1 == historyArrayList.size()) {
+            loadRecord(0);
+        }
     }
 
-//    private void loadRecordsHistory() {
-//        // Load History from db
-//        historyArrayList.add(new HistoryDataHolder("1001001", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001002", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001003", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001004", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001005", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001006", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001007", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001008", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001009", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001010", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001011", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001012", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001013", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001014", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001015", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001016", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001017", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001018", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001019", new Date()));
-//        historyArrayList.add(new HistoryDataHolder("1001020", new Date()));
-//        adapter.notifyDataSetInvalidated();
-//    }
+    private void loadRecord(int position) {
+        if (null != listener) {
+            Bundle args = new Bundle();
+            args.putSerializable("record", historyArrayList.get(position));
+            listener.loadRecord(historyArrayList.get(position).getRecord(), args);
+            try {
+                Dynamics.getInstance(context).setCurrentRecordId(historyArrayList.get(position).getRecord());
+            } catch (Exception e) {
+                Log.e(TAG, "setOnItemClickListener", e);
+            }
+        }
+    }
 
     @Override
     public void onDetach() {
