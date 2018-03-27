@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
+import com.em_projects.omdan.config.Errors;
 import com.em_projects.omdan.dialogs.AppExitDialog;
 import com.em_projects.omdan.dialogs.LoginDialog;
 import com.em_projects.omdan.dialogs.ServerConnectionDialog;
@@ -47,6 +48,7 @@ import com.em_projects.omdan.main.fragments.ShowRecordFragment;
 import com.em_projects.omdan.main.models.Setting;
 import com.em_projects.omdan.network.CommListener;
 import com.em_projects.omdan.network.ServerUtilities;
+import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.PreferencesUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
@@ -501,10 +503,11 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 try {
                     Log.d(TAG, "findRecordByData -> newDataArrived response: " + response);
                     if (response.contains("error")) {
-                        if (response.contains("user not found")) {
+                        int errorNo = ErrorsUtils.getError(response);
+                        if (Errors.USER_NOT_LOGGED_IN == errorNo || Errors.USER_NOT_FOUND == errorNo) {
                             showLoginDialog();
                         } else {
-                            if (response.contains("file not found")) {
+                            if (Errors.FILE_NOT_FOUND == errorNo) {
                                 showToast(context.getString(R.string.file_not_found));
                             }
                         }
@@ -614,9 +617,14 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             @Override
             public void newDataArrived(String response) {
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.has("uuid")) {
-                        Dynamics.uUID = (String) jsonObject.get(Constants.uuid);
+                    if (response.contains("error")) {
+                        int errorNo = ErrorsUtils.getError(response);
+                        showToast(context.getString(R.string.login_failed));
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.has("uuid")) {
+                            Dynamics.uUID = (String) jsonObject.get(Constants.uuid);
+                        }
                     }
                 } catch (JSONException ex) {
                     Log.e(TAG, "onSetLoginDataListener -> newDataArrived response: " + response);
@@ -626,6 +634,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 } finally {
                     hideProgressDialog();
                     hideVail();
+                    continueLoading();
                 }
             }
 
