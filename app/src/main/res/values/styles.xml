@@ -12,6 +12,13 @@
         <item name="android:actionModeStyle">@style/CustomActionModeStyle</item>
     </style>
 
+    <!-- https://stackoverflow.com/questions/19766402/dialogfragment-remove-transparent-black -->
+    <style name="CustomDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!--item name="android:padding">5dp</item-->
     <!--item name="android:fontFamily">sans-serif-light</item>
     <item name="android:textColorPrimary">@color/textColorPrimary</item>

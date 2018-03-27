@@ -6,62 +6,75 @@
     android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/container_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/tool_bar"
-                layout="@layout/toolbar" />
+            <LinearLayout
+                android:id="@+id/container_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/tool_bar"
+                    layout="@layout/toolbar" />
+
+            </LinearLayout>
+
+            <!-- https://stackoverflow.com/questions/22518018/android-how-to-create-radiobuttons-like-a-row-of-buttons -->
+            <RadioGroup
+                android:id="@+id/buttonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/openArchiveButton"
+                    style="@style/horizontal_menu_buttons"
+                    android:text="@string/device_archive" />
+
+                <RadioButton
+                    android:id="@+id/openGaleryButton"
+                    style="@style/horizontal_menu_buttons"
+                    android:text="@string/galery" />
+
+                <RadioButton
+                    android:id="@+id/allRecordsButton"
+                    style="@style/horizontal_menu_buttons"
+                    android:checked="true"
+                    android:text="@string/all_records" />
+
+                <RadioButton
+                    android:id="@+id/newRecordButton"
+                    style="@style/horizontal_menu_buttons"
+                    android:text="@string/create_new_record" />
+
+            </RadioGroup>
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
-        <!-- https://stackoverflow.com/questions/22518018/android-how-to-create-radiobuttons-like-a-row-of-buttons -->
-        <RadioGroup
-            android:id="@+id/buttonsLayout"
+        <ImageView
+            android:id="@+id/vailImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@drawable/semi_transparent_dark_vail"
+            android:visibility="visible" />
+    </RelativeLayout>
 
-            <RadioButton
-                android:id="@+id/openArchiveButton"
-                style="@style/horizontal_menu_buttons"
-                android:text="@string/device_archive" />
-
-            <RadioButton
-                android:id="@+id/openGaleryButton"
-                style="@style/horizontal_menu_buttons"
-                android:text="@string/galery" />
-
-            <RadioButton
-                android:id="@+id/allRecordsButton"
-                style="@style/horizontal_menu_buttons"
-                android:checked="true"
-                android:text="@string/all_records" />
-
-            <RadioButton
-                android:id="@+id/newRecordButton"
-                style="@style/horizontal_menu_buttons"
-                android:text="@string/create_new_record" />
-
-        </RadioGroup>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
     <!-- The navigation drawer -->
     <ListView
         android:id="@+id/left_drawer"
