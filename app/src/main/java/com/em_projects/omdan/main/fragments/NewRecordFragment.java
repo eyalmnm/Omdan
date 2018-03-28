@@ -137,10 +137,10 @@ public class NewRecordFragment extends Fragment implements TextWatcher {
         if (null != args && args.containsKey("record")) {
             Toast.makeText(context, "טוען תיק", Toast.LENGTH_SHORT).show();
             HistoryDataHolder dataHolder = (HistoryDataHolder) args.getSerializable("record");
-            String description = dataHolder.getDescription();
+            String insuredListName = dataHolder.getInsuredListName();
             String timeStr = dataHolder.getTimeStr();
             String dateStr = dataHolder.getDateStr();
-            data_1_EditText.setText(description);
+            data_1_EditText.setText(insuredListName);
             data_2_EditText.setText(timeStr);
             data_3_EditText.setText(dateStr);
             recordTitleTextView.setText(context.getString(R.string.new_record_id_title, dataHolder.getRecord()));

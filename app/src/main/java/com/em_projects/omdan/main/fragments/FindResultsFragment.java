@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.main.models.HistoryDataHolder;
+import com.em_projects.omdan.utils.JSONUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
 import org.json.JSONArray;
@@ -68,10 +69,19 @@ public class FindResultsFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(data);
             JSONObject jsonObject = null;
             for (int i = 0; i < jsonArray.length(); i++) {
+
                 jsonObject = jsonArray.getJSONObject(i);
-                historyArrayList.add(new HistoryDataHolder(jsonObject.getString("FileNumber")
-                        , jsonObject.getString("CreationDate")
-                        , jsonObject.getString("Customers.Name")));
+                String record = JSONUtils.getStringValue(jsonObject, "FileNumber");
+                String date = JSONUtils.getStringValue(jsonObject, "CreationDate");
+                String insuredListName = JSONUtils.getStringValue(jsonObject, "InsuredList.Name");
+                String customersName = JSONUtils.getStringValue(jsonObject, "Customers.Name");
+                String employeeListName = JSONUtils.getStringValue(jsonObject, "EmployeeList.Name");
+                String suitNumber = JSONUtils.getStringValue(jsonObject, "SuitNumber");
+                String fileStatusName = JSONUtils.getStringValue(jsonObject, "FileStatus.Name");
+
+                HistoryDataHolder holder = new HistoryDataHolder(record, date, insuredListName
+                        , customersName, employeeListName, suitNumber, fileStatusName);
+                historyArrayList.add(holder);
             }
         } catch (Exception ex) {
             Log.e(TAG, "onViewCreated", ex);
@@ -144,7 +154,7 @@ public class FindResultsFragment extends Fragment {
                 viewHolder.recordNumberTextView = (TextView) view.findViewById(R.id.recordNumberTextView);
                 viewHolder.recordDateTextView = (TextView) view.findViewById(R.id.recordDateTextView);
                 viewHolder.recordTimeTextView = (TextView) view.findViewById(R.id.recordTimeTextView);
-                viewHolder.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextView);
+                viewHolder.insuredListNameTextView = (TextView) view.findViewById(R.id.insuredListNameTextView);
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
@@ -154,7 +164,7 @@ public class FindResultsFragment extends Fragment {
             viewHolder.recordNumberTextView.setText(data.getRecord());
             viewHolder.recordDateTextView.setText(data.getDateStr());
             viewHolder.recordTimeTextView.setText(data.getTimeStr());
-            viewHolder.descriptionTextView.setText(data.getDescription());
+            viewHolder.insuredListNameTextView.setText(data.getInsuredListName());
 
 
             return view;
@@ -165,6 +175,6 @@ public class FindResultsFragment extends Fragment {
         public TextView recordNumberTextView;
         public TextView recordDateTextView;
         public TextView recordTimeTextView;
-        public TextView descriptionTextView;
+        public TextView insuredListNameTextView;
     }
 }

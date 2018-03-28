@@ -575,7 +575,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     public void loadRecord(String recNumber, Bundle args) {
         Log.d(TAG, "loadRecord " + recNumber + " selected");
         // showRecord(recNumber); // TODO Check with Ronen.
-        selectItem(2, args);
+        selectItem(1, args);
     }
 
     public void cancelCreation() {

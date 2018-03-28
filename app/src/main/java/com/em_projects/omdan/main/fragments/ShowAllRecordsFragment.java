@@ -23,7 +23,6 @@ import com.em_projects.omdan.main.models.HistoryDataHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Created by eyalmuchtar on 15/09/2017.
@@ -89,7 +88,7 @@ public class ShowAllRecordsFragment extends Fragment {
             }
         });
 
-        loadRecordsHistory();
+        // loadRecordsHistory();   // TODO
     }
 
     private void initCategoriesSpinner(View view) {
@@ -120,30 +119,30 @@ public class ShowAllRecordsFragment extends Fragment {
         Toast.makeText(getActivity(), "Sorting by: " + categoriesList.get(position), Toast.LENGTH_SHORT).show();
     }
 
-    private void loadRecordsHistory() {
-        // Load History from db
-        historyArrayList.add(new HistoryDataHolder("1001001", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001002", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001003", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001004", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001005", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001006", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001007", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001008", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001009", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001010", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001011", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001012", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001013", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001014", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001015", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001016", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001017", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001018", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001019", new Date()));
-        historyArrayList.add(new HistoryDataHolder("1001020", new Date()));
-        adapter.notifyDataSetInvalidated();
-    }
+//    private void loadRecordsHistory() {
+//        // Load History from db
+//        historyArrayList.add(new HistoryDataHolder("1001001", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001002", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001003", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001004", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001005", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001006", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001007", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001008", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001009", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001010", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001011", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001012", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001013", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001014", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001015", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001016", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001017", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001018", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001019", new Date()));
+//        historyArrayList.add(new HistoryDataHolder("1001020", new Date()));
+//        adapter.notifyDataSetInvalidated();
+//    }
 
     @Override
     public void onDetach() {
@@ -182,7 +181,7 @@ public class ShowAllRecordsFragment extends Fragment {
                 viewHolder.recordNumberTextView = view.findViewById(R.id.recordNumberTextView);
                 viewHolder.recordDateTextView = view.findViewById(R.id.recordDateTextView);
                 viewHolder.recordTimeTextView = view.findViewById(R.id.recordTimeTextView);
-                viewHolder.descriptionTextView = view.findViewById(R.id.descriptionTextView);
+                viewHolder.insuredListNameTextView = view.findViewById(R.id.insuredListNameTextView);
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
@@ -192,8 +191,7 @@ public class ShowAllRecordsFragment extends Fragment {
             viewHolder.recordNumberTextView.setText(data.getRecord());
             viewHolder.recordDateTextView.setText(data.getDateStr());
             viewHolder.recordTimeTextView.setText(data.getTimeStr());
-            viewHolder.descriptionTextView.setText(data.getDescription());
-
+            viewHolder.insuredListNameTextView.setText(data.getInsuredListName());
 
             return view;
         }
@@ -203,7 +201,6 @@ public class ShowAllRecordsFragment extends Fragment {
         TextView recordNumberTextView;
         TextView recordDateTextView;
         TextView recordTimeTextView;
-        TextView descriptionTextView;
+        TextView insuredListNameTextView;
     }
-
 }

@@ -1,6 +1,5 @@
 package com.em_projects.omdan.main.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.em_projects.omdan.R;
+import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.gallery.ImageGalleryActivity;
-import com.em_projects.omdan.main.models.RecordData;
+import com.em_projects.omdan.main.models.HistoryDataHolder;
 
 /**
  * Created by eyalmuchtar on 15/09/2017.
@@ -30,13 +30,17 @@ public class ShowRecordFragment extends Fragment {
 
     private Context context;
 
-    private RecordData recData;
+    private HistoryDataHolder recData;
 
+    // Form Fields
     private TextView recordTitleTextView;
-
-    // Animations
-//    private Animation showButtonsAnimation;
-//    private Animation hideButtonsAnimation;
+    private TextView insuredListNameTextView;
+    private TextView recordDateTextView;
+    private TextView recordTimeTextView;
+    private TextView customerNameTextView;
+    private TextView employeeNameTextView;
+    private TextView suitNameTextView;
+    private TextView fileStatusNameTextView;
 
     // Animated Action Buttons
     private boolean FAB_Status = false;
@@ -59,6 +63,13 @@ public class ShowRecordFragment extends Fragment {
         context = getActivity();
 
         recordTitleTextView = view.findViewById(R.id.recordTitleTextView);
+        insuredListNameTextView = view.findViewById(R.id.insuredListNameTextView);
+        recordDateTextView = view.findViewById(R.id.recordDateTextView);
+        recordTimeTextView = view.findViewById(R.id.recordTimeTextView);
+        customerNameTextView = view.findViewById(R.id.customerNameTextView);
+        employeeNameTextView = view.findViewById(R.id.employeeNameTextView);
+        suitNameTextView = view.findViewById(R.id.suitNameTextView);
+        fileStatusNameTextView = view.findViewById(R.id.fileStatusNameTextView);
 
         fabButtonsLayout = view.findViewById(R.id.fabButtonsLayout);
         fab = (Button) view.findViewById(R.id.fab);
@@ -68,56 +79,20 @@ public class ShowRecordFragment extends Fragment {
 
         recordTitleTextView.setText(getString(R.string.new_record_id_title, getRecordId()));
 
-        // Init Animations
-//        showButtonsAnimation = new TranslateAnimation(
-//                Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 1.0f,
-//                Animation.RELATIVE_TO_SELF, 0.0f);
-//        showButtonsAnimation.setDuration(500);
-//        showButtonsAnimation.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//                fabButtonsLayout.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
-
-//        hideButtonsAnimation = new TranslateAnimation(
-//                Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 1.0f);
-//        hideButtonsAnimation.setDuration(500);
-//        hideButtonsAnimation.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                fabButtonsLayout.setVisibility(View.GONE);
-////                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
-////                animation.setDuration(1);
-////                fabButtonsLayout.startAnimation(animation);
-//                fabButtonsLayout.clearAnimation();
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
+        Bundle args = getArguments();
+        if (null != args) {
+            recData = (HistoryDataHolder) args.getSerializable("record");
+            insuredListNameTextView.setText(recData.getInsuredListName());
+            recordDateTextView.setText(recData.getDateStr());
+            recordTimeTextView.setText(recData.getTimeStr());
+            customerNameTextView.setText(recData.getCustomersName());
+            employeeNameTextView.setText(recData.getEmployeeListName());
+            suitNameTextView.setText(recData.getSuitNumber());
+            fileStatusNameTextView.setText(recData.getFileStatusName());
+            Log.d(TAG, "Load Record Data succss");
+        } else {
+            Log.e(TAG, "Load Record Data Failed");  // TODO Implement this method
+        }
 
         fabButtonsLayout.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -155,18 +130,10 @@ public class ShowRecordFragment extends Fragment {
                 Toast.makeText(getActivity(), "Get images from server for current record", Toast.LENGTH_LONG).show();
             }
         });
-
-        Bundle args = getArguments();
-        if (null != args) {
-            recData = (RecordData) args.getSerializable("data");
-            Log.e(TAG, "Load Record Data Failed");  // TODO Implement this method
-        } else {
-            Log.e(TAG, "Load Record Data Failed");  // TODO Implement this method
-        }
     }
 
     private String getRecordId() {
-        return "1000";  // TODO
+        return Dynamics.getInstance(context).getCurrentRecordId();
     }
 
     @Override
