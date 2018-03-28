@@ -18,8 +18,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadeScrollbars="false"
-        android:layout_below="@id/recordTitleTextView">
+        android:layout_below="@id/recordTitleTextView"
+        android:fadeScrollbars="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,10 +38,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 1"
+                    android:text="@string/insured_list_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/insuredListNameTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -68,10 +69,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 2"
+                    android:text="@string/record_date_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/recordDateTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -98,10 +100,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 3"
+                    android:text="@string/record_time_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/recordTimeTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -128,10 +131,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 4"
+                    android:text="@string/customer_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/customerNameTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -158,10 +162,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 5"
+                    android:text="@string/employee_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/employeeNameTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -188,10 +193,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 6"
+                    android:text="@string/suit_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/suitNameTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -218,10 +224,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:text="Data 7"
+                    android:text="@string/file_status_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
+                    android:id="@+id/fileStatusNameTextView"
                     style="@style/AppTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

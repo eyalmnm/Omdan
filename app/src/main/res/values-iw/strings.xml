@@ -66,6 +66,15 @@
     <!-- Find results fragment -->
     <string name="choose_record_from_list">בחר רשומה מתוך הרשימה</string>
 
+    <!-- Show record fragment -->
+    <string name="insured_list_name_title">שם מבוטח</string>
+    <string name="record_date_title">תאריך</string>
+    <string name="record_time_title">שעה</string>
+    <string name="customer_name_title">שם לקוח</string>
+    <string name="employee_name_title">שם העובד</string>
+    <string name="suit_name_title">מספר סוויטה</string>
+    <string name="file_status_name_title">סטאטוס תיק</string>
+
     <!-- Show camera dialog -->
     <string name="record_id_et_hint">שם התיקייה</string>
 

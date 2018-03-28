@@ -68,6 +68,15 @@
     <!-- Find results fragment -->
     <string name="choose_record_from_list">Choose Record Form List</string>
 
+    <!-- Show record fragment -->
+    <string name="insured_list_name_title">Insured List Name</string>
+    <string name="record_date_title">Date</string>
+    <string name="record_time_title">Time</string>
+    <string name="customer_name_title">Customer Name</string>
+    <string name="employee_name_title">Employee Name</string>
+    <string name="suit_name_title">Suit Name</string>
+    <string name="file_status_name_title">File Status</string>
+
     <!-- Show camera dialog -->
     <string name="record_id_et_hint">File Name</string>
 
