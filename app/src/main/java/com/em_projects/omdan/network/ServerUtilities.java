@@ -1,9 +1,11 @@
 package com.em_projects.omdan.network;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
+import com.em_projects.omdan.utils.ImageUtils;
 import com.em_projects.omdan.utils.StringUtils;
 
 import org.apache.http.HttpResponse;
@@ -71,6 +73,16 @@ public final class ServerUtilities implements Runnable {
         String serverUrl = Dynamics.serverURL + Constants.findFile;
         HashMap params = new HashMap();
         params.put(Constants.fileNumber, fileNumber);
+
+        post(serverUrl, params, listener);
+    }
+
+    public void uploadImage(Bitmap bitmap, String dirctory, String subDirectory, CommListener listener) {
+        String serverUrl = Dynamics.serverURL + Constants.uploadImage;
+        HashMap params = new HashMap();
+        params.put(Constants.dirctory, dirctory);
+        params.put(Constants.subDirctory, dirctory);
+        params.put(Constants.image, ImageUtils.convertToBase64(bitmap));
 
         post(serverUrl, params, listener);
     }

@@ -9,9 +9,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -26,6 +28,20 @@ public class ImageUtils {
 //    public static final Bitmap defaultAvatar = ImageUtils.getCircleBitmap(BitmapFactory.decodeResource(context().getResources(), R.drawable.default_avatar));
 
     private static final String TAG = "ImageUtils";
+
+    public static String convertToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    public static Bitmap convertBase64ToBitmap(String encodedImage) {
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
 
     /**
      *

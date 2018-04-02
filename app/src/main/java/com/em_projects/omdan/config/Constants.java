@@ -19,4 +19,9 @@ public class Constants {
     public static final String findFile = "api/FindFile";
     public static final String fileNumber = "fileNumber";
 
+    public static final String uploadImage = "api/ImageUpload";
+    public static final String dirctory = "directory";
+    public static final String subDirctory = "sub_directory";
+    public static final String image = "image";
+
 }
