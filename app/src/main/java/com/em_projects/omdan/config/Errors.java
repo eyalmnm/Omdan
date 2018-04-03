@@ -13,4 +13,8 @@ public class Errors {
     // File 1100 - 1199
     public static final int FILE_NOT_FOUND = 1100;
 
+    // Image Storage 1200 - 1299
+    public static final int TARGET_DIRECTORY_NOT_FOUND = 1200;
+    public static final int TARGET_FILE_NAME_NOT_FOUND = 1201;
+
 }
