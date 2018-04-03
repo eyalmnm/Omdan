@@ -416,6 +416,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 Log.e(TAG, "onResume");
             }
         }
+        continueLoading();
     }
 
     @Override
