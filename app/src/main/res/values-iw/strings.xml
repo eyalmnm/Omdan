@@ -106,10 +106,13 @@
     <!-- Image Gallery Strings -->
     <string name="selected_files">%d קבצים נבחרו</string>
     <string name="select_all_title">בחר הכל</string>
+    <string name="file_upload_problems">בעיה בהעלאת הקובץ לשרת</string>
 
     <!-- Delete Confirmation Dialog -->
     <string name="delete_dialog_title">%d קבצים נבחרו למחיקה. האם ברצונך להמשיך?</string>
 
+    <!-- Save Confirmation Dialog -->
+    <string name="save_to_server_dialog_title">%d קבצים נבחרו להעלאה לשרת. האם ברצונך להמשיך?</string>
 
     <!-- App Exit Dialog -->
     <string name="exit_title">יציאה</string>
