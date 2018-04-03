@@ -1,5 +1,7 @@
 package com.em_projects.omdan.gallery;
 
+import com.em_projects.omdan.config.Constants;
+
 /**
  * Created by eyalmuchtar on 11/26/17.
  */
@@ -15,6 +17,18 @@ public class ImageGalleryFile {
         this.fullPath = fullPath;
         this.fileName = fileName;
         this.isDirectory = isDirectory;
+    }
+
+    public static String getDirectory(String fullPath, String fileName) {
+        int startIdx = fullPath.indexOf(Constants.BASE_PATH);
+        if (0 < startIdx) {
+            startIdx += Constants.BASE_PATH.length();
+        }
+        int lastIdx = fullPath.indexOf(fileName);
+        if (0 < lastIdx) {
+            return fullPath.substring(startIdx, lastIdx);
+        }
+        return null;
     }
 
     public String getFullPath() {
