@@ -108,9 +108,13 @@
     <!-- Image Gallery Strings -->
     <string name="selected_files">%d files selected</string>
     <string name="select_all_title">Select All</string>
+    <string name="file_upload_problems">Problems has been found while uploading file</string>
 
     <!-- Delete Confirmation Dialog -->
     <string name="delete_dialog_title">%d files selected for delete. Do you want to proceed?</string>
+
+    <!-- Save Confirmation Dialog -->
+    <string name="save_to_server_dialog_title">%d files selected for uploading to server. Do you want to proceed?</string>
 
     <!-- App Exit Dialog -->
     <string name="exit_title">Exit</string>
