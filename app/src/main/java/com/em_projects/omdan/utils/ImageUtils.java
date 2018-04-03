@@ -10,10 +10,13 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -22,6 +25,8 @@ import java.net.URLConnection;
 /**
  * Created by eyalmuchtar on 18/06/2017.
  */
+
+// Ref: https://stackoverflow.com/questions/28758014/how-to-convert-a-file-to-base64
 
 public class ImageUtils {
 
@@ -44,7 +49,6 @@ public class ImageUtils {
     }
 
     /**
-     *
      * @param bitmap
      * @return
      */
@@ -72,7 +76,6 @@ public class ImageUtils {
     }
 
     /**
-     *
      * @param url
      * @return
      */
@@ -109,7 +112,6 @@ public class ImageUtils {
     }
 
     /**
-     *
      * @param bitmap
      * @param width
      * @param height
@@ -145,7 +147,6 @@ public class ImageUtils {
     }
 
     /**
-     *
      * @param source
      * @param newHeight
      * @param newWidth
@@ -180,5 +181,27 @@ public class ImageUtils {
      */
     public static Bitmap byteArray2Bitmap(byte[] bytes) {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * Converting File to Base64.encode String type using Method
+     */
+    public static String getStringFile(File f) throws IOException {
+        InputStream inputStream = null;
+        String encodedFile = "", lastVal;
+        inputStream = new FileInputStream(f.getAbsolutePath());
+
+        byte[] buffer = new byte[10240];//specify the size to allow
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        Base64OutputStream output64 = new Base64OutputStream(output, Base64.DEFAULT);
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            output64.write(buffer, 0, bytesRead);
+        }
+        output64.close();
+        encodedFile = output.toString();
+        lastVal = encodedFile;
+        return lastVal;
     }
 }
