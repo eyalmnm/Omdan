@@ -2,20 +2,26 @@ package com.em_projects.omdan.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
  * Created by eyalmuchtar on 09/10/2017.
  */
+
+// Ref: https://stackoverflow.com/questions/28758014/how-to-convert-a-file-to-base64
 
 public class FileUtils {
     private static final String TAG = "FileUtils";
@@ -182,10 +188,32 @@ public class FileUtils {
         return false;
     }
 
-
     public static boolean removeFile(String fileName) {
         File file = new File(fileName);
         file.delete();
         return true;
     }
+
+    /**
+     * Converting File to Base64.encode String type using Method
+     */
+    public static String getStringFile(File f) throws IOException {
+        InputStream inputStream = null;
+        String encodedFile = "", lastVal;
+        inputStream = new FileInputStream(f.getAbsolutePath());
+
+        byte[] buffer = new byte[10240];//specify the size to allow
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        Base64OutputStream output64 = new Base64OutputStream(output, Base64.DEFAULT);
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            output64.write(buffer, 0, bytesRead);
+        }
+        output64.close();
+        encodedFile = output.toString();
+        lastVal = encodedFile;
+        return lastVal;
+    }
+
 }
