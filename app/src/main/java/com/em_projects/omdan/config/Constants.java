@@ -20,8 +20,8 @@ public class Constants {
     public static final String fileNumber = "fileNumber";
 
     public static final String uploadImage = "api/ImageUpload";
-    public static final String dirctory = "directory";
-    public static final String subDirctory = "sub_directory";
+    public static final String directory = "directory";
+    //public static final String subDirectory = "sub_directory";
     public static final String image = "image";
-
+    public static final String fileName = "file_name";
 }
