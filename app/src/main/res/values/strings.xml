@@ -109,6 +109,7 @@
     <string name="selected_files">%d files selected</string>
     <string name="select_all_title">Select All</string>
     <string name="file_upload_problems">Problems has been found while uploading file</string>
+    <string name="image_uploading_failed">Image uploading failed</string>
 
     <!-- Delete Confirmation Dialog -->
     <string name="delete_dialog_title">%d files selected for delete. Do you want to proceed?</string>
