@@ -1,11 +1,9 @@
 package com.em_projects.omdan.network;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
-import com.em_projects.omdan.utils.ImageUtils;
 import com.em_projects.omdan.utils.StringUtils;
 
 import org.apache.http.HttpResponse;
@@ -77,12 +75,13 @@ public final class ServerUtilities implements Runnable {
         post(serverUrl, params, listener);
     }
 
-    public void uploadImage(Bitmap bitmap, String dirctory, String subDirectory, CommListener listener) {
+    public void uploadImage(String bitmapBase64String, String directory, String fileName, /*String subDirectory,*/ CommListener listener) throws UnsupportedEncodingException {
         String serverUrl = Dynamics.serverURL + Constants.uploadImage;
         HashMap params = new HashMap();
-        params.put(Constants.dirctory, dirctory);
-        params.put(Constants.subDirctory, dirctory);
-        params.put(Constants.image, ImageUtils.convertToBase64(bitmap));
+        params.put(Constants.directory, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(directory, "utf-8")); // directory);
+        params.put(Constants.fileName, fileName);
+        //params.put(Constants.subDirectory, subDirectory);
+        params.put(Constants.image, bitmapBase64String); // ImageUtils.convertToBase64(bitmap));
 
         post(serverUrl, params, listener);
     }
@@ -223,7 +222,7 @@ public final class ServerUtilities implements Runnable {
         while (iterator.hasNext()) {
             Entry<String, String> param = iterator.next();
             if (param.getValue() != null) {
-                nameValuePairs.add(new MyNameValuePair(param.getKey(), param.getValue()));
+                nameValuePairs.add(new MyNameValuePair(param.getKey(), param.getValue())); // URLEncoder.encode(param.getValue(), "utf-8"))); //param.getValue()));
             }
         }
         return nameValuePairs;

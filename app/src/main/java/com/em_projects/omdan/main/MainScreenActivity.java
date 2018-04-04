@@ -176,10 +176,10 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             if (!checkPermissions()) {
                 requestPermission();
             } else {
-                continueLoading();
+                //continueLoading();
             }
         } else {
-            continueLoading();
+            //continueLoading();
         }
 
         // Make sure the view adjust while showing keyboard
@@ -273,7 +273,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     if (cameraRes && locationRes && locationCRes && internetRes && contectRes &&
                             wakeLockRes && writeFileRes && readFileRes) {
                         Snackbar.make(view, "Permission Granted, Now you can use the application.", Snackbar.LENGTH_LONG).show();
-                        continueLoading();
+                        //continueLoading();
                     } else {
                         Snackbar.make(view, "Permission Denied, You cannot access the application.", Snackbar.LENGTH_LONG).show();
 
@@ -503,7 +503,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             public void newDataArrived(String response) {
                 try {
                     Log.d(TAG, "findRecordByData -> newDataArrived response: " + response);
-                    if (response.contains("error")) {
+                    if (response.contains(Constants.error)) {
                         int errorNo = ErrorsUtils.getError(response);
                         if (Errors.USER_NOT_LOGGED_IN == errorNo || Errors.USER_NOT_FOUND == errorNo) {
                             showLoginDialog();
@@ -618,12 +618,12 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
             @Override
             public void newDataArrived(String response) {
                 try {
-                    if (response.contains("error")) {
+                    if (response.contains(Constants.error)) {
                         int errorNo = ErrorsUtils.getError(response);
                         showToast(context.getString(R.string.login_failed));
                     } else {
                         JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject.has("uuid")) {
+                        if (jsonObject.has(Constants.uuid)) {
                             Dynamics.uUID = (String) jsonObject.get(Constants.uuid);
                         }
                     }

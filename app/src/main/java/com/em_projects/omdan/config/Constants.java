@@ -11,6 +11,8 @@ public class Constants {
     public static final String BASE_PATH = Environment.getExternalStorageDirectory().toString() + "/omdan";
 
     // Server Constants
+    public static final String error = "error";
+
     public static final String login = "api/Login";
     public static final String userName = "name";
     public static final String password = "password";
@@ -20,8 +22,9 @@ public class Constants {
     public static final String fileNumber = "fileNumber";
 
     public static final String uploadImage = "api/ImageUpload";
-    public static final String directory = "directory";
+    public static final String directory = "filePath";
     //public static final String subDirectory = "sub_directory";
-    public static final String image = "image";
-    public static final String fileName = "file_name";
+    public static final String image = "fileContent";
+    public static final String fileName = "fileName";
+    public static final String fileFullPath = "file_full_path";
 }

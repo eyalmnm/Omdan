@@ -288,4 +288,14 @@ public class StringUtils {
     public static boolean containsIgnureCase(String container, String content) {
         return container.toLowerCase().contains(content.toLowerCase());
     }
+
+    public static String convertToUtf8(String str) {
+        String out = null;
+        try {
+            out = new String(str.getBytes("UTF-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException ex) {
+            return null;
+        }
+        return out;
+    }
 }

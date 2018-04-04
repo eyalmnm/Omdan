@@ -2,6 +2,7 @@ package com.em_projects.omdan.gallery;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
@@ -25,10 +26,19 @@ import android.widget.Toast;
 import com.em_projects.omdan.BuildConfig;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Constants;
+import com.em_projects.omdan.config.Dynamics;
+import com.em_projects.omdan.config.Errors;
+import com.em_projects.omdan.network.CommListener;
+import com.em_projects.omdan.network.ServerUtilities;
 import com.em_projects.omdan.utils.DimenUtils;
+import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.FileUtils;
+import com.em_projects.omdan.utils.JSONUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,10 +48,12 @@ import java.util.List;
  * Created by eyalmuchtar on 11/22/17.
  */
 
+// Ref: https://stackoverflow.com/questions/28758014/how-to-convert-a-file-to-base64
 // Ref: https://stackoverflow.com/questions/31968860/how-can-i-get-my-imageview-to-scroll-horizontally-as-well-as-vertically
 
 public class ImageGalleryActivity extends Activity implements View.OnClickListener,
-        DeleteItemsDialog.OnDeleteConfirmListener, ShowCameraDialog.ShowCameraDialogListener {
+        DeleteItemsDialog.OnDeleteConfirmListener, ShowCameraDialog.ShowCameraDialogListener,
+        SaveItemsDialog.OnSaveToServerConfirmListener {
     private static final String TAG = "ImageGallery";
     // Camera Properties
     private static final int OPEN_CAMERA_REQUEST_CODE = 1234;
@@ -72,6 +84,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
     private int normalBackgroundColor;
     private int selectedBackgroundColor;
 
+    private ProgressDialog progressDialog;
 
     private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -304,6 +317,95 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
 
     private void showSaveDialog() {
         // TODO Missing implementation
+        // currentDirectoryPath (fullPath - Constant.BasePath)
+        // List selectedItems = adapter.getSelectedItems();
+        List selectedItems = adapter.getSelectedItems();
+        if (selectedItems.size() > 0) {
+            SaveItemsDialog dialog = new SaveItemsDialog();
+            FragmentManager fm = getFragmentManager();
+            Bundle args = new Bundle();
+            args.putInt("data", selectedItems.size());
+            dialog.setArguments(args);
+            dialog.show(fm, "showSaveDialog");
+        }
+    }
+
+    // Implementation of SaveItemsDialog.OnSaveToServerConfirmListener
+    @Override
+    public void OnSaveToServerConfirm(boolean confirm) {
+        if (true == confirm) {
+            if (true == selectAllMode) {
+                toggleSelectAll();
+            }
+            List selectedItems = adapter.getSelectedItems();
+            if (selectedItems.size() > 0) {
+                ArrayList<String> toBeUploaded = new ArrayList<>();
+                for (int i = 0; i < selectedItems.size(); i++) {
+                    showProgressDialog();
+                    try {
+                        int position = (int) selectedItems.get(i);
+                        ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
+                        if (true == imageGalleryFile.isDirectory()) continue;
+                        toBeUploaded.add(galleryFiles.get(position).toString());
+                        String bitmapBase64String = FileUtils.getStringFile(new File(imageGalleryFile.getFullPath()));
+                        String bitmapDirectory = ImageGalleryFile.getDirectory(imageGalleryFile.getFullPath(), imageGalleryFile.getFileName());
+                        ServerUtilities.getInstance().uploadImage(bitmapBase64String, bitmapDirectory, imageGalleryFile.getFileName(), new CommListener() {
+                            @Override
+                            public void newDataArrived(String response) {
+                                try {
+                                    if (response.contains(Constants.error)) {
+                                        int errorNo = ErrorsUtils.getError(response);
+                                        if (Errors.USER_NOT_LOGGED_IN == errorNo
+                                                || Errors.USER_NOT_FOUND == errorNo) {
+                                            showToast(context.getString(R.string.login_failed));
+                                            Dynamics.uUID = null;
+                                            finish();
+                                            return;
+                                        } else if (Errors.TARGET_FILE_ALREADY_EXIST == errorNo
+                                                || Errors.TARGET_FILE_MISSING_DATA == errorNo
+                                                || Errors.TARGET_FILE_FAILED_TO_RESTORED == errorNo) {
+                                            showToast(context.getString(R.string.image_uploading_failed));
+                                            return;
+                                        } else {
+                                            if ((Errors.TARGET_DIRECTORY_NOT_FOUND == errorNo) || (Errors.TARGET_FILE_NAME_NOT_FOUND == errorNo)) {
+                                                showToast(context.getString(R.string.file_upload_problems));
+                                                return;
+                                            }
+                                        }
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        String fileFullPath = JSONUtils.getStringValue(jsonObject, Constants.fileFullPath);
+                                        FileUtils.removeFile(Constants.BASE_PATH + "/" + fileFullPath);
+                                        return;
+                                    }
+                                } catch (JSONException ex) {
+                                    Log.e(TAG, "OnSaveToServerConfirm -> newDataArrived response: " + response);
+                                    FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm -> newDataArrived");
+                                    FirebaseCrash.report(ex);
+                                    FirebaseCrash.log("response: " + response);
+                                } finally {
+                                    hideProgressDialog();
+                                }
+                            }
+
+                            @Override
+                            public void exceptionThrown(Throwable throwable) {
+                                Log.e(TAG, "OnSaveToServerConfirm -> exceptionThrown");
+                                FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm -> newDataArrived");
+                                FirebaseCrash.report(throwable);
+                                hideProgressDialog();
+                            }
+                        });
+                    } catch (Exception e) {
+                        Log.e(TAG, "OnSaveToServerConfirm", e);
+                        FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm");
+                        FirebaseCrash.report(e);
+                    } finally {
+                        hideProgressDialog();
+                    }
+                }
+                loadBitMap(currentDirectoryPath);
+            }
+        }
     }
 
     private void showDeleteDialog() {
@@ -367,6 +469,33 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
             }
         }
     }
+
+    private void showToast(final String message) {
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void hideProgressDialog() {
+        if (null != progressDialog) {
+            new Handler(getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            });
+        }
+    }
+
+    private void showProgressDialog() {
+        if (null == progressDialog || false == progressDialog.isShowing()) {
+            progressDialog = ProgressDialog.show(context, "", "Loading...", true);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

@@ -109,7 +109,6 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener 
 
     public interface OnSetLoginDataListener {
         void onSetLoginDataListener(String usr, String pwd);
-
         void settingButtonPressed();
     }
 }

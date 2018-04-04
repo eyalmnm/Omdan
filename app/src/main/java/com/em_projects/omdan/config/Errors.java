@@ -16,5 +16,8 @@ public class Errors {
     // Image Storage 1200 - 1299
     public static final int TARGET_DIRECTORY_NOT_FOUND = 1200;
     public static final int TARGET_FILE_NAME_NOT_FOUND = 1201;
+    public static final int TARGET_FILE_ALREADY_EXIST = 1202;
+    public static final int TARGET_FILE_MISSING_DATA = 1203;
+    public static final int TARGET_FILE_FAILED_TO_RESTORED = 1204;
 
 }

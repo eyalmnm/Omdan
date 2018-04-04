@@ -21,12 +21,12 @@ public class ImageGalleryFile {
 
     public static String getDirectory(String fullPath, String fileName) {
         int startIdx = fullPath.indexOf(Constants.BASE_PATH);
-        if (0 < startIdx) {
-            startIdx += Constants.BASE_PATH.length();
+        if (0 <= startIdx) {
+            startIdx += Constants.BASE_PATH.length() + 1;
         }
         int lastIdx = fullPath.indexOf(fileName);
         if (0 < lastIdx) {
-            return fullPath.substring(startIdx, lastIdx);
+            return fullPath.substring(startIdx, lastIdx - 1);
         }
         return null;
     }

@@ -50,7 +50,7 @@ public class GridItemView extends FrameLayout {
                     .config(Bitmap.Config.RGB_565)
                     .fit().centerCrop()
                     .placeholder(R.drawable.ic_folder_white_18dp)
-                    .into(theImageView);;
+                    .into(theImageView);
         } else {
             Picasso.with(context)
                     .load("file://" + path)
