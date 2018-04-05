@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
  * Created by eyal muchtar on 27/11/2016.
  */
 
+// Ref: https://stackoverflow.com/questions/27972078/encoding-hebrew-in-java-and-json
+
 public class StringUtils {
 
     /**
@@ -289,6 +291,7 @@ public class StringUtils {
         return container.toLowerCase().contains(content.toLowerCase());
     }
 
+    // Ref: https://stackoverflow.com/questions/27972078/encoding-hebrew-in-java-and-json
     public static String convertToUtf8(String str) {
         String out = null;
         try {
