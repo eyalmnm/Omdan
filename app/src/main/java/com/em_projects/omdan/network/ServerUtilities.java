@@ -78,10 +78,18 @@ public final class ServerUtilities implements Runnable {
     public void uploadImage(String bitmapBase64String, String directory, String fileName, /*String subDirectory,*/ CommListener listener) throws UnsupportedEncodingException {
         String serverUrl = Dynamics.serverURL + Constants.uploadImage;
         HashMap params = new HashMap();
-        params.put(Constants.directory, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(directory, "utf-8")); // directory);
+        params.put(Constants.filePath, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(filePath, "utf-8")); // filePath);
         params.put(Constants.fileName, fileName);
         //params.put(Constants.subDirectory, subDirectory);
         params.put(Constants.image, bitmapBase64String); // ImageUtils.convertToBase64(bitmap));
+
+        post(serverUrl, params, listener);
+    }
+
+    public void getAllFiles(String directory, CommListener listener) {
+        String serverUrl = Dynamics.serverURL + Constants.getFiles;
+        HashMap params = new HashMap();
+        params.put(Constants.directory, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(filePath, "utf-8")); // filePath);
 
         post(serverUrl, params, listener);
     }

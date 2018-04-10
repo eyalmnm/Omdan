@@ -301,4 +301,12 @@ public class StringUtils {
         }
         return out;
     }
+
+    public String[] string2StringArr(String theStr) {
+        return string2StringArr(theStr, ",");
+    }
+
+    public String[] string2StringArr(String theStr, String delimeter) {
+        return theStr.split(delimeter);
+    }
 }

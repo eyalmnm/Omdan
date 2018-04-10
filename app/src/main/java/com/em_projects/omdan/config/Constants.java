@@ -7,7 +7,7 @@ import android.os.Environment;
  */
 
 public class Constants {
-    // File System root directory
+    // File System root filePath
     public static final String BASE_PATH = Environment.getExternalStorageDirectory().toString() + "/omdan";
 
     // Server Constants
@@ -22,9 +22,14 @@ public class Constants {
     public static final String fileNumber = "fileNumber";
 
     public static final String uploadImage = "api/ImageUpload";
-    public static final String directory = "filePath";
+    public static final String filePath = "filePath";
     //public static final String subDirectory = "sub_directory";
     public static final String image = "fileContent";
     public static final String fileName = "fileName";
     public static final String fileFullPath = "file_full_path";
+
+    public static final String getFiles = "api/GetFiles";
+    public static final String directory = "directory";
+    public static final String filesLists = "files_list";
+
 }

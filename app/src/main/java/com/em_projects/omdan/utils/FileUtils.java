@@ -174,7 +174,7 @@ public class FileUtils {
             }
             return false;
         } else {
-            throw new Exception("Unknown directory " + dirName);
+            throw new Exception("Unknown filePath " + dirName);
         }
     }
 

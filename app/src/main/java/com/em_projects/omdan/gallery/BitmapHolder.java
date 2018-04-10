@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.utils.FileUtils;
-import com.em_projects.omdan.utils.ImageUtils;
 import com.em_projects.omdan.utils.StringUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -45,7 +44,7 @@ public class BitmapHolder {
             public void run() {
                 try {
                     //Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
-                    //FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+                    //FileUtils.writeBitmapToFile(filePath, fileName, bitmap);
                     //bitmap.recycle();
                     //bitmap = null;
                     FileUtils.writeBitmapToFile(directory, fileName, data);
@@ -53,7 +52,7 @@ public class BitmapHolder {
                     Log.e(TAG, "BitmapHolder - loading from bytes", e);
                     System.gc();
 //                    Bitmap bitmap = ImageUtils.byteArray2Bitmap(data);
-//                    FileUtils.writeBitmapToFile(directory, fileName, bitmap);
+//                    FileUtils.writeBitmapToFile(filePath, fileName, bitmap);
 //                    bitmap.recycle();
                     FirebaseCrash.logcat(Log.ERROR, TAG, "BitmapHolder - loading from bytes");
                     FirebaseCrash.report(e);
@@ -124,7 +123,7 @@ public class BitmapHolder {
                 "recordId='" + recordId + '\'' +
                 ", fullPath='" + fullPath + '\'' +
                 ", fileName='" + fileName + '\'' +
-                ", directory='" + directory + '\'' +
+                ", filePath='" + directory + '\'' +
                 ", subRecord='" + subRecord + '\'' +
                 '}';
     }

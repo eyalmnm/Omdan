@@ -38,6 +38,7 @@ import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.config.Errors;
 import com.em_projects.omdan.dialogs.AppExitDialog;
 import com.em_projects.omdan.dialogs.LoginDialog;
+import com.em_projects.omdan.dialogs.LoginFailedDialog;
 import com.em_projects.omdan.dialogs.ServerConnectionDialog;
 import com.em_projects.omdan.main.fragments.FindRecordFragment;
 import com.em_projects.omdan.main.fragments.FindResultsFragment;
@@ -80,7 +81,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainScreenActivity extends AppCompatActivity implements FindRecordFragment.FindRecordListener,
         ShowAllRecordsFragment.SelectRecordListener, FindResultsFragment.FindResultsListener,
-        ServerConnectionDialog.OnSetServerConnectionListener, LoginDialog.OnSetLoginDataListener {
+        ServerConnectionDialog.OnSetServerConnectionListener, LoginDialog.OnSetLoginDataListener,
+        LoginFailedDialog.OnLoginFailedListener {
 
     // Setting IDs
     public static final int FIND_RECORD = 100;
@@ -621,6 +623,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     if (response.contains(Constants.error)) {
                         int errorNo = ErrorsUtils.getError(response);
                         showToast(context.getString(R.string.login_failed));
+                        showLoginFailedDialog();
                     } else {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.has(Constants.uuid)) {
@@ -635,7 +638,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 } finally {
                     hideProgressDialog();
                     hideVail();
-                    continueLoading();
+                    //continueLoading();
                 }
             }
 
@@ -659,6 +662,31 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showLoginFailedDialog() {
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showVail();
+                FragmentManager fm = getFragmentManager();
+                LoginFailedDialog dialog = new LoginFailedDialog();
+                try {
+                    dialog.show(fm, "LoginFailedDialog");
+                } catch (Throwable e) {
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "showLoginFailedDialog");
+                    FirebaseCrash.report(e);
+                    hideVail();
+                }
+            }
+        }, 100);
+    }
+
+    // LoginFailedDialog.OnLoginFailedListener
+    @Override
+    public void okButtonPressed() {
+        hideVail();
+        continueLoading();
     }
 
     // LoginDialog.OnSetLoginDataListener
