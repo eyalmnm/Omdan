@@ -127,4 +127,8 @@
     <string name="port_et_hint">Port</string>
     <string name="missing_data_all">All fields are required</string>
 
+    <!-- Login Failed Dialog -->
+    <string name="login_failed_title">Log in Failed! \nPlease try again.</string>
+    <string name="ok">Ok</string>
+
 </resources>
