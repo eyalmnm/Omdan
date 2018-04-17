@@ -631,6 +631,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                         }
                     }
                 } catch (JSONException ex) {
+                    showLoginFailedDialog();
                     Log.e(TAG, "onSetLoginDataListener -> newDataArrived response: " + response);
                     FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
                     FirebaseCrash.report(ex);
@@ -644,13 +645,14 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
 
             @Override
             public void exceptionThrown(Throwable throwable) {
+                showLoginFailedDialog();
                 Log.e(TAG, "onSetLoginDataListener -> exceptionThrown");
-                showToast(context.getString(R.string.login_failed));
+                //showToast(context.getString(R.string.login_failed));
                 FirebaseCrash.logcat(Log.ERROR, TAG, "onSetLoginDataListener -> newDataArrived");
                 FirebaseCrash.report(throwable);
                 hideProgressDialog();
                 hideVail();
-                continueLoading();
+                //continueLoading();
             }
         });
     }
