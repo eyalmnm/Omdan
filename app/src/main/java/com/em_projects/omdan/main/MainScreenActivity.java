@@ -622,7 +622,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 try {
                     if (response.contains(Constants.error)) {
                         int errorNo = ErrorsUtils.getError(response);
-                        showToast(context.getString(R.string.login_failed));
+                        //showToast(context.getString(R.string.login_failed));
                         showLoginFailedDialog();
                     } else {
                         JSONObject jsonObject = new JSONObject(response);
