@@ -17,6 +17,8 @@ import com.em_projects.omdan.R;
  * Created by eyalmuchtar on 4/10/18.
  */
 
+// Ref: https://stackoverflow.com/questions/43389607/how-to-add-line-break-to-a-rtl-string-in-strings-xml-in-android
+
 public class LoginFailedDialog extends DialogFragment implements View.OnClickListener {
 
     private OnLoginFailedListener listener;
