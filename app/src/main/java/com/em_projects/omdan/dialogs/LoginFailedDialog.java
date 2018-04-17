@@ -48,6 +48,7 @@ public class LoginFailedDialog extends DialogFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        dismiss();
         if (null != listener) {
             listener.okButtonPressed();
         }
