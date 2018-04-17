@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Ref: https://stackoverflow.com/questions/43389607/how-to-add-line-break-to-a-rtl-string-in-strings-xml-in-android -->
+
     <string name="app_name">אומדן</string>
 
     <!-- Intro Activity -->
@@ -126,8 +128,10 @@
     <string name="missing_data_all">יש למלא את כל השדות</string>
 
     <!-- Login Failed Dialog -->
-    <string name="login_failed_title">כניסה למערכת נכשלהn\אנא נסו שוב</string>
+    <string name="login_failed_title">כניסה למערכת נכשלה.\nאנא נסו שוב.</string>
     <string name="ok">Ok</string>
 
+    <!-- Loading Dialog -->
+    <string name="uploading_images">מעלה תמונות לשרת</string>
 
 </resources>

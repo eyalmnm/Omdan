@@ -131,4 +131,7 @@
     <string name="login_failed_title">Log in Failed! \nPlease try again.</string>
     <string name="ok">Ok</string>
 
+    <!-- Loading Dialog -->
+    <string name="uploading_images">Uploading the selected images</string>
+
 </resources>
