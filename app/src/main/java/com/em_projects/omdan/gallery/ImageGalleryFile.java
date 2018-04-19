@@ -1,14 +1,27 @@
 package com.em_projects.omdan.gallery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.em_projects.omdan.config.Constants;
 
 /**
  * Created by eyalmuchtar on 11/26/17.
  */
 
-public class ImageGalleryFile {
-    private static final String TAG = "ImageGalleryFile";
+public class ImageGalleryFile implements Parcelable {
+    public static final Creator<ImageGalleryFile> CREATOR = new Creator<ImageGalleryFile>() {
+        @Override
+        public ImageGalleryFile createFromParcel(Parcel source) {
+            return new ImageGalleryFile(source);
+        }
 
+        @Override
+        public ImageGalleryFile[] newArray(int size) {
+            return new ImageGalleryFile[size];
+        }
+    };
+    private static final String TAG = "ImageGalleryFile";
     private String fullPath;
     private String fileName;
     private boolean isDirectory;
@@ -17,6 +30,12 @@ public class ImageGalleryFile {
         this.fullPath = fullPath;
         this.fileName = fileName;
         this.isDirectory = isDirectory;
+    }
+
+    protected ImageGalleryFile(Parcel in) {
+        this.fullPath = in.readString();
+        this.fileName = in.readString();
+        this.isDirectory = in.readByte() != 0;
     }
 
     public static String getDirectory(String fullPath, String fileName) {
@@ -70,5 +89,18 @@ public class ImageGalleryFile {
                 ", fileName='" + fileName + '\'' +
                 ", isDirectory=" + isDirectory +
                 '}';
+    }
+
+    // Parcelable Methods
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fullPath);
+        dest.writeString(this.fileName);
+        dest.writeByte(this.isDirectory ? (byte) 1 : (byte) 0);
     }
 }

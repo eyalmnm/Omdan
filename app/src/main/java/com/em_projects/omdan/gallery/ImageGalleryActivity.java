@@ -3,14 +3,17 @@ package com.em_projects.omdan.gallery;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.config.Errors;
 import com.em_projects.omdan.network.CommListener;
+import com.em_projects.omdan.network.ImagesUpLoaderService;
 import com.em_projects.omdan.network.ServerUtilities;
 import com.em_projects.omdan.utils.DimenUtils;
 import com.em_projects.omdan.utils.ErrorsUtils;
@@ -57,6 +61,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
     private static final String TAG = "ImageGallery";
     // Camera Properties
     private static final int OPEN_CAMERA_REQUEST_CODE = 1234;
+    public static String loadingImagesReceiverAction = "loadingImagesReceiverAction";
     private Context context;
     // Directory management components
     private String currentDirectoryPath;
@@ -77,14 +82,25 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
     private String subDirectory;
     private boolean showAsGallery;
     private boolean dialogIsShown;
-
     private View selectAllLayout;
     private ImageView selectAllIndicatorImageView;
     private boolean selectAllMode = false;
     private int normalBackgroundColor;
     private int selectedBackgroundColor;
-
     private ProgressDialog progressDialog;
+    private BroadcastReceiver loadingImagesReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (false == StringUtils.isNullOrEmpty(currentDirectoryPath)) {
+                if (true == selectAllMode) {
+                    toggleSelectAll();
+                }
+                loadBitMap(currentDirectoryPath);
+//                imageLoader = new ImageLoader();
+//                imageLoader.execute(Constants.BASE_PATH + File.separator + currentDirectoryPath);
+            }
+        }
+    };
 
     private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -178,6 +194,13 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
 
         currentDirectoryPath = "";
         initImagesGrid();
+
+        registerBroadcastReceiver();
+    }
+
+    private void registerBroadcastReceiver() {
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(loadingImagesReceiver, new IntentFilter(loadingImagesReceiverAction));
     }
 
     private void toggleSelectAll() {
@@ -191,7 +214,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
             selectAllMode = true;
             if (null != adapter) {
                 adapter.resetSelectedPositions();
-                for (int i = 0; i < galleryFiles.size(); i ++) {
+                for (int i = 0; i < galleryFiles.size(); i++) {
                     adapter.getSelectedItems().add(i);
                 }
                 adapter.notifyDataSetChanged();
@@ -338,72 +361,86 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                 toggleSelectAll();
             }
             List selectedItems = adapter.getSelectedItems();
-            if (selectedItems.size() > 0) {
+            if (selectedItems.size() == 1) {
                 ArrayList<String> toBeUploaded = new ArrayList<>();
-                for (int i = 0; i < selectedItems.size(); i++) {
-                    showProgressDialog();
-                    try {
-                        int position = (int) selectedItems.get(i);
-                        ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
-                        if (true == imageGalleryFile.isDirectory()) continue;
-                        toBeUploaded.add(galleryFiles.get(position).toString());
-                        String bitmapBase64String = FileUtils.getStringFile(new File(imageGalleryFile.getFullPath()));
-                        String bitmapDirectory = ImageGalleryFile.getDirectory(imageGalleryFile.getFullPath(), imageGalleryFile.getFileName());
-                        ServerUtilities.getInstance().uploadImage(bitmapBase64String, bitmapDirectory, imageGalleryFile.getFileName(), new CommListener() {
-                            @Override
-                            public void newDataArrived(String response) {
-                                try {
-                                    if (response.contains(Constants.error)) {
-                                        int errorNo = ErrorsUtils.getError(response);
-                                        if (Errors.USER_NOT_LOGGED_IN == errorNo
-                                                || Errors.USER_NOT_FOUND == errorNo) {
-                                            showToast(context.getString(R.string.login_failed));
-                                            Dynamics.uUID = null;
-                                            finish();
-                                            return;
-                                        } else if (Errors.TARGET_FILE_ALREADY_EXIST == errorNo
-                                                || Errors.TARGET_FILE_MISSING_DATA == errorNo
-                                                || Errors.TARGET_FILE_FAILED_TO_RESTORED == errorNo) {
-                                            showToast(context.getString(R.string.image_uploading_failed));
-                                            return;
-                                        } else {
-                                            if ((Errors.TARGET_DIRECTORY_NOT_FOUND == errorNo) || (Errors.TARGET_FILE_NAME_NOT_FOUND == errorNo)) {
-                                                showToast(context.getString(R.string.file_upload_problems));
-                                                return;
-                                            }
-                                        }
-                                        JSONObject jsonObject = new JSONObject(response);
-                                        String fileFullPath = JSONUtils.getStringValue(jsonObject, Constants.fileFullPath);
-                                        FileUtils.removeFile(Constants.BASE_PATH + "/" + fileFullPath);
+                showProgressDialog();
+                try {
+                    int position = (int) selectedItems.get(0);
+                    ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
+                    if (true == imageGalleryFile.isDirectory()) return;
+                    toBeUploaded.add(galleryFiles.get(position).toString());
+                    String bitmapBase64String = FileUtils.getStringFile(new File(imageGalleryFile.getFullPath()));
+                    String bitmapDirectory = ImageGalleryFile.getDirectory(imageGalleryFile.getFullPath(), imageGalleryFile.getFileName());
+                    ServerUtilities.getInstance().uploadImage(bitmapBase64String, bitmapDirectory, imageGalleryFile.getFileName(), new CommListener() {
+                        @Override
+                        public void newDataArrived(String response) {
+                            try {
+                                if (response.contains(Constants.error)) {
+                                    int errorNo = ErrorsUtils.getError(response);
+                                    if (Errors.USER_NOT_LOGGED_IN == errorNo
+                                            || Errors.USER_NOT_FOUND == errorNo) {
+                                        showToast(context.getString(R.string.login_failed));
+                                        Dynamics.uUID = null;
+                                        finish();
                                         return;
+                                    } else if (Errors.TARGET_FILE_ALREADY_EXIST == errorNo
+                                            || Errors.TARGET_FILE_MISSING_DATA == errorNo
+                                            || Errors.TARGET_FILE_FAILED_TO_RESTORED == errorNo) {
+                                        showToast(context.getString(R.string.image_uploading_failed));
+                                        return;
+                                    } else {
+                                        if ((Errors.TARGET_DIRECTORY_NOT_FOUND == errorNo) || (Errors.TARGET_FILE_NAME_NOT_FOUND == errorNo)) {
+                                            showToast(context.getString(R.string.file_upload_problems));
+                                            return;
+                                        }
                                     }
-                                } catch (JSONException ex) {
-                                    Log.e(TAG, "OnSaveToServerConfirm -> newDataArrived response: " + response);
-                                    FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm -> newDataArrived");
-                                    FirebaseCrash.report(ex);
-                                    FirebaseCrash.log("response: " + response);
-                                } finally {
-                                    hideProgressDialog();
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String fileFullPath = JSONUtils.getStringValue(jsonObject, Constants.fileFullPath);
+                                    FileUtils.removeFile(Constants.BASE_PATH + "/" + fileFullPath);
+                                    return;
                                 }
-                            }
-
-                            @Override
-                            public void exceptionThrown(Throwable throwable) {
-                                Log.e(TAG, "OnSaveToServerConfirm -> exceptionThrown");
+                            } catch (JSONException ex) {
+                                Log.e(TAG, "OnSaveToServerConfirm -> newDataArrived response: " + response);
                                 FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm -> newDataArrived");
-                                FirebaseCrash.report(throwable);
+                                FirebaseCrash.report(ex);
+                                FirebaseCrash.log("response: " + response);
+                            } finally {
                                 hideProgressDialog();
                             }
-                        });
-                    } catch (Exception e) {
-                        Log.e(TAG, "OnSaveToServerConfirm", e);
-                        FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm");
-                        FirebaseCrash.report(e);
-                    } finally {
-                        hideProgressDialog();
-                    }
+                        }
+
+                        @Override
+                        public void exceptionThrown(Throwable throwable) {
+                            Log.e(TAG, "OnSaveToServerConfirm -> exceptionThrown");
+                            FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm -> newDataArrived");
+                            FirebaseCrash.report(throwable);
+                            hideProgressDialog();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "OnSaveToServerConfirm", e);
+                    FirebaseCrash.logcat(Log.ERROR, TAG, "OnSaveToServerConfirm");
+                    FirebaseCrash.report(e);
+                } finally {
+                    hideProgressDialog();
                 }
                 loadBitMap(currentDirectoryPath);
+            } else if (1 < selectedItems.size()) {
+                ArrayList<ImageGalleryFile> imagesToUpload = new ArrayList<>(selectedItems.size());
+                for (int i = 0; i < selectedItems.size(); i++) {
+                    int position = (int) selectedItems.get(i);
+                    ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
+                    if (imageGalleryFile.isDirectory()) continue;
+                    imagesToUpload.add(imageGalleryFile);
+                }
+                Intent loadingServiceIntent = new Intent(context, ImagesUpLoaderService.class);
+                loadingServiceIntent.putExtra("filesToUpload", imagesToUpload);
+                // Android 8
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                    context.startForegroundService(loadingServiceIntent);
+                } else {
+                    context.startService(loadingServiceIntent);
+                }
             }
         }
     }
@@ -465,7 +502,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                 }
             } else {
                 currentDirectoryPath = "";
-                 onBackPressed();
+                onBackPressed();
             }
         }
     }
@@ -517,6 +554,14 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         super.onDestroy();
         if (null != imageLoader) {
             imageLoader.cancel(true);
+        }
+        unregisterBroadcastReceiver();
+    }
+
+    private void unregisterBroadcastReceiver() {
+        if (null != loadingImagesReceiver) {
+            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+            localBroadcastManager.unregisterReceiver(loadingImagesReceiver);
         }
     }
 

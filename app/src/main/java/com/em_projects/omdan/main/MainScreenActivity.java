@@ -67,6 +67,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
 import static android.Manifest.permission.WAKE_LOCK;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -242,6 +243,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         int wakeLockRes = ContextCompat.checkSelfPermission(getApplicationContext(), WAKE_LOCK);
         int writeFileRes = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         int readFilekRes = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        int alertWindow = ContextCompat.checkSelfPermission(getApplicationContext(), SYSTEM_ALERT_WINDOW);
 
         return cameraRes == PackageManager.PERMISSION_GRANTED &&
                 locationRes == PackageManager.PERMISSION_GRANTED &&
@@ -250,11 +252,14 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 readContactRes == PackageManager.PERMISSION_GRANTED &&
                 wakeLockRes == PackageManager.PERMISSION_GRANTED &&
                 writeFileRes == PackageManager.PERMISSION_GRANTED &&
-                readFilekRes == PackageManager.PERMISSION_GRANTED;
+                readFilekRes == PackageManager.PERMISSION_GRANTED &&
+                alertWindow == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{CAMERA, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, INTERNET, READ_CONTACTS, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA, ACCESS_FINE_LOCATION,
+                ACCESS_COARSE_LOCATION, INTERNET, READ_CONTACTS, WAKE_LOCK, WRITE_EXTERNAL_STORAGE,
+                READ_EXTERNAL_STORAGE, SYSTEM_ALERT_WINDOW}, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -280,13 +285,16 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                         Snackbar.make(view, "Permission Denied, You cannot access the application.", Snackbar.LENGTH_LONG).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (hasPermissions(context, CAMERA, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, INTERNET, READ_CONTACTS, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)) {
+                            if (hasPermissions(context, CAMERA, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, INTERNET,
+                                    READ_CONTACTS, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)) {
                                 showMessageOKCancel("You need to allow access to all the permissions",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{CAMERA, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, INTERNET, READ_CONTACTS, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE},
+                                                    requestPermissions(new String[]{CAMERA, ACCESS_FINE_LOCATION,
+                                                                    ACCESS_COARSE_LOCATION, INTERNET, READ_CONTACTS, WAKE_LOCK,
+                                                                    WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, SYSTEM_ALERT_WINDOW},
                                                             PERMISSION_REQUEST_CODE);
                                                 }
                                             }

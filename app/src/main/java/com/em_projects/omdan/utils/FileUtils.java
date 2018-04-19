@@ -2,6 +2,7 @@ package com.em_projects.omdan.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.Base64;
 import android.util.Base64OutputStream;
 import android.util.Log;
@@ -15,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +25,7 @@ import java.util.ArrayList;
  */
 
 // Ref: https://stackoverflow.com/questions/28758014/how-to-convert-a-file-to-base64
+// Ref: https://stackoverflow.com/questions/4178168/how-to-programmatically-move-copy-and-delete-files-and-directories-on-sd
 
 public class FileUtils {
     private static final String TAG = "FileUtils";
@@ -216,4 +220,66 @@ public class FileUtils {
         return lastVal;
     }
 
+    public static boolean moveFile(File src, File dest, String fullDirectory) {
+        try {
+            File dir = new File(fullDirectory);
+            if (false == dir.exists()) {
+                dir.mkdirs();
+            }
+            if (false == dest.exists()) {
+                dest.createNewFile();
+            }
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                Files.move(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } else {
+                if (true == copyFile(src, dest)) {
+                    if (deleteFile(src)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+
+    public static boolean copyFile(File src, File dest) {
+        FileInputStream var2 = null;
+        FileOutputStream var3 = null;
+        try {
+            var2 = new FileInputStream(src);
+            var3 = new FileOutputStream(dest);
+            byte[] var4 = new byte[1024];
+            int var5;
+            while ((var5 = var2.read(var4)) > 0) {
+                var3.write(var4, 0, var5);
+            }
+            return true;
+        } catch (FileNotFoundException ex) {
+            return false;
+        } catch (IOException ex) {
+            return false;
+        } finally {
+            if (null != var2) try {
+                var2.close();
+            } catch (IOException e) {
+            }
+            if (null != var3) try {
+                var3.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    public static boolean deleteFile(File file) {
+        if (true == file.isDirectory()) {
+            return false;
+        }
+        return file.delete();
+    }
 }

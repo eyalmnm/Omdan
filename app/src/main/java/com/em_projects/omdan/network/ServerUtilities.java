@@ -35,6 +35,8 @@ import static java.lang.Thread.sleep;
  * Created by eyal muchtar on 29/07/2017.
  */
 
+// Ref: https://stackoverflow.com/questions/15729598/how-to-add-a-string-array-in-a-json-object
+
 public final class ServerUtilities implements Runnable {
     private static String TAG = "ServerUtilities";
 
@@ -75,16 +77,26 @@ public final class ServerUtilities implements Runnable {
         post(serverUrl, params, listener);
     }
 
-    public void uploadImage(String bitmapBase64String, String directory, String fileName, /*String subDirectory,*/ CommListener listener) throws UnsupportedEncodingException {
+    public void uploadImage(String bitmapBase64String, String directory, String fileName, CommListener listener) throws UnsupportedEncodingException {
         String serverUrl = Dynamics.serverURL + Constants.uploadImage;
         HashMap params = new HashMap();
         params.put(Constants.filePath, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(filePath, "utf-8")); // filePath);
         params.put(Constants.fileName, fileName);
-        //params.put(Constants.subDirectory, subDirectory);
         params.put(Constants.image, bitmapBase64String); // ImageUtils.convertToBase64(bitmap));
 
         post(serverUrl, params, listener);
     }
+
+    // Ref: https://stackoverflow.com/questions/15729598/how-to-add-a-string-array-in-a-json-object
+//    public void uploadImage(ArrayList<String> bitmapBase64Strings, String directory, ArrayList<String> fileNames, CommListener listener) throws UnsupportedEncodingException {
+//        String serverUrl = Dynamics.serverURL + Constants.uploadImages;
+//        HashMap params = new HashMap();
+//        params.put(Constants.filePath, StringUtils.convertToUtf8(directory)); // URLEncoder.encode(filePath, "utf-8")); // filePath);
+//        params.put(Constants.fileNames, fileNames);
+//        params.put(Constants.images, bitmapBase64Strings);
+//
+//        post(serverUrl, params, listener);
+//    }
 
     public void getAllFiles(String directory, CommListener listener) {
         String serverUrl = Dynamics.serverURL + Constants.getFiles;
