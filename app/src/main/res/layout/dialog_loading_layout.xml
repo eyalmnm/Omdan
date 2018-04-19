@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_container"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/loadingDialogTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/uploading_images"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_main"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/loadingDialogFileNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loadingDialogTitleTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="IMG_2018_11_04_20_30"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_reg" />
+    />
+
+    <ProgressBar
+        android:id="@+id/loadingDialogSimpleProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loadingDialogTitleTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
+        android:max="100"
+        android:progress="0" />
+    <!--android:progressDrawable="@drawable/custom_progress" /-->
+
+    <TextView
+        android:id="@+id/loadingDialogCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/loadingDialogSimpleProgressBar"
+        android:layout_below="@id/loadingDialogSimpleProgressBar"
+        android:text="0"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_reg" />
+
+    <TextView
+        android:id="@+id/loadingDialogOfNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/loadingDialogSimpleProgressBar"
+        android:layout_below="@id/loadingDialogSimpleProgressBar"
+        android:text="10"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_reg" />
+
+</RelativeLayout>
