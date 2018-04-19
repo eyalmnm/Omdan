@@ -2,12 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.em_projects.omdan">
 
+    <!-- Location Permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Internet Access Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Contact List Access Permissions -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Storage Access Permissions -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Wake Up Permissions -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- Camera Permissions-->
@@ -16,18 +25,18 @@
     <uses-feature android:name="android.hardware.camera.front" android:required="false" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
-    <!-- Progrees Dialog Permission -->
-    <!--uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /-->
+    <!-- Progress Dialog Permission -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -53,14 +62,19 @@
         <!-- Image Gallery with Camera -->
         <activity
             android:name=".gallery.ImageGalleryActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".gallery.ApiCameraActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+
+        <!-- Images uploading Service (Network) -->
+        <service
+            android:name=".network.ImagesUpLoaderService"
+            android:exported="true" />
 
     </application>
 
