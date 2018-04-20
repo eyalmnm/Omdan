@@ -7,12 +7,16 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -94,6 +98,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
     public static final int FIND_RESULTS = 105;
     private static final String TAG = "MainScreenActivity";
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 250;
     private Context context;
 
 //    private SearchView searchView;
@@ -234,6 +239,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         ft.commit();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean checkPermissions() {
         int cameraRes = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int locationRes = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
@@ -244,6 +250,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         int writeFileRes = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         int readFilekRes = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
         int alertWindow = ContextCompat.checkSelfPermission(getApplicationContext(), SYSTEM_ALERT_WINDOW);
+        boolean overLay = Settings.canDrawOverlays(this);
 
         return cameraRes == PackageManager.PERMISSION_GRANTED &&
                 locationRes == PackageManager.PERMISSION_GRANTED &&
@@ -253,7 +260,8 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 wakeLockRes == PackageManager.PERMISSION_GRANTED &&
                 writeFileRes == PackageManager.PERMISSION_GRANTED &&
                 readFilekRes == PackageManager.PERMISSION_GRANTED &&
-                alertWindow == PackageManager.PERMISSION_GRANTED;
+                alertWindow == PackageManager.PERMISSION_GRANTED &&
+                overLay;
     }
 
     private void requestPermission() {
@@ -262,6 +270,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                 READ_EXTERNAL_STORAGE, SYSTEM_ALERT_WINDOW}, PERMISSION_REQUEST_CODE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -276,10 +285,14 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     boolean wakeLockRes = grantResults[5] == PackageManager.PERMISSION_GRANTED;
                     boolean writeFileRes = grantResults[6] == PackageManager.PERMISSION_GRANTED;
                     boolean readFileRes = grantResults[7] == PackageManager.PERMISSION_GRANTED;
+                    boolean alertWindow = grantResults[8] == PackageManager.PERMISSION_GRANTED;
 
                     if (cameraRes && locationRes && locationCRes && internetRes && contectRes &&
-                            wakeLockRes && writeFileRes && readFileRes) {
+                            wakeLockRes && writeFileRes && readFileRes && alertWindow) {
                         Snackbar.make(view, "Permission Granted, Now you can use the application.", Snackbar.LENGTH_LONG).show();
+                        if (false == Settings.canDrawOverlays(context)) {
+                            permissionToDrawOverlays();
+                        }
                         //continueLoading();
                     } else {
                         Snackbar.make(view, "Permission Denied, You cannot access the application.", Snackbar.LENGTH_LONG).show();
@@ -306,6 +319,29 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
                     }
                 }
         }
+    }
+
+    public void permissionToDrawOverlays() {
+        if (android.os.Build.VERSION.SDK_INT >= 23) {   //Android M Or Over
+            FirebaseCrash.log("permissionToDrawOverlays");
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+            if (android.os.Build.VERSION.SDK_INT >= 23) {   //Android M Or Over
+                if (!checkPermissions()) {
+                    requestPermission();
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void continueLoading() {
@@ -445,7 +481,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
      * Swaps fragments in the main content view
      * if args is null then show all otherwise show the related data
      */
-    private void selectItem(int position , Bundle args) {
+    private void selectItem(int position, Bundle args) {
         Fragment fragment = null;
         boolean addToBackStack = false;
         switch (settings.get(position).getId()) {
