@@ -3,7 +3,10 @@
     style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
+
+    <!-- https://stackoverflow.com/questions/20632852/how-to-create-android-linearlayout-with-rtl-horizontal-orientation -->
 
     <TextView
         android:id="@+id/recordTitleTextView"
@@ -23,14 +26,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/insured_list_name_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/insuredListNameTextView"
@@ -38,17 +51,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 1 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/insured_list_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
@@ -62,8 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/record_date_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/recordDateTextView"
@@ -71,19 +83,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 2 data"
                     android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/record_date_title"
-                    android:textSize="@dimen/text_size_reg" />
-
 
             </LinearLayout>
 
@@ -96,8 +97,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/record_time_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/recordTimeTextView"
@@ -105,17 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 3 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/record_time_title"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
@@ -129,8 +129,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/customer_name_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/customerNameTextView"
@@ -138,17 +147,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 4 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/customer_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
@@ -162,8 +161,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/employee_name_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/employeeNameTextView"
@@ -171,17 +179,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 5 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/employee_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
@@ -195,8 +193,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/suit_name_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/suitNameTextView"
@@ -204,17 +211,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 6 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/suit_name_title"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
@@ -228,8 +225,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="@string/file_status_name_title"
+                    android:textSize="@dimen/text_size_reg" />
 
                 <TextView
                     android:id="@+id/fileStatusNameTextView"
@@ -237,19 +243,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
                     android:text="The Data 7 data"
                     android:textSize="@dimen/text_size_reg" />
 
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="@string/file_status_name_title"
-                    android:textSize="@dimen/text_size_reg" />
-
             </LinearLayout>
 
             <View
@@ -261,6 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -269,19 +266,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 8 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 8"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 8 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -293,6 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -301,19 +297,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 9 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 9"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 9 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -333,19 +327,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 10 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
+                    android:layoutDirection="rtl"
                     android:text="Data 10"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 10 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -357,6 +350,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -365,19 +359,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 11 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 11"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 11 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -389,6 +381,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -397,19 +390,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 12 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 12"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 12 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -421,6 +412,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -429,19 +421,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 13 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 13"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 13 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -453,6 +443,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -461,19 +452,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 14 data"
-                    android:textSize="@dimen/text_size_reg" />
-
-                <TextView
-                    style="@style/AppTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right"
                     android:text="Data 14"
                     android:textSize="@dimen/text_size_reg" />
 
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="The Data 14 data"
+                    android:textSize="@dimen/text_size_reg" />
+
             </LinearLayout>
 
             <View
@@ -485,6 +474,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -493,8 +483,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="The Data 15 data"
+                    android:text="Data 15"
                     android:textSize="@dimen/text_size_reg" />
 
                 <TextView
@@ -502,8 +491,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:gravity="right"
-                    android:text="Data 15"
+                    android:text="The Data 15 data"
                     android:textSize="@dimen/text_size_reg" />
 
             </LinearLayout>
