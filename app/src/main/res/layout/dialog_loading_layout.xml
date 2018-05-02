@@ -63,4 +63,12 @@
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/text_size_reg" />
 
+    <Button
+        android:id="@+id/abortButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_below="@id/loadingDialogOfNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/abort" />
 </RelativeLayout>
