@@ -26,7 +26,6 @@ import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.em_projects.omdan.R;
-import com.em_projects.omdan.utils.StringUtils;
 import com.em_projects.omdan.utils.TimeUtils;
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -127,7 +126,7 @@ public class ApiCameraActivity extends Activity {
             recordId = dataIntent.getStringExtra("recordId");
             subDir = dataIntent.getStringExtra("subDir");
         }
-        if (StringUtils.isNullOrEmpty(recordId) || null == subDir) {
+        if ((null == recordId) || (null == subDir)) {
             throw new NullPointerException("Missing data in ApiCameraActivity. Missing recordId and/or subDir");
         }
 

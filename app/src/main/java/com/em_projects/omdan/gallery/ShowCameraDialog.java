@@ -72,8 +72,9 @@ public class ShowCameraDialog extends DialogFragment implements View.OnClickList
                 return false;
             }
         });
-        recordIdAutoComplete.setAdapter(new ArrayAdapter<String>(getActivity(),
-                R.layout.layout_category_spinner_item, subDirectoriesName));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.layout_category_spinner_item, subDirectoriesName);
+        recordIdAutoComplete.setAdapter(adapter);
         recordIdAutoComplete.setThreshold(1);
         recordIdAutoComplete.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -84,10 +84,10 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
  * Created by eyalmuchtar on 13/09/2017.
  */
 
-public class MainScreenActivity extends AppCompatActivity implements FindRecordFragment.FindRecordListener,
-        ShowAllRecordsFragment.SelectRecordListener, FindResultsFragment.FindResultsListener,
-        ServerConnectionDialog.OnSetServerConnectionListener, LoginDialog.OnSetLoginDataListener,
-        LoginFailedDialog.OnLoginFailedListener {
+public class MainScreenActivity extends AppCompatActivity implements
+        FindRecordFragment.FindRecordListener, ShowAllRecordsFragment.SelectRecordListener,
+        FindResultsFragment.FindResultsListener, ServerConnectionDialog.OnSetServerConnectionListener,
+        LoginDialog.OnSetLoginDataListener, LoginFailedDialog.OnLoginFailedListener {
 
     // Setting IDs
     public static final int FIND_RECORD = 100;
@@ -357,7 +357,7 @@ public class MainScreenActivity extends AppCompatActivity implements FindRecordF
         }
     }
 
-    private void showLoginDialog() {
+    public void showLoginDialog() {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {

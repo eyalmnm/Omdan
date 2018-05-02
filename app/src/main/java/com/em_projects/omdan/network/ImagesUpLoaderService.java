@@ -119,6 +119,7 @@ public class ImagesUpLoaderService extends Service {
     private void sendBroadcast() {
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         Intent intent = new Intent(ImageGalleryActivity.loadingImagesReceiverAction);
+        intent.putParcelableArrayListExtra("filesToUpload", filesToUpload);
         localBroadcastManager.sendBroadcast(intent);
     }
 

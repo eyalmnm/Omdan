@@ -58,6 +58,7 @@ import java.util.List;
 public class ImageGalleryActivity extends Activity implements View.OnClickListener,
         DeleteItemsDialog.OnDeleteConfirmListener, ShowCameraDialog.ShowCameraDialogListener,
         SaveItemsDialog.OnSaveToServerConfirmListener {
+
     private static final String TAG = "ImageGallery";
     // Camera Properties
     private static final int OPEN_CAMERA_REQUEST_CODE = 1234;
@@ -88,6 +89,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
     private int normalBackgroundColor;
     private int selectedBackgroundColor;
     private ProgressDialog progressDialog;
+
     private BroadcastReceiver loadingImagesReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -96,11 +98,31 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                     toggleSelectAll();
                 }
                 loadBitMap(currentDirectoryPath);
-//                imageLoader = new ImageLoader();
-//                imageLoader.execute(Constants.BASE_PATH + File.separator + currentDirectoryPath);
+                ArrayList<ImageGalleryFile> files = intent.getParcelableArrayListExtra("filesToUpload");
+                showUploadedFilesList(files);
             }
         }
     };
+
+    private void showUploadedFilesList(ArrayList<ImageGalleryFile> filesToUpload) {
+        if (null != filesToUpload && 0 < filesToUpload.size()) {
+            ArrayList<String> fileNames = getFileNamesArray(filesToUpload);
+            Bundle args = new Bundle();
+            args.putStringArrayList("filesToUpload", fileNames);
+            FragmentManager fm = getFragmentManager();
+            UploadedImagesDialog dialog = new UploadedImagesDialog();
+            dialog.setArguments(args);
+            dialog.show(fm, "UploadedImagesDialog");
+        }
+    }
+
+    private ArrayList<String> getFileNamesArray(ArrayList<ImageGalleryFile> filesToUpload) {
+        ArrayList<String> namesArray = new ArrayList<>();
+        for (ImageGalleryFile file : filesToUpload) {
+            namesArray.add(file.getFileName());
+        }
+        return namesArray;
+    }
 
     private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -311,16 +333,26 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         FragmentManager fm = getFragmentManager();
         ShowCameraDialog dialog = new ShowCameraDialog();
         Bundle args = new Bundle();
-        args.putString("data", currentRecordId);
-        args.putStringArrayList("additions", getSubRecords(currentRecordId));
+        args.putString("data", currentDirectoryPath); // currentRecordId);
+        args.putStringArrayList("additions", getSubRecords(currentDirectoryPath)); //(currentRecordId));
         dialog.setArguments(args);
         dialog.show(fm, "ShowCameraDialog");
     }
 
-    private ArrayList<String> getSubRecords(String recordId) {
-        String path = Constants.BASE_PATH + File.separator + recordId;
+    private ArrayList<String> getSubRecords(String currentDirectoryPath) {
+        String path = Constants.BASE_PATH + currentDirectoryPath;
+        Log.d(TAG, "Path: " + path + " recordId: " + currentDirectoryPath);
         ArrayList<String> allSubs = new ArrayList<>();
-        allSubs.add(getResources().getString(R.string.root));
+        if (true == StringUtils.isNullOrEmpty(currentDirectoryPath)) {
+            allSubs.add(getResources().getString(R.string.root));
+        } else {
+            String displayName = currentDirectoryPath;
+            if (displayName.startsWith(File.pathSeparator)) {
+                displayName = displayName.substring(1);
+            }
+            allSubs.add(displayName);
+            //allSubs.add(subDirectory);
+        }
         if (false == StringUtils.isNullOrEmpty(path)) {
             ArrayList<String> dirs = FileUtils.getDirectories(path);
             if (null != dirs) {
