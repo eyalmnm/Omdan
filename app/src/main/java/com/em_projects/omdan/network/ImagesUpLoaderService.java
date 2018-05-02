@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -67,6 +68,7 @@ public class ImagesUpLoaderService extends Service {
     private WindowManager windowManager;
     private WindowManager.LayoutParams mainWindow;
     private View floatingWidget;
+    private Button abortButton;
     private TextView loadingDialogFileNameTextView;
     private ProgressBar loadingDialogSimpleProgressBar;
     private TextView loadingDialogCurrent;
@@ -81,6 +83,8 @@ public class ImagesUpLoaderService extends Service {
     private File src;
     private String baseDirectory;
     private File dest;
+
+    private boolean abortUpload = false;
 
 
     @Override
@@ -102,7 +106,7 @@ public class ImagesUpLoaderService extends Service {
         serviceHandler = new Handler(serviceLopper) {
             public void handleMessage(Message msg) {
                 Log.d(TAG, "New message arraived");
-                if (filesToUpload.size() > i) {
+                if ((filesToUpload.size() > i) && (false == abortUpload)) {
                     Log.d(TAG, "loading image: " + i);
                     uploadFile();
                     i++;
@@ -252,10 +256,19 @@ public class ImagesUpLoaderService extends Service {
         // Loading UI Components
         inflater = LayoutInflater.from(this);
         floatingWidget = inflater.inflate(R.layout.dialog_loading_layout, null);
+        abortButton = floatingWidget.findViewById(R.id.abortButton);
         loadingDialogFileNameTextView = floatingWidget.findViewById(R.id.loadingDialogFileNameTextView);
         loadingDialogSimpleProgressBar = floatingWidget.findViewById(R.id.loadingDialogSimpleProgressBar);
         loadingDialogCurrent = floatingWidget.findViewById(R.id.loadingDialogCurrent);
         loadingDialogOfNumber = floatingWidget.findViewById(R.id.loadingDialogOfNumber);
+
+        abortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abortUpload = true;
+                hidesLoadingDialog();
+            }
+        });
 
         floatingWidget.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
