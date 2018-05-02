@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:windowSoftInputMode="adjustResize|adjustPan">
+
+    <TextView
+        android:id="@+id/uploadedImagesTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/dialog_uploaded_images_title"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_main" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp" />
+
+    <ListView
+        android:id="@+id/uploadedImagesListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/ok"
+        android:textAllCaps="true" />
+</LinearLayout>

@@ -133,5 +133,18 @@
 
     <!-- Loading Dialog -->
     <string name="uploading_images">Uploading the selected images</string>
+    <string name="abort">Abort</string>
+
+    <!-- Uploaded Images Dialog -->
+    <string name="dialog_uploaded_images_title">%d Files uploded</string>
+
+    <!-- Images List Request Dialog -->
+    <string name="images_list_request_title">Download Images List</string>
+    <string name="images_list_request_message">This file may contains images stored on server. \nDo you interested to get the images list?</string>
+    <string name="directory_not_found">Directory Not Found</string>
+
+    <!-- Images List Dialog -->
+    <string name="images_list_title">Images List</string>
+    <string name="close_images_list">Close</string>
 
 </resources>

@@ -133,5 +133,19 @@
 
     <!-- Loading Dialog -->
     <string name="uploading_images">מעלה תמונות לשרת</string>
+    <string name="abort">הפסק</string>
+
+    <!-- Uploaded Images Dialog -->
+    <string name="dialog_uploaded_images_title">%d קבצים הועלו</string>
+
+    <!-- Images List Request Dialog -->
+    <string name="images_list_request_title">הורד רשימת תמונות</string>
+    <string name="images_list_request_message">תיק זה עלול להכיל תמונות ששמורות בשרת. \nברצונך להוריד רשימת תמונות זו?</string>
+    <string name="directory_not_found">תיקיה לא נמצאה</string>
+
+    <!-- Images List Dialog -->
+    <string name="images_list_title">רשימת תמונות</string>
+    <string name="close_images_list">סגור</string>
+
 
 </resources>
