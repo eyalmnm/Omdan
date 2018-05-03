@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Constants;
+import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.gallery.ImageGalleryActivity;
 import com.em_projects.omdan.utils.FileUtils;
+import com.em_projects.omdan.utils.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,27 +78,31 @@ public class OpenGaleryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-//                    if (true == FileUtils.containsImages(Constants.BASE_PATH + directories.get(i))) {
-                        Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
-                        intent.putExtra("data", directories.get(i));
-                        intent.putExtra("showAsGallery", true);
-                        startActivity(intent);
-//                    } else {
-//                        Toast.makeText(getActivity(), R.string.directory_contains_no_images, Toast.LENGTH_SHORT).show();
-//                    }
+                    Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
+                    intent.putExtra("data", directories.get(i));
+                    intent.putExtra("showAsGallery", true);
+                    startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "onItemClick", e);
                 }
             }
         });
 
-        baseDir = new File(Constants.BASE_PATH);
+        String currentRecord = Dynamics.getInstance(context).getCurrentRecordId();
+        if (false == StringUtils.isNullOrEmpty(currentRecord)) {
+            currentRecord = File.separator + currentRecord;
+        } else {
+            currentRecord = "";
+        }
+        baseDir = new File(Constants.BASE_PATH + currentRecord);
         if (true == baseDir.exists()) {
-//            FileUtils.findDirectories(baseDir, "", directories);
-//            adapter.notifyDataSetChanged();
             directoriesLoader();
         } else {
             Toast.makeText(getActivity(), R.string.empty_archive_msg, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
+            intent.putExtra("data", currentRecord);
+            intent.putExtra("showAsGallery", true);
+            startActivity(intent);
         }
     }
 

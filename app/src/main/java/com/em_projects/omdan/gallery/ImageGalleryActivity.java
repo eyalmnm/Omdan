@@ -214,7 +214,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
 
         initButtons();
 
-        currentDirectoryPath = "";
+        currentDirectoryPath = currentRecordId;
         initImagesGrid();
 
         registerBroadcastReceiver();
@@ -282,6 +282,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                 adapter.resetSelectedPositions();
             }
         }
+        String title = currentDirectoryPath;
         titleTextView.setText(currentDirectoryPath);
         imageLoader = new ImageLoader();
         imageLoader.execute(Constants.BASE_PATH + File.separator + currentDirectoryPath);
@@ -518,6 +519,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         } else {
             subDirectory = subRecord;
         }
+        currentRecordId = recordId;
         dialogIsShown = true;
         cameraButton.performClick();
     }
