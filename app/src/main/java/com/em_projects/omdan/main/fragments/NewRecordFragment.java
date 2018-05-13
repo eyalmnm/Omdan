@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.em_projects.omdan.R;
-import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.dialogs.CreateNewRecordDialog;
 import com.em_projects.omdan.gallery.ImageGalleryActivity;
 import com.em_projects.omdan.main.models.HistoryDataHolder;
@@ -146,13 +145,15 @@ public class NewRecordFragment extends Fragment implements TextWatcher {
             recordTitleTextView.setText(context.getString(R.string.new_record_id_title, dataHolder.getRecord()));
         } else {
             showCreateNewRecordDialog();
+            recordTitleTextView.setText(getString(R.string.new_record_id_title, ""));
         }
     }
 
     public void createNewRecord() {
         // TODO Implement this method.
-        recordTitleTextView.setText(getString(R.string.new_record_id_title,
-                Dynamics.getInstance(context).getCurrentRecordId()));
+//        recordTitleTextView.setText(getString(R.string.new_record_id_title,
+//                Dynamics.getInstance(context).getCurrentRecordId()));
+        recordTitleTextView.setText(getString(R.string.new_record_id_title, getRecordId()));
     }
 
     public void cancelCreation() {

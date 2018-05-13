@@ -344,16 +344,16 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         String path = Constants.BASE_PATH + currentDirectoryPath;
         Log.d(TAG, "Path: " + path + " recordId: " + currentDirectoryPath);
         ArrayList<String> allSubs = new ArrayList<>();
-        if (true == StringUtils.isNullOrEmpty(currentDirectoryPath)) {
+//        if (true == StringUtils.isNullOrEmpty(currentDirectoryPath)) {
             allSubs.add(getResources().getString(R.string.root));
-        } else {
-            String displayName = currentDirectoryPath;
-            if (displayName.startsWith(File.pathSeparator)) {
-                displayName = displayName.substring(1);
-            }
-            allSubs.add(displayName);
-            //allSubs.add(subDirectory);
-        }
+//        } else {
+//            String displayName = currentDirectoryPath;
+//            if (displayName.startsWith(File.pathSeparator)) {
+//                displayName = displayName.substring(1);
+//            }
+//            allSubs.add(displayName);
+//            //allSubs.add(subDirectory);
+//        }
         if (false == StringUtils.isNullOrEmpty(path)) {
             ArrayList<String> dirs = FileUtils.getDirectories(path);
             if (null != dirs) {
@@ -395,11 +395,29 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
             }
             List selectedItems = adapter.getSelectedItems();
             if (selectedItems.size() == 1) {
+                // Handle Gallery Selection
+                int position = (int) selectedItems.get(0);
+                ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
+                if (imageGalleryFile.isDirectory()) {
+                    ArrayList<ImageGalleryFile> imagesToUpload = new ArrayList<>();
+                    ArrayList<String> imagesNameToUpload = FileUtils.getFilesListInDirectory(imageGalleryFile.getFullPath());
+                    imagesToUpload = findImagesGalleryFiles(imageGalleryFile.getFullPath(), imagesNameToUpload);
+                    Intent loadingServiceIntent = new Intent(context, ImagesUpLoaderService.class);
+                    loadingServiceIntent.putExtra("filesToUpload", imagesToUpload);
+                    // Android 8
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                        context.startForegroundService(loadingServiceIntent);
+                    } else {
+                        context.startService(loadingServiceIntent);
+                    }
+                    return;
+                }
+                // Handle Gallery Selection
                 ArrayList<String> toBeUploaded = new ArrayList<>();
                 showProgressDialog();
                 try {
-                    int position = (int) selectedItems.get(0);
-                    ImageGalleryFile imageGalleryFile = galleryFiles.get(position);
+                    position = (int) selectedItems.get(0);
+                    imageGalleryFile = galleryFiles.get(position);
                     if (true == imageGalleryFile.isDirectory()) return;
                     toBeUploaded.add(galleryFiles.get(position).toString());
                     String bitmapBase64String = FileUtils.getStringFile(new File(imageGalleryFile.getFullPath()));
@@ -476,6 +494,28 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                 }
             }
         }
+    }
+
+    private ArrayList<ImageGalleryFile> findImagesGalleryFiles(String dirName, ArrayList<String> imagesNameToUpload) {
+        ArrayList<ImageGalleryFile> imageGalleryFiles = new ArrayList<>(); // TODO Check this method.
+        File galleryDirectory = new File(dirName);
+        ArrayList<ImageGalleryFile> imageGalleryFileArrayList = convertToImageGalleryFileArray(galleryDirectory.listFiles());
+        for (String filename : imagesNameToUpload) {
+            for (ImageGalleryFile imageGalleryFile : imageGalleryFileArrayList) {
+                if (true == imageGalleryFile.getFullPath().equalsIgnoreCase(filename)) {
+                    imageGalleryFiles.add(imageGalleryFile);
+                }
+            }
+        }
+        return imageGalleryFiles;
+    }
+
+    private ArrayList<ImageGalleryFile> convertToImageGalleryFileArray(File[] filesInDirectory) {
+        ArrayList<ImageGalleryFile> imageGalleryFiles = new ArrayList<>(filesInDirectory.length);
+        for (File file : filesInDirectory) {
+            imageGalleryFiles.add(new ImageGalleryFile(file));
+        }
+        return imageGalleryFiles;
     }
 
     private void showDeleteDialog() {

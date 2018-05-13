@@ -283,4 +283,16 @@ public class FileUtils {
         }
         return file.delete();
     }
+
+    public static ArrayList<String> getFilesListInDirectory(String directory) {
+        File dir = new File(directory);
+        File[] files = dir.listFiles();
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (int i = 0; i < files.length; i++) {
+            if (false == files[i].isDirectory()) {
+                fileNames.add(files[i].getAbsolutePath());
+            }
+        }
+        return fileNames;
+    }
 }

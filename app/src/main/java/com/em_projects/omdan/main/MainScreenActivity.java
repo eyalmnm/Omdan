@@ -22,7 +22,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +107,7 @@ public class MainScreenActivity extends AppCompatActivity implements
     private DrawerLayout settingLayout;
     private ListView left_drawer;
     private ArrayList<Setting> settings;
-    private Toolbar toolbar;
+    //    private Toolbar toolbar;
     private CharSequence drawerTitle;
     private CharSequence title;
     private android.support.v7.app.ActionBarDrawerToggle drawerToggle;
@@ -155,7 +154,7 @@ public class MainScreenActivity extends AppCompatActivity implements
 
         currentRecordId = Dynamics.getInstance(context).getCurrentRecordId();
 
-        setupToolbar();
+//        setupToolbar();
 
         settings = new ArrayList<Setting>();
         settings.add(new Setting(getString(R.string.find_record), R.mipmap.ic_launcher_round, FIND_RECORD));
@@ -164,9 +163,9 @@ public class MainScreenActivity extends AppCompatActivity implements
         settings.add(new Setting(getString(R.string.show_all), R.mipmap.ic_launcher_round, SHOW_ALL_RECORDS));
         settings.add(new Setting(getString(R.string.open_galery), R.mipmap.ic_launcher_round, OPEN_GALERY));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         left_drawer.setAdapter(new SettingAdapter());
         left_drawer.setOnItemClickListener(new DrawerItemClickListener());
@@ -426,10 +425,10 @@ public class MainScreenActivity extends AppCompatActivity implements
                 .show();
     }
 
-    void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//    void setupToolbar() {
+//        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 //        searchView = toolbar.findViewById(R.id.searchView);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -444,12 +443,12 @@ public class MainScreenActivity extends AppCompatActivity implements
 //                return false;
 //            }
 //        });
-    }
+//    }
 
     void setupDrawerToggle() {
-        drawerToggle = new android.support.v7.app.ActionBarDrawerToggle(this, settingLayout, toolbar, R.string.app_name, R.string.app_name);
+        //drawerToggle = new android.support.v7.app.ActionBarDrawerToggle(this, settingLayout, toolbar, R.string.app_name, R.string.app_name);
         //This is necessary to change the icon of the Drawer Toggle upon state change.
-        drawerToggle.syncState();
+        //drawerToggle.syncState();
     }
 
     @Override

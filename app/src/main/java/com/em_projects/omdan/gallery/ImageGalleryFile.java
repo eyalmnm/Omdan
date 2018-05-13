@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.em_projects.omdan.config.Constants;
 
+import java.io.File;
+
 /**
  * Created by eyalmuchtar on 11/26/17.
  */
@@ -30,6 +32,12 @@ public class ImageGalleryFile implements Parcelable {
         this.fullPath = fullPath;
         this.fileName = fileName;
         this.isDirectory = isDirectory;
+    }
+
+    public ImageGalleryFile(File file) {
+        fullPath = file.getAbsolutePath();
+        fileName = file.getName();
+        isDirectory = file.isDirectory();
     }
 
     protected ImageGalleryFile(Parcel in) {
