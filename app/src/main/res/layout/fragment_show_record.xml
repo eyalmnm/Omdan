@@ -257,7 +257,7 @@
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary" />
 
-            <LinearLayout
+            <!--LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin_sides"
@@ -506,7 +506,7 @@
                     android:text="Data 15"
                     android:textSize="@dimen/text_size_reg" />
 
-            </LinearLayout>
+            </LinearLayout-->
 
             <View
                 android:layout_width="match_parent"

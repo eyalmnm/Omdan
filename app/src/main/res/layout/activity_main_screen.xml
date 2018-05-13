@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <!--LinearLayout
                 android:id="@+id/container_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                     android:id="@+id/tool_bar"
                     layout="@layout/toolbar" />
 
-            </LinearLayout>
+            </LinearLayout-->
 
             <!-- https://stackoverflow.com/questions/22518018/android-how-to-create-radiobuttons-like-a-row-of-buttons -->
             <RadioGroup
@@ -82,7 +82,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="75dp"
         android:background="#111"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"

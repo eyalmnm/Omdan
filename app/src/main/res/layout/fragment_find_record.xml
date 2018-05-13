@@ -82,7 +82,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="data 2"
+                        android:text="נתון 2"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
@@ -104,7 +104,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="data 3"
+                        android:text="נתון 3"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
@@ -126,7 +126,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="data 4"
+                        android:text="נתון 4"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="data 5"
+                        android:text="נתון 5"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
