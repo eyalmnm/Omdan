@@ -341,7 +341,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
     }
 
     private ArrayList<String> getSubRecords(String currentDirectoryPath) {
-        String path = Constants.BASE_PATH + currentDirectoryPath;
+        String path = Constants.BASE_PATH + File.separator + currentDirectoryPath;
         Log.d(TAG, "Path: " + path + " recordId: " + currentDirectoryPath);
         ArrayList<String> allSubs = new ArrayList<>();
 //        if (true == StringUtils.isNullOrEmpty(currentDirectoryPath)) {

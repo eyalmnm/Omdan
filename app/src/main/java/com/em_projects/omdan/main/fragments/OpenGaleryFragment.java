@@ -79,7 +79,7 @@ public class OpenGaleryFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
-                    intent.putExtra("data", directories.get(i));
+                    intent.putExtra("data", Dynamics.getInstance(context).getCurrentRecordId() + directories.get(i));
                     intent.putExtra("showAsGallery", true);
                     startActivity(intent);
                 } catch (Exception e) {
@@ -98,6 +98,7 @@ public class OpenGaleryFragment extends Fragment {
         if (true == baseDir.exists()) {
             directoriesLoader();
         } else {
+            baseDir.mkdirs();
             Toast.makeText(getActivity(), R.string.empty_archive_msg, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
             intent.putExtra("data", currentRecord);
@@ -191,7 +192,7 @@ public class OpenGaleryFragment extends Fragment {
                 view = inflater.inflate(R.layout.simple_list_item_1, null);
             }
             TextView theTextView = view.findViewById(R.id.theTextView);
-            theTextView.setText("omdan" + directories.get(i).trim() + "");
+            theTextView.setText(Dynamics.getInstance(context).getCurrentRecordId() + directories.get(i).trim() + "");
             return view;
         }
     }
