@@ -191,7 +191,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         if (true == intent.hasExtra("data")) {
             currentRecordId = intent.getStringExtra("data");
             showAsGallery = intent.getBooleanExtra("showAsGallery", false);
-            Log.e(TAG, "OnCreate - DO NOT FORGET TO USE CURRENT RECORD ID FOR THE CAMERA DIALOG AND THE ORIGIN IF FROM RECORD"); // TODO remove
+            // Log.e(TAG, "OnCreate - DO NOT FORGET TO USE CURRENT RECORD ID FOR THE CAMERA DIALOG AND THE ORIGIN IF FROM RECORD"); // TODO remove
         } else {
             throw new NullPointerException("PLEASE DO NOT FORGET TO SEND THE CURRENT RECORD ID AND THE ORIGIN IF FROM RECORD");
         }
