@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_clear_white_18dp"/>
+                android:src="@drawable/ic_clear_white_18dp" />
         </LinearLayout>
 
         <ScrollView
@@ -82,12 +82,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="נתון 2"
+                        android:text="@string/insured_list_name_title"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/data_2_EditText"
+                        android:id="@+id/insuredNameEditText"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -104,12 +104,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="נתון 3"
+                        android:text="@string/customer_name_title"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/data_3_EditText"
+                        android:id="@+id/customerEditText"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -126,12 +126,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="נתון 4"
+                        android:text="@string/employee_name_title"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/data_4_EditText"
+                        android:id="@+id/employeeEditText"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -148,12 +148,56 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="נתון 5"
+                        android:text="@string/suit_name_title"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/suitNumberEditText"
+                    style="@style/textInputLayoutEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/file_status_name_title"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/data_5_EditText"
+                        android:id="@+id/fileStatusEditText"
+                        style="@style/textInputLayoutEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/creation_date_title"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/creationDateTextView"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

@@ -4,6 +4,6 @@
     style="@style/AppTextView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="start"
+    android:gravity="left"
     android:padding="5dip"
     android:textSize="@dimen/text_size_reg" />

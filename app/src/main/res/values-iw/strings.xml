@@ -64,6 +64,7 @@
     <string name="find_record_by_data">חפש תיק</string>
     <string name="file_number_title">מספר תיק</string>>
     <string name="file_not_found">לא נמצאה רשומה תואמת לחיפוש</string>
+    <string name="creation_date_title">תאריך יצירה</string>
 
     <!-- Find results fragment -->
     <string name="choose_record_from_list">בחר רשומה מתוך הרשימה</string>
