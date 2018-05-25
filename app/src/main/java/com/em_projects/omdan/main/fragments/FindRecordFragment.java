@@ -2,6 +2,7 @@ package com.em_projects.omdan.main.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +20,10 @@ import android.widget.Toast;
 import com.em_projects.omdan.R;
 import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.utils.StringUtils;
+import com.em_projects.omdan.utils.TimeUtils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,19 +32,25 @@ import java.util.Map;
  * Created by eyalmuchtar on 15/09/2017.
  */
 
-public class FindRecordFragment extends Fragment {
+public class FindRecordFragment extends Fragment implements DatePickerDialog.OnDatePickedListener {
     public static final String TAG = "FindRecordFragment";
 
     private Context context;
     private FindRecordListener listener;
     // UI Components
     private EditText fileNumberEditText;
-    private EditText data_2_EditText;
-    private EditText data_3_EditText;
-    private EditText data_4_EditText;
-    private EditText data_5_EditText;
+    private EditText insuredNameEditText;
+    private EditText customerEditText;
+    private EditText employeeEditText;
+    private EditText suitNumberEditText;
+    private EditText fileStatusEditText;
+    private TextView creationDateTextView;
     private ImageButton searchButton;
     private ImageButton clearAllButton;
+
+    // UI Helper
+    private long creationDate;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -59,12 +69,15 @@ public class FindRecordFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        long now = System.currentTimeMillis();
         fileNumberEditText = (EditText) view.findViewById(R.id.fileNumberEditText);
-        data_2_EditText = (EditText) view.findViewById(R.id.data_2_EditText);
-        data_3_EditText = (EditText) view.findViewById(R.id.data_3_EditText);
-        data_4_EditText = (EditText) view.findViewById(R.id.data_4_EditText);
-        data_5_EditText = (EditText) view.findViewById(R.id.data_5_EditText);
+        insuredNameEditText = (EditText) view.findViewById(R.id.insuredNameEditText);
+        customerEditText = (EditText) view.findViewById(R.id.customerEditText);
+        employeeEditText = (EditText) view.findViewById(R.id.employeeEditText);
+        suitNumberEditText = (EditText) view.findViewById(R.id.suitNumberEditText);
+        fileStatusEditText = (EditText) view.findViewById(R.id.fileStatusEditText);
+        creationDateTextView = (TextView) view.findViewById(R.id.creationDateTextView);
+        creationDateTextView.setText(TimeUtils.getDateStr(now));
 
         searchButton = (ImageButton) view.findViewById(R.id.searchButton);
         clearAllButton = (ImageButton) view.findViewById(R.id.clearAllButton);
@@ -83,7 +96,6 @@ public class FindRecordFragment extends Fragment {
                     if (null != listener) {
                         listener.findRecordByData(dataMap);
                     }
-                    // clearData();
                 } else {
                     Toast.makeText(context, R.string.missing_data, Toast.LENGTH_SHORT).show();
                 }
@@ -94,10 +106,12 @@ public class FindRecordFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fileNumberEditText.setText(null);
-                data_2_EditText.setText(null);
-                data_3_EditText.setText(null);
-                data_4_EditText.setText(null);
-                data_5_EditText.setText(null);
+                insuredNameEditText.setText(null);
+                customerEditText.setText(null);
+                employeeEditText.setText(null);
+                suitNumberEditText.setText(null);
+                fileStatusEditText.setText(null);
+                creationDateTextView.setText(null);
             }
         });
 
@@ -109,7 +123,7 @@ public class FindRecordFragment extends Fragment {
             }
         });
 
-        data_2_EditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        insuredNameEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 searchButton.performClick();
@@ -117,7 +131,7 @@ public class FindRecordFragment extends Fragment {
             }
         });
 
-        data_3_EditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        customerEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 searchButton.performClick();
@@ -125,7 +139,7 @@ public class FindRecordFragment extends Fragment {
             }
         });
 
-        data_4_EditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        employeeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 searchButton.performClick();
@@ -133,46 +147,83 @@ public class FindRecordFragment extends Fragment {
             }
         });
 
-        data_5_EditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        suitNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 searchButton.performClick();
                 return true;
+            }
+        });
+
+        fileStatusEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                searchButton.performClick();
+                return true;
+            }
+        });
+
+        creationDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePickerDialog();
             }
         });
     }
 
     private void clearData() {
         fileNumberEditText.setText(null);
-        data_2_EditText.setText(null);
-        data_3_EditText.setText(null);
-        data_4_EditText.setText(null);
-        data_5_EditText.setText(null);
+        insuredNameEditText.setText(null);
+        customerEditText.setText(null);
+        employeeEditText.setText(null);
+        suitNumberEditText.setText(null);
+        fileStatusEditText.setText(null);
+        creationDateTextView.setText(null);
     }
 
     private Map<String, String> getAllData() {
         String fileNumber = fileNumberEditText.getText().toString();
-        String data_2 = data_2_EditText.getText().toString();
-        String data_3 = data_3_EditText.getText().toString();
-        String data_4 = data_4_EditText.getText().toString();
-        String data_5 = data_5_EditText.getText().toString();
+        String insuredName = insuredNameEditText.getText().toString();
+        String customerName = customerEditText.getText().toString();
+        String employeeName = employeeEditText.getText().toString();
+        String suitNumber = suitNumberEditText.getText().toString();
+        String fileStatus = fileStatusEditText.getText().toString();
+        String creationDate = String.valueOf(this.creationDate);
 
         if (true == StringUtils.isNullOrEmpty(fileNumber) &&
-                true == StringUtils.isNullOrEmpty(data_2) &&
-                true == StringUtils.isNullOrEmpty(data_3) &&
-                true == StringUtils.isNullOrEmpty(data_4) &&
-                true == StringUtils.isNullOrEmpty(data_5)) {
+                true == StringUtils.isNullOrEmpty(insuredName) &&
+                true == StringUtils.isNullOrEmpty(customerName) &&
+                true == StringUtils.isNullOrEmpty(employeeName) &&
+                true == StringUtils.isNullOrEmpty(suitNumber) &&
+                true == StringUtils.isNullOrEmpty(fileStatus)) {
             return null;
         }
 
-        HashMap dataMap = new HashMap(5);
+        HashMap dataMap = new HashMap(6);
         dataMap.put(Constants.fileNumber, fileNumber);
-        dataMap.put("data_2", data_2);
-        dataMap.put("data_3", data_3);
-        dataMap.put("data_4", data_4);
-        dataMap.put("data_5", data_5);
+        dataMap.put(Constants.insuredName, insuredName);
+        dataMap.put(Constants.customer, customerName);
+        dataMap.put(Constants.employee, employeeName);
+        dataMap.put(Constants.suitNumber, suitNumber);
+        dataMap.put(Constants.fileStatus, fileStatus);
+        dataMap.put(Constants.creationDate, creationDate);
 
         return dataMap;
+    }
+
+    private void openDatePickerDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        DatePickerDialog datePickerDialog = new DatePickerDialog();
+        datePickerDialog.show(fragmentManager, "DatePickerDialog");
+    }
+
+    @Override
+    public void onDatePicked(Date date) {
+        creationDateTextView.setText(TimeUtils.getDateStr(date));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        creationDate = date.getTime();
     }
 
     @Override
@@ -182,9 +233,11 @@ public class FindRecordFragment extends Fragment {
     }
 
     public interface FindRecordListener {
-        public void findRecordById(String recNumber);
-        public void findRecordByData(Map<String, String> dataMap);
-        public void findRecordCancelled();
+        void findRecordById(String recNumber);
+
+        void findRecordByData(Map<String, String> dataMap);
+
+        void findRecordCancelled();
     }
 
 }

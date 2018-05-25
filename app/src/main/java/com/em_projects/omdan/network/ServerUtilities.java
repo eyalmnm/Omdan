@@ -69,10 +69,17 @@ public final class ServerUtilities implements Runnable {
         post(serverUrl, params, listener);
     }
 
-    public void findFiles(String fileNumber, CommListener listener) {
+    public void findFiles(String fileNumber, String insuredName, String customer, String employee,
+                          String suitNumber, String fileStatus, String creationDate, CommListener listener) {
         String serverUrl = Dynamics.serverURL + Constants.findFile;
         HashMap params = new HashMap();
         params.put(Constants.fileNumber, fileNumber);
+        params.put(Constants.insuredName, insuredName);
+        params.put(Constants.customer, customer);
+        params.put(Constants.employee, employee);
+        params.put(Constants.suitNumber, suitNumber);
+        params.put(Constants.fileStatus, fileStatus);
+        params.put(creationDate, creationDate);
 
         post(serverUrl, params, listener);
     }

@@ -541,9 +541,24 @@ public class MainScreenActivity extends AppCompatActivity implements
     public void findRecordByData(Map<String, String> dataMap) {
         Log.d(TAG, "findRecordByData");
         String fileNumber = dataMap.get(Constants.fileNumber);
-        if (true == StringUtils.isNullOrEmpty(fileNumber)) return;
+        String insuredName = dataMap.get(Constants.insuredName);
+        String customer = dataMap.get(Constants.customer);
+        String employee = dataMap.get(Constants.employee);
+        String suitNumber = dataMap.get(Constants.suitNumber);
+        String fileStatus = dataMap.get(Constants.fileStatus);
+        String creationDate = dataMap.get(Constants.creationDate);
+
+        if ((true == StringUtils.isNullOrEmpty(fileNumber)) &&
+                (true == StringUtils.isNullOrEmpty(insuredName)) &&
+                (true == StringUtils.isNullOrEmpty(customer)) &&
+                (true == StringUtils.isNullOrEmpty(employee)) &&
+                (true == StringUtils.isNullOrEmpty(suitNumber)) &&
+                (true == StringUtils.isNullOrEmpty(fileStatus)) &&
+                (true == StringUtils.isNullOrEmpty(creationDate))) return;
+
         showProgressDialog();
-        ServerUtilities.getInstance().findFiles(fileNumber, new CommListener() {
+        ServerUtilities.getInstance().findFiles(fileNumber, insuredName, customer, employee, suitNumber,
+                fileStatus, creationDate, new CommListener() {
             @Override
             public void newDataArrived(String response) {
                 try {

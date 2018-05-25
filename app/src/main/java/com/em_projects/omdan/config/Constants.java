@@ -23,6 +23,12 @@ public class Constants {
 
     public static final String findFile = "api/FindFile";
     public static final String fileNumber = "fileNumber";
+    public static final String creationDate = "creationDate";
+    public static final String insuredName = "insuredName";
+    public static final String customer = "customer";
+    public static final String employee = "employee";
+    public static final String suitNumber = "suitNumber";
+    public static final String fileStatus = "fileStatus";
 
     public static final String uploadImage = "api/ImageUpload";
     public static final String filePath = "filePath";

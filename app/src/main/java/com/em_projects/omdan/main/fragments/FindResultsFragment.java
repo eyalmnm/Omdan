@@ -98,8 +98,8 @@ public class FindResultsFragment extends Fragment {
             }
         });
 
-        if (1 == historyArrayList.size()) {
-            loadRecord(0);
+        if (1 == historyArrayList.size()) {  // TODO USE IT AGAIN
+//            loadRecord(0);
         }
     }
 
