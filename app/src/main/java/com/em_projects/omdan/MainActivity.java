@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.em_projects.omdan.main.MainScreenActivity;
+import com.em_projects.omdan.main.LoginAndPermissionsActivity;
 import com.em_projects.omdan.utils.AppUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 //                Intent intent = new Intent(context, IntroActivity.class);
-                Intent intent = new Intent(context, MainScreenActivity.class);
+                Intent intent = new Intent(context, LoginAndPermissionsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out);
                 finish();
             }
-        }, 3000);
+        }, 1500);
     }
 }

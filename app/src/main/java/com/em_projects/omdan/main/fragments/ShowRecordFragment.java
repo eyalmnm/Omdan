@@ -146,7 +146,10 @@ public class ShowRecordFragment extends Fragment implements RequestImagesListDia
             }
         });
 
-        showImagesListRequestDialog();
+        if (false == Dynamics.isImagesListShown(getRecordId())) {
+            Dynamics.setImagesListShown(getRecordId());
+            showImagesListRequestDialog();
+        }
     }
 
     private void showImagesListRequestDialog() {

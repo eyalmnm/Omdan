@@ -98,8 +98,8 @@ public class FindResultsFragment extends Fragment {
             }
         });
 
-        if (1 == historyArrayList.size()) {  // TODO USE IT AGAIN
-//            loadRecord(0);
+        if (1 == historyArrayList.size()) {
+            loadRecord(0);
         }
     }
 
@@ -165,7 +165,6 @@ public class FindResultsFragment extends Fragment {
             viewHolder.recordDateTextView.setText(data.getDateStr());
             viewHolder.recordTimeTextView.setText(data.getTimeStr());
             viewHolder.insuredListNameTextView.setText(data.getInsuredListName());
-
 
             return view;
         }

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.em_projects.omdan.utils.PreferencesUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by eyalmuchtar on 10/30/17.
  */
@@ -16,6 +18,7 @@ public class Dynamics {
     private static String serverIp = null;
     private static int serverPort;
     private Context context;
+    private static ArrayList<String> imagesListDialogShownForRecord = new ArrayList<>();
 
     private Dynamics(Context context) {
         this.context = context;
@@ -50,5 +53,13 @@ public class Dynamics {
 
     public void setCurrentRecordId(String currentRecordId) throws Exception {
         PreferencesUtils.getInstance(context).setRecordId(currentRecordId);
+    }
+
+    public static boolean isImagesListShown(String recordId) {
+        return imagesListDialogShownForRecord.contains(recordId);
+    }
+
+    public static void setImagesListShown(String recordId) {
+        imagesListDialogShownForRecord.add(recordId);
     }
 }

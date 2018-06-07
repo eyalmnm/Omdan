@@ -96,8 +96,6 @@ public class MainScreenActivity extends AppCompatActivity implements
     public static final int OPEN_GALERY = 104;
     public static final int FIND_RESULTS = 105;
     private static final String TAG = "MainScreenActivity";
-    private static final int PERMISSION_REQUEST_CODE = 200;
-    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 250;
     private Context context;
 
 //    private SearchView searchView;
@@ -125,16 +123,6 @@ public class MainScreenActivity extends AppCompatActivity implements
     // Hold the current RecordId
     private String currentRecordId; // TODO use this to hold the current Record id.
 
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -238,6 +226,10 @@ public class MainScreenActivity extends AppCompatActivity implements
         ft.commit();
     }
 
+    // ******************************************  Permissions Section  ******************************************
+    private static final int PERMISSION_REQUEST_CODE = 200;
+    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 250;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean checkPermissions() {
         int cameraRes = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
@@ -320,6 +312,17 @@ public class MainScreenActivity extends AppCompatActivity implements
         }
     }
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void permissionToDrawOverlays() {
         if (android.os.Build.VERSION.SDK_INT >= 23) {   //Android M Or Over
             FirebaseCrash.log("permissionToDrawOverlays");
@@ -342,6 +345,7 @@ public class MainScreenActivity extends AppCompatActivity implements
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+    // ******************************************  Permissions Section  ******************************************
 
     private void continueLoading() {
         hideVail();
