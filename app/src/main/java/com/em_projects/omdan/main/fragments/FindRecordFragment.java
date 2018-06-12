@@ -49,7 +49,7 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     private ImageButton clearAllButton;
 
     // UI Helper
-    private long creationDate;
+    private long creationDate = 0;
 
 
     @Override
@@ -77,7 +77,6 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         suitNumberEditText = (EditText) view.findViewById(R.id.suitNumberEditText);
         fileStatusEditText = (EditText) view.findViewById(R.id.fileStatusEditText);
         creationDateTextView = (TextView) view.findViewById(R.id.creationDateTextView);
-        creationDateTextView.setText(TimeUtils.getDateStr(now));
 
         searchButton = (ImageButton) view.findViewById(R.id.searchButton);
         clearAllButton = (ImageButton) view.findViewById(R.id.clearAllButton);
@@ -92,7 +91,6 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                 if (null != dataMap && false == dataMap.isEmpty()) {
-
                     if (null != listener) {
                         listener.findRecordByData(dataMap);
                     }
@@ -188,14 +186,15 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         String employeeName = employeeEditText.getText().toString();
         String suitNumber = suitNumberEditText.getText().toString();
         String fileStatus = fileStatusEditText.getText().toString();
-        String creationDate = String.valueOf(this.creationDate);
+        String creationDate = creationDateTextView.getText().toString();
 
         if (true == StringUtils.isNullOrEmpty(fileNumber) &&
                 true == StringUtils.isNullOrEmpty(insuredName) &&
                 true == StringUtils.isNullOrEmpty(customerName) &&
                 true == StringUtils.isNullOrEmpty(employeeName) &&
                 true == StringUtils.isNullOrEmpty(suitNumber) &&
-                true == StringUtils.isNullOrEmpty(fileStatus)) {
+                true == StringUtils.isNullOrEmpty(fileStatus) &&
+                true == StringUtils.isNullOrEmpty(creationDate)) {
             return null;
         }
 
@@ -206,7 +205,7 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         dataMap.put(Constants.employee, employeeName);
         dataMap.put(Constants.suitNumber, suitNumber);
         dataMap.put(Constants.fileStatus, fileStatus);
-        dataMap.put(Constants.creationDate, creationDate);
+        dataMap.put(Constants.creationDate, (0 >= this.creationDate) ? "" : String.valueOf(this.creationDate));
 
         return dataMap;
     }
@@ -217,6 +216,7 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         datePickerDialog.show(fragmentManager, "DatePickerDialog");
     }
 
+    // DatePickerDialog.OnDatePickedListener implementation
     @Override
     public void onDatePicked(Date date) {
         creationDateTextView.setText(TimeUtils.getDateStr(date));

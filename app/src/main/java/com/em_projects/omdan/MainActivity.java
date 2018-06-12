@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, LoginAndPermissionsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out);
+//                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out);
                 finish();
             }
         }, 1500);

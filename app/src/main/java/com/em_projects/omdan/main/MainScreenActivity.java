@@ -43,6 +43,7 @@ import com.em_projects.omdan.dialogs.AppExitDialog;
 import com.em_projects.omdan.dialogs.LoginDialog;
 import com.em_projects.omdan.dialogs.LoginFailedDialog;
 import com.em_projects.omdan.dialogs.ServerConnectionDialog;
+import com.em_projects.omdan.main.fragments.DatePickerDialog;
 import com.em_projects.omdan.main.fragments.FindRecordFragment;
 import com.em_projects.omdan.main.fragments.FindResultsFragment;
 import com.em_projects.omdan.main.fragments.NewRecordFragment;
@@ -62,6 +63,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -86,7 +88,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class MainScreenActivity extends AppCompatActivity implements
         FindRecordFragment.FindRecordListener, ShowAllRecordsFragment.SelectRecordListener,
         FindResultsFragment.FindResultsListener, ServerConnectionDialog.OnSetServerConnectionListener,
-        LoginDialog.OnSetLoginDataListener, LoginFailedDialog.OnLoginFailedListener {
+        LoginDialog.OnSetLoginDataListener, LoginFailedDialog.OnLoginFailedListener,
+        DatePickerDialog.OnDatePickedListener {
 
     // Setting IDs
     public static final int FIND_RECORD = 100;
@@ -768,6 +771,21 @@ public class MainScreenActivity extends AppCompatActivity implements
                 }
             });
         }
+    }
+
+    // DatePickerDialog.OnDatePickedListener implementation
+    @Override
+    public void onDatePicked(Date date) {
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof DatePickerDialog.OnDatePickedListener) {
+            ((DatePickerDialog.OnDatePickedListener) fragment).onDatePicked(date);
+        }
+    }
+
+    private Fragment getCurrentFragment() {
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.container);
+        return fragment;
     }
 
     private void showProgressDialog() {

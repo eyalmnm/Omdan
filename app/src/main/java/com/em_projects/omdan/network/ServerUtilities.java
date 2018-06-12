@@ -73,13 +73,13 @@ public final class ServerUtilities implements Runnable {
                           String suitNumber, String fileStatus, String creationDate, CommListener listener) {
         String serverUrl = Dynamics.serverURL + Constants.findFile;
         HashMap params = new HashMap();
-        params.put(Constants.fileNumber, fileNumber);
-        params.put(Constants.insuredName, insuredName);
-        params.put(Constants.customer, customer);
-        params.put(Constants.employee, employee);
-        params.put(Constants.suitNumber, suitNumber);
-        params.put(Constants.fileStatus, fileStatus);
-        params.put(creationDate, creationDate);
+        params.put(Constants.fileNumber, StringUtils.convertToUtf8(fileNumber));
+        params.put(Constants.insuredName, StringUtils.convertToUtf8(insuredName));
+        params.put(Constants.customer, StringUtils.convertToUtf8(customer));
+        params.put(Constants.employee, StringUtils.convertToUtf8(employee));
+        params.put(Constants.suitNumber, StringUtils.convertToUtf8(suitNumber));
+        params.put(Constants.fileStatus, StringUtils.convertToUtf8(fileStatus));
+        params.put(Constants.creationDate, creationDate);
 
         post(serverUrl, params, listener);
     }
