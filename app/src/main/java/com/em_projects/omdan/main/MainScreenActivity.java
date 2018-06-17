@@ -193,28 +193,28 @@ public class MainScreenActivity extends AppCompatActivity implements
         openArchiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(3, null);
+                selectItem(3, null, true);
             }
         });
 
         openGaleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(4, null);
+                selectItem(4, null, true);
             }
         });
 
         allRecordsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(0, null);
+                selectItem(0, null, true);
             }
         });
 
         newRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(2, null);
+                selectItem(2, null, true);
             }
         });
     }
@@ -487,9 +487,8 @@ public class MainScreenActivity extends AppCompatActivity implements
      * Swaps fragments in the main content view
      * if args is null then show all otherwise show the related data
      */
-    private void selectItem(int position, Bundle args) {
+    private void selectItem(int position, Bundle args, boolean addToBackStack) {
         Fragment fragment = null;
-        boolean addToBackStack = false;
         switch (settings.get(position).getId()) {
             case FIND_RECORD:
                 fragment = new FindRecordFragment();
@@ -541,7 +540,7 @@ public class MainScreenActivity extends AppCompatActivity implements
     @Override
     public void findRecordById(String recNumber) {
         Log.d(TAG, "findRecordById " + recNumber + " selected");
-        showRecord(recNumber);
+        showRecord(recNumber, false);
     }
 
     @Override
@@ -629,37 +628,37 @@ public class MainScreenActivity extends AppCompatActivity implements
     @Override
     public void findRecordCancelled() {
         Log.d(TAG, "findRecordCancelled " + "Last Record" + " selected");
-        showRecord("Last Record");
+        showRecord("Last Record", false);
     }
 
     // ShowAllRecordsFragment.SelectRecordListener
     public void loadRecord(String recNumber, boolean editable) {
         Log.d(TAG, "loadRecord " + recNumber + " selected");
         // showRecord(recNumber); // TODO Check with Ronen.
-        selectItem(1, null);  // TODO add the required args
+        selectItem(1, null, true);  // TODO add the required args
     }
 
     // FindResultsFragment.FindResultsListener
     public void loadRecord(String recNumber, Bundle args) {
         Log.d(TAG, "loadRecord " + recNumber + " selected");
         // showRecord(recNumber); // TODO Check with Ronen.
-        selectItem(1, args);
+        selectItem(1, args, false);
     }
 
-    public void cancelCreation() {
-        showRecord("Last Record");
-    }   // TODO put the real record Id
+//    public void cancelCreation() {
+//        showRecord("Last Record");
+//    }   // TODO put the real record Id
 
     private void showNewRecordIdMessage(String recNumber) {
         Toast.makeText(context, getString(R.string.record_created_successfully_message, recNumber), Toast.LENGTH_LONG).show();
     }
 
-    private void showNewRecordData(String recNumber) {
-        showRecord(recNumber);
-    }
+//    private void showNewRecordData(String recNumber) {
+//        showRecord(recNumber);
+//    }
 
-    private void showRecord(String recNumber) {
-        selectItem(1, null); // TODO add the required args
+    private void showRecord(String recNumber, boolean addToBackStack) {
+        selectItem(1, null, addToBackStack); // TODO add the required args
     }   // TODO add the required args
 
     // ServerConnectionDialog.OnSetServerConnectionListener
@@ -806,7 +805,7 @@ public class MainScreenActivity extends AppCompatActivity implements
         if (true == StringUtils.containsIgnureCase(fragment.toString(), "showrecordfragment")) {
             showAppExitDialog();
         } else {
-            selectItem(1, null); // TODO add the required args
+            selectItem(1, null, false); // TODO add the required args
         }
     }
 
@@ -820,7 +819,7 @@ public class MainScreenActivity extends AppCompatActivity implements
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position, null);
+            selectItem(position, null, true);
         }
     }
 
@@ -864,7 +863,7 @@ public class MainScreenActivity extends AppCompatActivity implements
     private class DrawerSettingItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position, null);
+            selectItem(position, null, true);
         }
     }
 }

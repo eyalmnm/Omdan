@@ -12,6 +12,7 @@ public class Errors {
 
     // File 1100 - 1199
     public static final int FILE_NOT_FOUND = 1100;
+    public static final int FILE_CRAETION_FAILED = 1101;
 
     // Image Storage 1200 - 1299
     public static final int TARGET_DIRECTORY_NOT_FOUND = 1200;
