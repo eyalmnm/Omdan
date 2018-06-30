@@ -345,7 +345,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
         Log.d(TAG, "Path: " + path + " recordId: " + currentDirectoryPath);
         ArrayList<String> allSubs = new ArrayList<>();
 //        if (true == StringUtils.isNullOrEmpty(currentDirectoryPath)) {
-            allSubs.add(getResources().getString(R.string.root));
+        allSubs.add(getResources().getString(R.string.root));
 //        } else {
 //            String displayName = currentDirectoryPath;
 //            if (displayName.startsWith(File.pathSeparator)) {
@@ -445,9 +445,18 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                                             return;
                                         }
                                     }
+                                } else {
                                     JSONObject jsonObject = new JSONObject(response);
-                                    String fileFullPath = JSONUtils.getStringValue(jsonObject, Constants.fileFullPath);
+                                    String filePath = JSONUtils.getStringValue(jsonObject, Constants.directory);
+                                    String fileName = JSONUtils.getStringValue(jsonObject, Constants.fileName);
+                                    String fileFullPath = filePath + "/" + fileName;
                                     FileUtils.removeFile(Constants.BASE_PATH + "/" + fileFullPath);
+                                    new Handler(getMainLooper()).post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            loadBitMap(currentDirectoryPath);
+                                        }
+                                    });
                                     return;
                                 }
                             } catch (JSONException ex) {
