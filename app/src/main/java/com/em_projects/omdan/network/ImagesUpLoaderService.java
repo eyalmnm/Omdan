@@ -165,7 +165,7 @@ public class ImagesUpLoaderService extends Service {
             showLoadingDialog(filesToUpload.size(), (i + 1), fileName);
             Log.d(TAG, "Loading image: " + fileName + " file index: " + i);
             base64Image = FileUtils.getStringFile(new File(filesToUpload.get(i).getFullPath()));
-            ServerUtilities.getInstance().uploadImage(base64Image, directory, fileName, new CommListener() {
+            Communicator.getInstance().uploadImage(base64Image, directory, fileName, new CommListener() {
                 @Override
                 public void newDataArrived(String response) {
                     Log.d(TAG, "newDataArrived response: " + response);

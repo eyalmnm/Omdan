@@ -32,8 +32,8 @@ import com.em_projects.omdan.config.Constants;
 import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.config.Errors;
 import com.em_projects.omdan.network.CommListener;
+import com.em_projects.omdan.network.Communicator;
 import com.em_projects.omdan.network.ImagesUpLoaderService;
-import com.em_projects.omdan.network.ServerUtilities;
 import com.em_projects.omdan.utils.DimenUtils;
 import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.FileUtils;
@@ -422,7 +422,7 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
                     toBeUploaded.add(galleryFiles.get(position).toString());
                     String bitmapBase64String = FileUtils.getStringFile(new File(imageGalleryFile.getFullPath()));
                     String bitmapDirectory = ImageGalleryFile.getDirectory(imageGalleryFile.getFullPath(), imageGalleryFile.getFileName());
-                    ServerUtilities.getInstance().uploadImage(bitmapBase64String, bitmapDirectory, imageGalleryFile.getFileName(), new CommListener() {
+                    Communicator.getInstance().uploadImage(bitmapBase64String, bitmapDirectory, imageGalleryFile.getFileName(), new CommListener() {
                         @Override
                         public void newDataArrived(String response) {
                             try {

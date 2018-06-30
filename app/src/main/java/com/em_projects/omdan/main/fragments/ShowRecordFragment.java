@@ -26,7 +26,7 @@ import com.em_projects.omdan.gallery.ImageGalleryActivity;
 import com.em_projects.omdan.main.MainScreenActivity;
 import com.em_projects.omdan.main.models.HistoryDataHolder;
 import com.em_projects.omdan.network.CommListener;
-import com.em_projects.omdan.network.ServerUtilities;
+import com.em_projects.omdan.network.Communicator;
 import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.JSONUtils;
 import com.em_projects.omdan.utils.StringUtils;
@@ -165,7 +165,7 @@ public class ShowRecordFragment extends Fragment implements RequestImagesListDia
     }
 
     public void showImagesList() {
-        ServerUtilities.getInstance().getAllFiles(getRecordId(), new CommListener() {
+        Communicator.getInstance().getAllFiles(getRecordId(), new CommListener() {
             @Override
             public void newDataArrived(String response) {
                 try {

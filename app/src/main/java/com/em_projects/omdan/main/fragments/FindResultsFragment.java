@@ -41,6 +41,8 @@ public class FindResultsFragment extends Fragment {
     private HistoryListAdapter adapter;
     private ArrayList<HistoryDataHolder> historyArrayList;
 
+    private boolean alreadyLoaded = false;
+
     @Override
     public void onAttach(Activity activity) {
         listener = (FindResultsListener) activity;
@@ -98,9 +100,10 @@ public class FindResultsFragment extends Fragment {
             }
         });
 
-        if (1 == historyArrayList.size()) {
+        if (1 == historyArrayList.size() && false == alreadyLoaded) {
             loadRecord(0);
         }
+        alreadyLoaded = true;
     }
 
     private void loadRecord(int position) {

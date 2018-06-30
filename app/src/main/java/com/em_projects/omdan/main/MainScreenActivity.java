@@ -52,7 +52,7 @@ import com.em_projects.omdan.main.fragments.ShowAllRecordsFragment;
 import com.em_projects.omdan.main.fragments.ShowRecordFragment;
 import com.em_projects.omdan.main.models.Setting;
 import com.em_projects.omdan.network.CommListener;
-import com.em_projects.omdan.network.ServerUtilities;
+import com.em_projects.omdan.network.Communicator;
 import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.PreferencesUtils;
 import com.em_projects.omdan.utils.StringUtils;
@@ -64,7 +64,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -544,15 +543,9 @@ public class MainScreenActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void findRecordByData(Map<String, String> dataMap) {
+    public void findRecordByData(String fileNumber, String insuredName, String customer, String employee,
+                                 String suitNumber, String fileStatus, String creationDateStart, String creationDateEnd) {
         Log.d(TAG, "findRecordByData");
-        String fileNumber = dataMap.get(Constants.fileNumber);
-        String insuredName = dataMap.get(Constants.insuredName);
-        String customer = dataMap.get(Constants.customer);
-        String employee = dataMap.get(Constants.employee);
-        String suitNumber = dataMap.get(Constants.suitNumber);
-        String fileStatus = dataMap.get(Constants.fileStatus);
-        String creationDate = dataMap.get(Constants.creationDate);
 
         if ((true == StringUtils.isNullOrEmpty(fileNumber)) &&
                 (true == StringUtils.isNullOrEmpty(insuredName)) &&
@@ -560,11 +553,12 @@ public class MainScreenActivity extends AppCompatActivity implements
                 (true == StringUtils.isNullOrEmpty(employee)) &&
                 (true == StringUtils.isNullOrEmpty(suitNumber)) &&
                 (true == StringUtils.isNullOrEmpty(fileStatus)) &&
-                (true == StringUtils.isNullOrEmpty(creationDate))) return;
+                (true == StringUtils.isNullOrEmpty(creationDateStart)) &&
+                (true == StringUtils.isNullOrEmpty(creationDateEnd))) return;
 
         showProgressDialog();
-        ServerUtilities.getInstance().findFiles(fileNumber, insuredName, customer, employee, suitNumber,
-                fileStatus, creationDate, new CommListener() {
+        Communicator.getInstance().findFiles(fileNumber, insuredName, customer, employee, suitNumber,
+                fileStatus, creationDateStart, creationDateEnd, new CommListener() {
             @Override
             public void newDataArrived(String response) {
                 try {
@@ -642,7 +636,7 @@ public class MainScreenActivity extends AppCompatActivity implements
     public void loadRecord(String recNumber, Bundle args) {
         Log.d(TAG, "loadRecord " + recNumber + " selected");
         // showRecord(recNumber); // TODO Check with Ronen.
-        selectItem(1, args, false);
+        selectItem(1, args, true);
     }
 
 //    public void cancelCreation() {
@@ -680,7 +674,7 @@ public class MainScreenActivity extends AppCompatActivity implements
     @Override
     public void onSetLoginDataListener(String usr, String pwd) {
         showProgressDialog();
-        ServerUtilities.getInstance().login(usr, pwd, new CommListener() {
+        Communicator.getInstance().login(usr, pwd, new CommListener() {
             @Override
             public void newDataArrived(String response) {
                 try {
@@ -774,10 +768,10 @@ public class MainScreenActivity extends AppCompatActivity implements
 
     // DatePickerDialog.OnDatePickedListener implementation
     @Override
-    public void onDatePicked(Date date) {
+    public void onDatePicked(Date date, boolean isStartData) {
         Fragment fragment = getCurrentFragment();
         if (fragment instanceof DatePickerDialog.OnDatePickedListener) {
-            ((DatePickerDialog.OnDatePickedListener) fragment).onDatePicked(date);
+            ((DatePickerDialog.OnDatePickedListener) fragment).onDatePicked(date, isStartData);
         }
     }
 

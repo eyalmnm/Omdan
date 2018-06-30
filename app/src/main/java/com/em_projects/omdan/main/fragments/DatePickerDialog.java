@@ -28,6 +28,7 @@ public class DatePickerDialog extends DialogFragment {
     private Button saveButton;
     private Button cancelButton;
     private OnDatePickedListener listener;
+    private boolean isStartDate = true;
 
     @Override
     public void onAttach(Activity activity) {
@@ -54,6 +55,7 @@ public class DatePickerDialog extends DialogFragment {
         Bundle args = getArguments();
         if (null != args) {
             date = args.getLong("data", -1);
+            isStartDate = args.getBoolean("isStartDate", true);
         }
         simpleDatePicker = view.findViewById(R.id.simpleDatePicker);
         simpleDatePicker.setSpinnersShown(false);
@@ -63,7 +65,7 @@ public class DatePickerDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (null != listener) {
-                    listener.onDatePicked(datePickerToDate());
+                    listener.onDatePicked(datePickerToDate(), isStartDate);
                 }
                 dismiss();
             }
@@ -102,6 +104,6 @@ public class DatePickerDialog extends DialogFragment {
     }
 
     public interface OnDatePickedListener {
-        void onDatePicked(Date date);
+        void onDatePicked(Date date, boolean isStartDate);
     }
 }

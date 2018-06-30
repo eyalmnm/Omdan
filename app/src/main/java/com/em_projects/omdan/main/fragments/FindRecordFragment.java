@@ -18,14 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.em_projects.omdan.R;
-import com.em_projects.omdan.config.Constants;
+import com.em_projects.omdan.config.Dynamics;
 import com.em_projects.omdan.utils.StringUtils;
 import com.em_projects.omdan.utils.TimeUtils;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -44,12 +42,14 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     private EditText employeeEditText;
     private EditText suitNumberEditText;
     private EditText fileStatusEditText;
-    private TextView creationDateTextView;
+    private TextView creationDateStartTextView;
+    private TextView creationDateEndTextView;
     private ImageButton searchButton;
     private ImageButton clearAllButton;
 
     // UI Helper
-    private long creationDate = 0;
+    private long creationDateStartL = 0;
+    private long creationDateEndL = 0;
 
 
     @Override
@@ -69,14 +69,15 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        long now = System.currentTimeMillis();
         fileNumberEditText = (EditText) view.findViewById(R.id.fileNumberEditText);
         insuredNameEditText = (EditText) view.findViewById(R.id.insuredNameEditText);
         customerEditText = (EditText) view.findViewById(R.id.customerEditText);
         employeeEditText = (EditText) view.findViewById(R.id.employeeEditText);
         suitNumberEditText = (EditText) view.findViewById(R.id.suitNumberEditText);
         fileStatusEditText = (EditText) view.findViewById(R.id.fileStatusEditText);
-        creationDateTextView = (TextView) view.findViewById(R.id.creationDateTextView);
+        creationDateStartTextView = (TextView) view.findViewById(R.id.creationDateStartTextView);
+        creationDateEndTextView = (TextView) view.findViewById(R.id.creationDateEndTextView);
+        restoreData(Dynamics.saveSearchCriteria);
 
         searchButton = (ImageButton) view.findViewById(R.id.searchButton);
         clearAllButton = (ImageButton) view.findViewById(R.id.clearAllButton);
@@ -84,15 +85,32 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, String> dataMap = getAllData();
+                saveSearchCriteria();
+                String fileNumber = fileNumberEditText.getText().toString();
+                String insuredName = insuredNameEditText.getText().toString();
+                String customerName = customerEditText.getText().toString();
+                String employeeName = employeeEditText.getText().toString();
+                String suitNumber = suitNumberEditText.getText().toString();
+                String fileStatus = fileStatusEditText.getText().toString();
+                String creationDateStart = creationDateStartTextView.getText().toString();
+                String creationDateEnd = creationDateEndTextView.getText().toString();
 
                 // Hide keyboard
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                if (null != dataMap && false == dataMap.isEmpty()) {
+                if (false == StringUtils.isNullOrEmpty(fileNumber) ||
+                        false == StringUtils.isNullOrEmpty(insuredName) ||
+                        false == StringUtils.isNullOrEmpty(customerName) ||
+                        false == StringUtils.isNullOrEmpty(employeeName) ||
+                        false == StringUtils.isNullOrEmpty(suitNumber) ||
+                        false == StringUtils.isNullOrEmpty(fileStatus) ||
+                        false == StringUtils.isNullOrEmpty(creationDateStart) ||
+                        false == StringUtils.isNullOrEmpty(creationDateEnd)) {
                     if (null != listener) {
-                        listener.findRecordByData(dataMap);
+                        listener.findRecordByData(fileNumber, insuredName, customerName, employeeName, suitNumber, fileStatus,
+                                (0 >= creationDateStartL) ? "" : String.valueOf(creationDateStartL),
+                                (0 >= creationDateEndL) ? "" : String.valueOf(creationDateEndL));
                     }
                 } else {
                     Toast.makeText(context, R.string.missing_data, Toast.LENGTH_SHORT).show();
@@ -109,7 +127,8 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
                 employeeEditText.setText(null);
                 suitNumberEditText.setText(null);
                 fileStatusEditText.setText(null);
-                creationDateTextView.setText(null);
+                creationDateStartTextView.setText(null);
+                creationDateEndTextView.setText(null);
             }
         });
 
@@ -161,12 +180,50 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
             }
         });
 
-        creationDateTextView.setOnClickListener(new View.OnClickListener() {
+        creationDateStartTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDatePickerDialog();
+                openDatePickerDialog(true);
             }
         });
+
+        creationDateEndTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePickerDialog(false);
+            }
+        });
+    }
+
+    private void restoreData(Bundle saveSearchCriteria) {
+        if (null != saveSearchCriteria) {
+            fileNumberEditText.setText(saveSearchCriteria.getString("fileNumber"));
+            insuredNameEditText.setText(saveSearchCriteria.getString("insuredName"));
+            customerEditText.setText(saveSearchCriteria.getString("customerName"));
+            employeeEditText.setText(saveSearchCriteria.getString("employeeName"));
+            suitNumberEditText.setText(saveSearchCriteria.getString("suitNumber"));
+            fileStatusEditText.setText(saveSearchCriteria.getString("fileStatus"));
+            creationDateStartTextView.setText(saveSearchCriteria.getString("creationDateStart"));
+            creationDateEndTextView.setText(saveSearchCriteria.getString("creationDateEnd"));
+            creationDateStartL = saveSearchCriteria.getLong("creationDateStartL");
+            creationDateEndL = saveSearchCriteria.getLong("creationDateEndL");
+        }
+        Dynamics.saveSearchCriteria = null;
+    }
+
+    public void saveSearchCriteria() {
+        Bundle outState = new Bundle();
+        outState.putString("fileNumber", fileNumberEditText.getText().toString());
+        outState.putString("insuredName", insuredNameEditText.getText().toString());
+        outState.putString("customerName", customerEditText.getText().toString());
+        outState.putString("employeeName", employeeEditText.getText().toString());
+        outState.putString("suitNumber", suitNumberEditText.getText().toString());
+        outState.putString("fileStatus", fileStatusEditText.getText().toString());
+        outState.putString("creationDateStart", creationDateStartTextView.getText().toString());
+        outState.putString("creationDateEnd", creationDateEndTextView.getText().toString());
+        outState.putLong("creationDateStartL", creationDateStartL);
+        outState.putLong("creationDateEndL", creationDateEndL);
+        Dynamics.saveSearchCriteria = outState;
     }
 
     private void clearData() {
@@ -176,54 +233,33 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         employeeEditText.setText(null);
         suitNumberEditText.setText(null);
         fileStatusEditText.setText(null);
-        creationDateTextView.setText(null);
+        creationDateStartTextView.setText(null);
+        creationDateEndTextView.setText(null);
     }
 
-    private Map<String, String> getAllData() {
-        String fileNumber = fileNumberEditText.getText().toString();
-        String insuredName = insuredNameEditText.getText().toString();
-        String customerName = customerEditText.getText().toString();
-        String employeeName = employeeEditText.getText().toString();
-        String suitNumber = suitNumberEditText.getText().toString();
-        String fileStatus = fileStatusEditText.getText().toString();
-        String creationDate = creationDateTextView.getText().toString();
 
-        if (true == StringUtils.isNullOrEmpty(fileNumber) &&
-                true == StringUtils.isNullOrEmpty(insuredName) &&
-                true == StringUtils.isNullOrEmpty(customerName) &&
-                true == StringUtils.isNullOrEmpty(employeeName) &&
-                true == StringUtils.isNullOrEmpty(suitNumber) &&
-                true == StringUtils.isNullOrEmpty(fileStatus) &&
-                true == StringUtils.isNullOrEmpty(creationDate)) {
-            return null;
-        }
-
-        HashMap dataMap = new HashMap(6);
-        dataMap.put(Constants.fileNumber, fileNumber);
-        dataMap.put(Constants.insuredName, insuredName);
-        dataMap.put(Constants.customer, customerName);
-        dataMap.put(Constants.employee, employeeName);
-        dataMap.put(Constants.suitNumber, suitNumber);
-        dataMap.put(Constants.fileStatus, fileStatus);
-        dataMap.put(Constants.creationDate, (0 >= this.creationDate) ? "" : String.valueOf(this.creationDate));
-
-        return dataMap;
-    }
-
-    private void openDatePickerDialog() {
+    private void openDatePickerDialog(boolean isStartDate) {
         FragmentManager fragmentManager = getFragmentManager();
         DatePickerDialog datePickerDialog = new DatePickerDialog();
+        Bundle args = new Bundle();
+        args.putBoolean("isStartDate", isStartDate);
+        datePickerDialog.setArguments(args);
         datePickerDialog.show(fragmentManager, "DatePickerDialog");
     }
 
     // DatePickerDialog.OnDatePickedListener implementation
     @Override
-    public void onDatePicked(Date date) {
-        creationDateTextView.setText(TimeUtils.getDateStr(date));
+    public void onDatePicked(Date date, boolean isStartDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        creationDate = date.getTime();
+        if (true == isStartDate) {
+            creationDateStartTextView.setText(TimeUtils.getDateStr(date));
+            creationDateStartL = date.getTime();
+        } else {
+            creationDateEndTextView.setText(TimeUtils.getDateStr(date));
+            creationDateEndL = date.getTime();
+        }
     }
 
     @Override
@@ -235,7 +271,8 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     public interface FindRecordListener {
         void findRecordById(String recNumber);
 
-        void findRecordByData(Map<String, String> dataMap);
+        void findRecordByData(String fileNumber, String insuredName, String customer, String employee,
+                              String suitNumber, String fileStatus, String creationDateStart, String creationDateEnd);
 
         void findRecordCancelled();
     }

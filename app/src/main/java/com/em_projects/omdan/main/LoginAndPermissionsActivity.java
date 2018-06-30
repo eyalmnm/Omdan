@@ -31,7 +31,7 @@ import com.em_projects.omdan.dialogs.LoginDialog;
 import com.em_projects.omdan.dialogs.LoginFailedDialog;
 import com.em_projects.omdan.dialogs.ServerConnectionDialog;
 import com.em_projects.omdan.network.CommListener;
-import com.em_projects.omdan.network.ServerUtilities;
+import com.em_projects.omdan.network.Communicator;
 import com.em_projects.omdan.utils.AppUtils;
 import com.em_projects.omdan.utils.ErrorsUtils;
 import com.em_projects.omdan.utils.PreferencesUtils;
@@ -281,7 +281,7 @@ public class LoginAndPermissionsActivity extends AppCompatActivity implements
     @Override
     public void onSetLoginDataListener(String usr, String pwd) {
         showProgressDialog();
-        ServerUtilities.getInstance().login(usr, pwd, new CommListener() {
+        Communicator.getInstance().login(usr, pwd, new CommListener() {
             @Override
             public void newDataArrived(String response) {
                 try {

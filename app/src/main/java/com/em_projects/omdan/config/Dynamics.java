@@ -1,6 +1,7 @@
 package com.em_projects.omdan.config;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.em_projects.omdan.utils.PreferencesUtils;
 
@@ -19,6 +20,8 @@ public class Dynamics {
     private static int serverPort;
     private Context context;
     private static ArrayList<String> imagesListDialogShownForRecord = new ArrayList<>();
+
+    public static Bundle saveSearchCriteria = null;
 
     private Dynamics(Context context) {
         this.context = context;
