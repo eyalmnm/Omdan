@@ -192,13 +192,36 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/creation_date_title"
+                        android:text="@string/creation_date_start_title"
                         android:inputType="date"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/creationDateTextView"
+                        android:id="@+id/creationDateStartTextView"
+                        style="@style/textInputLayoutEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:text="@string/creation_date_end_title"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/creationDateEndTextView"
                         style="@style/textInputLayoutEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

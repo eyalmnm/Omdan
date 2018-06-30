@@ -64,7 +64,8 @@
     <string name="find_record_by_data">Find Record</string>
     <string name="file_number_title">File Number</string>
     <string name="file_not_found">File Not Found!</string>
-    <string name="creation_date_title">Creation Date</string>
+    <string name="creation_date_start_title">Creation Date Start</string>
+    <string name="creation_date_end_title">Creation Date End</string>
 
     <!-- Find results fragment -->
     <string name="choose_record_from_list">Choose Record Form List</string>
