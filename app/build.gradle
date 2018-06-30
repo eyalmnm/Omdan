@@ -8,8 +8,8 @@ android {
         applicationId "com.em_projects.omdan"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 38
-        versionName "2.6.2"
+        versionCode 40
+        versionName "2.6.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
