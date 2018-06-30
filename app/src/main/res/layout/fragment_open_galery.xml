@@ -12,11 +12,11 @@
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/galeries"
+        android:text="@string/galleries"
         android:textSize="21sp" />
 
     <ListView
-        android:id="@+id/galeriesListView"
+        android:id="@+id/galleriesListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

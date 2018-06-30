@@ -88,7 +88,7 @@
     <string name="create_new_record">New Record</string>
 
     <!-- Open Galery -->
-    <string name="galeries">Galleries</string>
+    <string name="galleries">Galleries</string>
     <string name="empty_archive_msg">Your image archive is empty</string>
     <string name="directory_contains_no_images">The selected record contains no images</string>
 

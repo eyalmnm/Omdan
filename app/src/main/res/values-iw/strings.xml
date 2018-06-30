@@ -88,7 +88,7 @@
     <string name="create_new_record">תיק חדש</string>
 
     <!-- Open Galery -->
-    <string name="galeries">גלריות</string>
+    <string name="galleries">גלריות</string>
     <string name="empty_archive_msg">ארכיון התמונות שלך ריק</string>
     <string name="directory_contains_no_images">תיקייה זו אינה מכילה תמונות</string>
 
