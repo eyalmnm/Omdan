@@ -610,7 +610,10 @@ public class ImageGalleryActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
+        String recoerdId = Dynamics.getInstance(context).getCurrentRecordId();
         if ("".equalsIgnoreCase(currentDirectoryPath)) {
+            super.onBackPressed();
+        } else if (false == StringUtils.isNullOrEmpty(recoerdId) && recoerdId.equalsIgnoreCase(currentDirectoryPath)) {
             super.onBackPressed();
         } else {
             int lastIndex = currentDirectoryPath.lastIndexOf(fSa);

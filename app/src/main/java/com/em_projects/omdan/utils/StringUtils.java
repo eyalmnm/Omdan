@@ -38,10 +38,10 @@ public class StringUtils {
     public static boolean isNullOrEmpty(String str) {
         if (str == null)
             return true;
-        str = str.replace("?", "").replace("<", "").replace(">", "")
-                .replace("&", "").replace("\"", "").replace("\'", "")
-                .replace(";", "").replace("\n", "").replace("\r", "")
-                .replace("\t", "").trim();
+        str = str.replaceAll("/?", "").replaceAll("<", "").replaceAll(">", "")
+                .replaceAll("&", "").replaceAll("\"", "").replaceAll("\'", "")
+                .replaceAll(";", "").replaceAll("\n", "").replaceAll("\r", "")
+                .replaceAll("\t", "").trim();
         if (str.trim().length() == 0)
             return true;
         return false;

@@ -71,7 +71,7 @@ public class OpenGaleryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
-        galeriesListView = view.findViewById(R.id.galeriesListView);
+        galeriesListView = view.findViewById(R.id.galleriesListView);
         adapter = new GalleryListAdapter();
         galeriesListView.setAdapter(adapter);
         galeriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
