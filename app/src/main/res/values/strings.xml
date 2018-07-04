@@ -16,7 +16,6 @@
     <string name="fourth_intro_message">Fourth Intro Message</string>
 
     <!-- Action Bar -->
-    <string name="record_id_title">Record Id</string>
 
     <!-- Drawer Options -->
     <string name="find_record">Find Record</string>
@@ -32,21 +31,6 @@
     <string name="login_failed">Login failed. Please try again.</string>
 
     <!-- New Record -->
-    <string name="data_1_et_hint">Data 1</string>
-    <string name="data_2_et_hint">Data 2</string>
-    <string name="data_3_et_hint">Data 3</string>
-    <string name="data_4_et_hint">Data 4</string>
-    <string name="data_5_et_hint">Data 5</string>
-    <string name="data_6_et_hint">Data 6</string>
-    <string name="data_7_et_hint">Data 7</string>
-    <string name="data_8_et_hint">Data 8</string>
-    <string name="data_9_et_hint">Data 9</string>
-    <string name="data_10_et_hint">Data 10</string>
-    <string name="data_11_et_hint">Data 11</string>
-    <string name="data_12_et_hint">Data 12</string>
-    <string name="data_13_et_hint">Data 13</string>
-    <string name="data_14_et_hint">Data 14</string>
-    <string name="data_15_et_hint">Data 15</string>
 
     <!-- Record Created successfully message -->
     <string name="record_created_successfully_message">Record %s created successfully</string>

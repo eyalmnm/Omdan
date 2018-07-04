@@ -16,7 +16,6 @@
     <string name="fourth_intro_message">הודעה רביעית</string>
 
     <!-- Action Bar -->
-    <string name="record_id_title">מספר תיק</string>
 
     <!-- Drawer Options -->
     <string name="find_record">מצא רשומה</string>
@@ -32,21 +31,6 @@
     <string name="login_failed">כניסה נכשלה. נסו שוב.</string>
 
     <!-- New Record -->
-    <string name="data_1_et_hint">נתון 1</string>
-    <string name="data_2_et_hint">נתון 2</string>
-    <string name="data_3_et_hint">נתון 3</string>
-    <string name="data_4_et_hint">נתון 4</string>
-    <string name="data_5_et_hint">נתון 5</string>
-    <string name="data_6_et_hint">נתון 6</string>
-    <string name="data_7_et_hint">נתון 7</string>
-    <string name="data_8_et_hint">נתון 8</string>
-    <string name="data_9_et_hint">נתון 9</string>
-    <string name="data_10_et_hint">נתון 10</string>
-    <string name="data_11_et_hint">נתון 11</string>
-    <string name="data_12_et_hint">נתון 12</string>
-    <string name="data_13_et_hint">נתון 13</string>
-    <string name="data_14_et_hint">נתון 14</string>
-    <string name="data_15_et_hint">נתון 15</string>
 
     <!-- Record Created successfully message -->
     <string name="record_created_successfully_message">רשומה %s נוצרה בהצלחה</string>
