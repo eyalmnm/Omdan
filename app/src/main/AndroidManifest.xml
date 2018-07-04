@@ -28,6 +28,9 @@
     <!-- Progress Dialog Permission -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!-- Date Picker Permissions -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <application
         android:allowBackup="true"

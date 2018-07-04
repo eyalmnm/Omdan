@@ -2,7 +2,6 @@ package com.em_projects.omdan.main.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,8 +47,8 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     private ImageButton clearAllButton;
 
     // UI Helper
-    private long creationDateStartL = 0;
-    private long creationDateEndL = 0;
+    private Calendar creationDateStartCalendar = null;
+    private Calendar creationDateEndCalendar = null;
 
 
     @Override
@@ -109,8 +108,8 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
                         false == StringUtils.isNullOrEmpty(creationDateEnd)) {
                     if (null != listener) {
                         listener.findRecordByData(fileNumber, insuredName, customerName, employeeName, suitNumber, fileStatus,
-                                (0 >= creationDateStartL) ? "" : String.valueOf(creationDateStartL),
-                                (0 >= creationDateEndL) ? "" : String.valueOf(creationDateEndL));
+                                (null == creationDateStartCalendar) ? "" : String.valueOf(creationDateStartCalendar.getTimeInMillis()),
+                                (null == creationDateEndCalendar) ? "" : String.valueOf(creationDateEndCalendar.getTimeInMillis()));
                     }
                 } else {
                     Toast.makeText(context, R.string.missing_data, Toast.LENGTH_SHORT).show();
@@ -205,8 +204,16 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
             fileStatusEditText.setText(saveSearchCriteria.getString("fileStatus"));
             creationDateStartTextView.setText(saveSearchCriteria.getString("creationDateStart"));
             creationDateEndTextView.setText(saveSearchCriteria.getString("creationDateEnd"));
-            creationDateStartL = saveSearchCriteria.getLong("creationDateStartL");
-            creationDateEndL = saveSearchCriteria.getLong("creationDateEndL");
+            long creationDateStartL = saveSearchCriteria.getLong("creationDateStartL");
+            long creationDateEndL = saveSearchCriteria.getLong("creationDateEndL");
+            if (0 < creationDateStartL) {
+                creationDateStartCalendar = Calendar.getInstance();
+                creationDateStartCalendar.setTimeInMillis(creationDateStartL);
+            }
+            if (0 < creationDateEndL) {
+                creationDateEndCalendar = Calendar.getInstance();
+                creationDateEndCalendar.setTimeInMillis(creationDateEndL);
+            }
         }
         Dynamics.saveSearchCriteria = null;
     }
@@ -221,8 +228,8 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         outState.putString("fileStatus", fileStatusEditText.getText().toString());
         outState.putString("creationDateStart", creationDateStartTextView.getText().toString());
         outState.putString("creationDateEnd", creationDateEndTextView.getText().toString());
-        outState.putLong("creationDateStartL", creationDateStartL);
-        outState.putLong("creationDateEndL", creationDateEndL);
+        outState.putLong("creationDateStartL", null == creationDateStartCalendar ? 0 : creationDateStartCalendar.getTimeInMillis());
+        outState.putLong("creationDateEndL", null == creationDateEndCalendar ? 0 : creationDateEndCalendar.getTimeInMillis());
         Dynamics.saveSearchCriteria = outState;
     }
 
@@ -238,13 +245,45 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
     }
 
 
-    private void openDatePickerDialog(boolean isStartDate) {
-        FragmentManager fragmentManager = getFragmentManager();
-        DatePickerDialog datePickerDialog = new DatePickerDialog();
-        Bundle args = new Bundle();
-        args.putBoolean("isStartDate", isStartDate);
-        datePickerDialog.setArguments(args);
-        datePickerDialog.show(fragmentManager, "DatePickerDialog");
+    private void openDatePickerDialog(final boolean isStartDate) {
+//        FragmentManager fragmentManager = getFragmentManager();
+//        DatePickerDialog datePickerDialog = new DatePickerDialog();
+//        Bundle args = new Bundle();
+//        args.putBoolean("isStartDate", isStartDate);
+//        datePickerDialog.setArguments(args);
+//        datePickerDialog.show(fragmentManager, "DatePickerDialog");
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.setTimeInMillis(System.currentTimeMillis());
+        int year = tempCal.get(Calendar.YEAR);
+        int month = tempCal.get(Calendar.MONTH);
+        int day = tempCal.get(Calendar.DAY_OF_MONTH);
+        if (true == isStartDate && null != creationDateStartCalendar) {
+            year = creationDateStartCalendar.get(Calendar.YEAR);
+            month = creationDateStartCalendar.get(Calendar.MONTH);
+            day = creationDateStartCalendar.get(Calendar.DAY_OF_MONTH);
+        } else if (null != creationDateEndCalendar) {
+            year = creationDateEndCalendar.get(Calendar.YEAR);
+            month = creationDateEndCalendar.get(Calendar.MONTH);
+            day = creationDateEndCalendar.get(Calendar.DAY_OF_MONTH);
+        }
+        com.android.datetimepicker.date.DatePickerDialog.newInstance(
+                new com.android.datetimepicker.date.DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(com.android.datetimepicker.date.DatePickerDialog dialog,
+                                          int year, int monthOfYear, int dayOfMonth) {
+                        if (isStartDate) {
+                            if (null == creationDateStartCalendar)
+                                creationDateStartCalendar = Calendar.getInstance();
+                            creationDateStartCalendar.set(year, monthOfYear, dayOfMonth);
+                            creationDateStartTextView.setText(TimeUtils.getDateStr(creationDateStartCalendar.getTime()));
+                        } else {
+                            if (null == creationDateEndCalendar)
+                                creationDateEndCalendar = Calendar.getInstance();
+                            creationDateEndCalendar.set(year, monthOfYear, dayOfMonth);
+                            creationDateEndTextView.setText(TimeUtils.getDateStr(creationDateEndCalendar.getTime()));
+                        }
+                    }
+                }, year, month, day).show(getFragmentManager(), "datePicker");
     }
 
     // DatePickerDialog.OnDatePickedListener implementation
@@ -254,11 +293,14 @@ public class FindRecordFragment extends Fragment implements DatePickerDialog.OnD
         calendar.setTime(date);
 
         if (true == isStartDate) {
+            if (null == creationDateStartCalendar)
+                creationDateStartCalendar = Calendar.getInstance();
+            creationDateStartCalendar.setTime(date);
             creationDateStartTextView.setText(TimeUtils.getDateStr(date));
-            creationDateStartL = date.getTime();
         } else {
+            if (null == creationDateEndCalendar) creationDateEndCalendar = Calendar.getInstance();
+            creationDateEndCalendar.setTime(date);
             creationDateEndTextView.setText(TimeUtils.getDateStr(date));
-            creationDateEndL = date.getTime();
         }
     }
 
